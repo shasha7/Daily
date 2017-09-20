@@ -7,13 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Dog.h"
 
 int main(int argc, const char * argv[]) {
+
     @autoreleasepool {
         // insert code here...
-        NSLog(@"Hello, World!");
-        NSObject *obj = [[NSObject alloc] init];
-        __weak NSObject *weakObj = obj;
+        Dog *dog = [[Dog alloc] init];
+        NSLog(@"%@", dog);
     }
     return 0;
 }

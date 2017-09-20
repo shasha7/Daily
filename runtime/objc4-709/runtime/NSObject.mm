@@ -717,7 +717,9 @@ class AutoreleasePoolPage
         mprotect(this, SIZE, PROT_READ | PROT_WRITE);
 #endif
     }
-
+    
+    // C++类构造函数初始化列表
+    // C++初始化类成员时，是按照声明的顺序初始化的
     AutoreleasePoolPage(AutoreleasePoolPage *newParent) 
         : magic(), next(begin()), thread(pthread_self()),
           parent(newParent), child(nil), 
@@ -734,9 +736,10 @@ class AutoreleasePoolPage
         protect();
     }
 
+    // 析构函数
     ~AutoreleasePoolPage() 
     {
-        check();
+        check();//完整性检查
         unprotect();
         assert(empty());
 
@@ -1151,7 +1154,7 @@ public:
 
     static void init()
     {
-        int r __unused = pthread_key_init_np(AutoreleasePoolPage::key, 
+        int r __unused = pthread_key_init_np(AutoreleasePoolPage::key,
                                              AutoreleasePoolPage::tls_dealloc);
         assert(r == 0);
     }
