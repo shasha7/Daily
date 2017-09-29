@@ -13,8 +13,8 @@
 @property int cat_id;
 @property NSString *name;
 @property int age;
-@property long weight;
-@property long height;
+@property float weight;
+@property float height;
 
 @end
 

@@ -28,7 +28,7 @@
 		AA62297B1F7BD93C0038BAD7 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		AA62297C1F7BD93C0038BAD7 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		AA6229811F7BD93C0038BAD7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		AA6229861F7BD93C0038BAD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA6229861F7BD93C0038BAD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Info.plist; sourceTree = "<group>"; };
 		AA6229871F7BD93C0038BAD7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AA62298F1F7BDCE70038BAD7 /* Cat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cat.h; sourceTree = "<group>"; };
 		AA6229901F7BDCE70038BAD7 /* Cat.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Cat.m; sourceTree = "<group>"; };
@@ -36,7 +36,7 @@
 		AA6229931F7BDCF90038BAD7 /* Dog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Dog.m; sourceTree = "<group>"; };
 		AA6229951F7BDD050038BAD7 /* Human.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Human.h; sourceTree = "<group>"; };
 		AA6229961F7BDD050038BAD7 /* Human.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Human.m; sourceTree = "<group>"; };
-		AA6229981F7BDD2E0038BAD7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		AA6229981F7BDD2E0038BAD7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../../Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,7 +62,6 @@
 		AA62296C1F7BD93C0038BAD7 = {
 			isa = PBXGroup;
 			children = (
-				AA6229981F7BDD2E0038BAD7 /* Default-568h@2x.png */,
 				AA6229771F7BD93C0038BAD7 /* RealmDemo */,
 				AA6229761F7BD93C0038BAD7 /* Products */,
 				DF677020D0B7E95C779BAF46 /* Pods */,
@@ -83,7 +82,6 @@
 			children = (
 				AA6229781F7BD93C0038BAD7 /* AppDelegate.h */,
 				AA6229791F7BD93C0038BAD7 /* AppDelegate.m */,
-				AA62298E1F7BDC7A0038BAD7 /* sources */,
 				AA62297B1F7BD93C0038BAD7 /* ViewController.h */,
 				AA62297C1F7BD93C0038BAD7 /* ViewController.m */,
 				AA62298F1F7BDCE70038BAD7 /* Cat.h */,
@@ -92,7 +90,7 @@
 				AA6229931F7BDCF90038BAD7 /* Dog.m */,
 				AA6229951F7BDD050038BAD7 /* Human.h */,
 				AA6229961F7BDD050038BAD7 /* Human.m */,
-				AA6229861F7BD93C0038BAD7 /* Info.plist */,
+				AA62298E1F7BDC7A0038BAD7 /* sources */,
 			);
 			path = RealmDemo;
 			sourceTree = "<group>";
@@ -100,6 +98,8 @@
 		AA62298E1F7BDC7A0038BAD7 /* sources */ = {
 			isa = PBXGroup;
 			children = (
+				AA6229981F7BDD2E0038BAD7 /* Default-568h@2x.png */,
+				AA6229861F7BD93C0038BAD7 /* Info.plist */,
 				AA6229811F7BD93C0038BAD7 /* Assets.xcassets */,
 				AA6229871F7BD93C0038BAD7 /* main.m */,
 			);

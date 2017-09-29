@@ -20,9 +20,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     self.view.backgroundColor = [UIColor whiteColor];
-    [self testBaicOperation];
+    
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -30,7 +29,6 @@
 }
 
 - (void)testBaicOperation {
-    
     Cat *cat = [[Cat alloc] init];
     cat.cat_id = 1;
     cat.name = @"xiaowang";
