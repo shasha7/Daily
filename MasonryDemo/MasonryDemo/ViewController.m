@@ -9,8 +9,12 @@
 #import "ViewController.h"
 #import "NSObject+Calculate.h"
 #import "Masonry.h"
+#import "Person.h"
+#import "NSObject+KVO.h"
 
 @interface ViewController ()
+
+@property (nonatomic, strong) Person *person;
 
 @end
 
@@ -19,6 +23,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    Person *person = [Person new];
+    self.person = person;
+    [person wwh_addObserver:self forKeyPath:@"age" options:NSKeyValueObservingOptionNew context:nil];
+    
     
     // 链式编程思想
     NSInteger result = [NSObject wwh_makeCaculate:^(CalculateMaker *make) {
@@ -89,5 +98,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    NSLog(@"监听到了值改变=%@", keyPath);
+}
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    self.person.age ++;
+}
 @end

@@ -26,6 +26,9 @@
 		AA991EB01F7F3BDE0045E58A /* ViewController+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = AA991EA51F7F3BDE0045E58A /* ViewController+MASAdditions.m */; };
 		AAD79DD41F7F614800458E09 /* CalculateMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD79DD31F7F614800458E09 /* CalculateMaker.m */; };
 		AAD79DD71F7F616000458E09 /* NSObject+Calculate.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD79DD61F7F616000458E09 /* NSObject+Calculate.m */; };
+		AAD79DDE1F7F6DB700458E09 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD79DDD1F7F6DB700458E09 /* Person.m */; };
+		AAD79DE11F7F6F3300458E09 /* WWHKVONotifying_Person.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD79DE01F7F6F3300458E09 /* WWHKVONotifying_Person.m */; };
+		AAD79DE71F7F704600458E09 /* NSObject+KVO.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD79DE61F7F704600458E09 /* NSObject+KVO.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +72,12 @@
 		AAD79DD31F7F614800458E09 /* CalculateMaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalculateMaker.m; sourceTree = "<group>"; };
 		AAD79DD51F7F616000458E09 /* NSObject+Calculate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Calculate.h"; sourceTree = "<group>"; };
 		AAD79DD61F7F616000458E09 /* NSObject+Calculate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Calculate.m"; sourceTree = "<group>"; };
+		AAD79DDC1F7F6DB700458E09 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
+		AAD79DDD1F7F6DB700458E09 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
+		AAD79DDF1F7F6F3300458E09 /* WWHKVONotifying_Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWHKVONotifying_Person.h; sourceTree = "<group>"; };
+		AAD79DE01F7F6F3300458E09 /* WWHKVONotifying_Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWHKVONotifying_Person.m; sourceTree = "<group>"; };
+		AAD79DE51F7F704600458E09 /* NSObject+KVO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+KVO.h"; sourceTree = "<group>"; };
+		AAD79DE61F7F704600458E09 /* NSObject+KVO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+KVO.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +110,7 @@
 		AA991E731F7F3BCA0045E58A /* MasonryDemo */ = {
 			isa = PBXGroup;
 			children = (
+				AAD79DD81F7F6D6D00458E09 /* KVO */,
 				AAD79DD11F7F612F00458E09 /* CalculateMaker */,
 				AA991E8B1F7F3BDE0045E58A /* Masonry */,
 				AA991E771F7F3BCA0045E58A /* AppDelegate.h */,
@@ -166,6 +176,19 @@
 				AAD79DD31F7F614800458E09 /* CalculateMaker.m */,
 			);
 			path = CalculateMaker;
+			sourceTree = "<group>";
+		};
+		AAD79DD81F7F6D6D00458E09 /* KVO */ = {
+			isa = PBXGroup;
+			children = (
+				AAD79DE51F7F704600458E09 /* NSObject+KVO.h */,
+				AAD79DE61F7F704600458E09 /* NSObject+KVO.m */,
+				AAD79DDC1F7F6DB700458E09 /* Person.h */,
+				AAD79DDD1F7F6DB700458E09 /* Person.m */,
+				AAD79DDF1F7F6F3300458E09 /* WWHKVONotifying_Person.h */,
+				AAD79DE01F7F6F3300458E09 /* WWHKVONotifying_Person.m */,
+			);
+			path = KVO;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -245,15 +268,18 @@
 				AA991EAC1F7F3BDE0045E58A /* MASViewConstraint.m in Sources */,
 				AA991EA71F7F3BDE0045E58A /* MASCompositeConstraint.m in Sources */,
 				AA991EAD1F7F3BDE0045E58A /* NSArray+MASAdditions.m in Sources */,
+				AAD79DDE1F7F6DB700458E09 /* Person.m in Sources */,
 				AAD79DD71F7F616000458E09 /* NSObject+Calculate.m in Sources */,
 				AA991E7C1F7F3BCA0045E58A /* ViewController.m in Sources */,
 				AAD79DD41F7F614800458E09 /* CalculateMaker.m in Sources */,
 				AA991E791F7F3BCA0045E58A /* AppDelegate.m in Sources */,
+				AAD79DE71F7F704600458E09 /* NSObject+KVO.m in Sources */,
 				AA991EAA1F7F3BDE0045E58A /* MASLayoutConstraint.m in Sources */,
 				AA991E761F7F3BCA0045E58A /* main.m in Sources */,
 				AA991EB01F7F3BDE0045E58A /* ViewController+MASAdditions.m in Sources */,
 				AA991EAF1F7F3BDE0045E58A /* View+MASAdditions.m in Sources */,
 				AA991EAB1F7F3BDE0045E58A /* MASViewAttribute.m in Sources */,
+				AAD79DE11F7F6F3300458E09 /* WWHKVONotifying_Person.m in Sources */,
 				AA991EA81F7F3BDE0045E58A /* MASConstraint.m in Sources */,
 				AA991EA91F7F3BDE0045E58A /* MASConstraintMaker.m in Sources */,
 			);
