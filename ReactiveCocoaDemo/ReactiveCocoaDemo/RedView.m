@@ -17,9 +17,14 @@
         self.btn.backgroundColor = [UIColor redColor];
         self.btn.frame = CGRectMake(100, 100, 100, 30);
         [self.btn setTitle:@"Button" forState:UIControlStateNormal];
+        [self.btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.btn];
     }
     return self;
 }
-    
+
+- (void)btnClick:(UIButton *)sender {
+    NSLog(@"红色View内的按钮被点击了");
+}
+
 @end

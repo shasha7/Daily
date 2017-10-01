@@ -22,20 +22,56 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    [[[NSNotificationCenter defaultCenter] rac_addObserverForName:@"age" object:self] subscribeNext:^(NSNotification * _Nullable x) {
-        NSLog(@"属性发生变化=%@", x);
-    }];
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-    
+
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     self.age ++;
 }
+
+- (void)mutipleDataSourceSyncReturnAndReloadData {
+    RACSignal *sigalOne = [RACSignal createSignal:^RACDisposable * (id<RACSubscriber>subscriber) {
+        NSLog(@"处理信号");
+        [subscriber sendNext:@{@"retcode":@(1)}];
+        return nil;
+    }];
     
+    RACSignal *sigalTwo = [RACSignal createSignal:^RACDisposable * (id<RACSubscriber>subscriber) {
+        NSLog(@"处理信号");
+        [subscriber sendNext:@{@"retcode":@(-1)}];
+        return nil;
+    }];
+    
+    [self rac_liftSelector:@selector(reloadDataOne:two:) withSignalsFromArray:@[sigalOne, sigalTwo]];
+}
+
+- (void)reloadDataOne:(NSDictionary *)one two:(NSDictionary *)two {
+    NSLog(@"%@-%@", one, two);
+}
+
+- (void)kvo {
+    [[self rac_valuesForKeyPath:@"age" observer:self] subscribeNext:^(id  _Nullable x) {
+        NSLog(@"监听到属性值的改变");
+    }];
+}
+
+// 通知
+- (void)notification {
+    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(100, 300, 100, 100)];
+    textField.backgroundColor = [UIColor lightGrayColor];
+    [self.view addSubview:textField];
+    
+    // 通知
+    [[[NSNotificationCenter defaultCenter] rac_addObserverForName:UIKeyboardWillShowNotification object:nil] subscribeNext:^(NSNotification * _Nullable x) {
+        NSLog(@"监听键盘弹出");
+    }];
+}
+
 - (void)monitorTextFieldTextChange {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
     label.textColor = [UIColor blueColor];
@@ -55,6 +91,10 @@
     redView.frame = CGRectMake(0 , 40, self.view.bounds.size.width, 200);
     redView.backgroundColor = [UIColor redColor];
     [self.view addSubview:redView];
+
+    [[redView rac_signalForSelector:NSSelectorFromString(@"btnClick:")] subscribeNext:^(RACTuple * _Nullable x) {
+        NSLog(@"监听到了按钮点击");
+    }];
     
     [[redView.btn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
         NSLog(@"按钮被点击");
