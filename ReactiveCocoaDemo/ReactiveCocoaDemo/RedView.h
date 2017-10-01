@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <ReactiveObjC/ReactiveObjC.h>
 
 @interface RedView : UIView
 
+@property (nonatomic, strong) RACSubject *subject; 
 @property (nonatomic, strong) UIButton *btn; 
     
 @end

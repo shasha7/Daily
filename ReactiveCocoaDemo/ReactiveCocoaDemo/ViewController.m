@@ -22,12 +22,58 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    RedView *redView = [RedView new];
+    redView.frame = CGRectMake(0 , 40, self.view.bounds.size.width, 200);
+    redView.backgroundColor = [UIColor redColor];
+    [self.view addSubview:redView];
     
+    [redView.subject subscribeNext:^(id  _Nullable x) {
+        NSLog(@"%@", x);
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)replaySubject {
+    RACReplaySubject *replaySubject = [RACReplaySubject subject];
+    // _valuesReceived
+    [replaySubject sendNext:@(1)];
+    
+    [replaySubject subscribeNext:^(id  _Nullable x) {
+        NSLog(@"subject1=%@", x);
+    }];
+    // RACReplaySubject  sendNext发信号可以放到前面
+}
+
+- (void)subject {
+    RACSubject *subject = [RACSubject subject];
+    [subject subscribeNext:^(id  _Nullable x) {
+        NSLog(@"subject1=%@", x);
+    }];
+    [subject subscribeNext:^(id  _Nullable x) {
+        NSLog(@"subject2=%@", x);
+    }];
+    [subject sendNext:@(1)];
+}
+
+- (void)signal {
+    // RACSubscriber协议
+    RACSignal *signal = [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
+        // 进行网络请求 拿到数据之后 进行发送
+        [subscriber sendNext:@(1)];
+        return [RACDisposable disposableWithBlock:^{
+            NSLog(@"取消订阅");
+        }];
+    }];
+    
+    RACDisposable *disposable = [signal subscribeNext:^(id  _Nullable x) {
+        NSLog(@"%@", x);
+    }];
+    
+    [disposable dispose];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA62599C1F8080EE009E200E /* Calculator.m in Sources */ = {isa = PBXBuildFile; fileRef = AA62599B1F8080EE009E200E /* Calculator.m */; };
+		AA6259B91F80CFDC009E200E /* Flag.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6259B81F80CFDC009E200E /* Flag.m */; };
 		AA7CDD241F7FBA2800ED03E6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7CDD231F7FBA2800ED03E6 /* AppDelegate.m */; };
 		AA7CDD271F7FBA2800ED03E6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7CDD261F7FBA2800ED03E6 /* ViewController.m */; };
 		AA7CDD2A1F7FBA2800ED03E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA7CDD281F7FBA2800ED03E6 /* Main.storyboard */; };
@@ -21,6 +23,10 @@
 		0F48CBEA3F964ED6C145DD75 /* Pods-ReactiveCocoaDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactiveCocoaDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-ReactiveCocoaDemo/Pods-ReactiveCocoaDemo.release.xcconfig"; sourceTree = "<group>"; };
 		12F9AA6F3046FA6D4E267183 /* Pods_ReactiveCocoaDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReactiveCocoaDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C5EE9EFD7A56AE700F1943B /* Pods-ReactiveCocoaDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactiveCocoaDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReactiveCocoaDemo/Pods-ReactiveCocoaDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		AA62599A1F8080EE009E200E /* Calculator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Calculator.h; sourceTree = "<group>"; };
+		AA62599B1F8080EE009E200E /* Calculator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Calculator.m; sourceTree = "<group>"; };
+		AA6259B71F80CFDC009E200E /* Flag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Flag.h; sourceTree = "<group>"; };
+		AA6259B81F80CFDC009E200E /* Flag.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Flag.m; sourceTree = "<group>"; };
 		AA7CDD1F1F7FBA2800ED03E6 /* ReactiveCocoaDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactiveCocoaDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA7CDD221F7FBA2800ED03E6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		AA7CDD231F7FBA2800ED03E6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -64,6 +70,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		AA6259991F8080BC009E200E /* Calculate */ = {
+			isa = PBXGroup;
+			children = (
+				AA62599A1F8080EE009E200E /* Calculator.h */,
+				AA62599B1F8080EE009E200E /* Calculator.m */,
+			);
+			path = Calculate;
+			sourceTree = "<group>";
+		};
 		AA7CDD161F7FBA2800ED03E6 = {
 			isa = PBXGroup;
 			children = (
@@ -85,10 +100,13 @@
 		AA7CDD211F7FBA2800ED03E6 /* ReactiveCocoaDemo */ = {
 			isa = PBXGroup;
 			children = (
+				AA6259991F8080BC009E200E /* Calculate */,
 				AA7CDD221F7FBA2800ED03E6 /* AppDelegate.h */,
 				AA7CDD231F7FBA2800ED03E6 /* AppDelegate.m */,
 				AA7CDD251F7FBA2800ED03E6 /* ViewController.h */,
 				AA7CDD261F7FBA2800ED03E6 /* ViewController.m */,
+				AA6259B71F80CFDC009E200E /* Flag.h */,
+				AA6259B81F80CFDC009E200E /* Flag.m */,
 				AA7CDD381F7FC8DE00ED03E6 /* RedView.h */,
 				AA7CDD391F7FC8DE00ED03E6 /* RedView.m */,
 				AA7CDD281F7FBA2800ED03E6 /* Main.storyboard */,
@@ -223,9 +241,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA7CDD271F7FBA2800ED03E6 /* ViewController.m in Sources */,
+				AA6259B91F80CFDC009E200E /* Flag.m in Sources */,
 				AA7CDD321F7FBA2800ED03E6 /* main.m in Sources */,
 				AA7CDD3A1F7FC8DE00ED03E6 /* RedView.m in Sources */,
 				AA7CDD241F7FBA2800ED03E6 /* AppDelegate.m in Sources */,
+				AA62599C1F8080EE009E200E /* Calculator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,6 +10,13 @@
 
 @implementation RedView
 
+- (RACSubject *)subject {
+    if (!_subject) {
+        _subject = [RACSubject subject];
+    }
+    return _subject;
+}
+
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -24,6 +31,7 @@
 }
 
 - (void)btnClick:(UIButton *)sender {
+    [self.subject sendNext:@(1)];
     NSLog(@"红色View内的按钮被点击了");
 }
 
