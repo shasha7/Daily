@@ -22,6 +22,54 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    RACCommand *command = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
+        // input是execute:方法参数的值
+        NSLog(@"input=%@", input);
+        return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
+            [subscriber sendNext:@"创建信号传出来的数据"];
+            return nil;
+        }];
+    }];
+    
+    RACSignal *signal = [command execute:@(1)];
+    
+    [signal subscribeNext:^(id  _Nullable x) {
+        NSLog(@"%@", x);
+    }];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)connection {
+    // 信号被订阅不止一次,单只执行一次block的内容
+    RACDisposable *(^didSubscribe)(id<RACSubscriber> subscriber) = ^RACDisposable *(id<RACSubscriber> subscriber){
+        NSLog(@"创建信号");
+        [subscriber sendNext:@(1)];
+        //        return [RACDisposable disposableWithBlock:^{
+        //            NSLog(@"取消订阅");
+        //        }];
+        return nil;
+    };
+    
+    // RACSignal的createSignal方法 是首选的创建信号的方式
+    // 保存传进来的 didSubscribe block
+    RACSignal *signal = [RACSignal createSignal:didSubscribe];
+    RACMulticastConnection *connection = [signal publish];
+    
+    [connection.signal subscribeNext:^(id  _Nullable x) {
+        NSLog(@"订阅者1=%@", x);
+    }];
+    [connection.signal subscribeNext:^(id  _Nullable x) {
+        NSLog(@"订阅者2=%@", x);
+    }];
+    
+    [connection connect];
+}
+
+- (void)subjectDemo {
     RedView *redView = [RedView new];
     redView.frame = CGRectMake(0 , 40, self.view.bounds.size.width, 200);
     redView.backgroundColor = [UIColor redColor];
@@ -30,11 +78,6 @@
     [redView.subject subscribeNext:^(id  _Nullable x) {
         NSLog(@"%@", x);
     }];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)replaySubject {
