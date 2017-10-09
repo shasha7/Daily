@@ -35,11 +35,7 @@
     self.viewModel = [[BroadcastViewModel alloc] init];
     RACSignal *signal = [self.viewModel.communityRequest execute:nil];
     [signal subscribeNext:^(NSArray *communityDictArray) {
-        NSMutableArray *communityArray = [NSMutableArray array];
-        for (NSDictionary *dict in communityDictArray) {
-            [communityArray addObject:[BroadcastCommunityModel communityModelWithDict:dict]];
-        }
-        self.source = [communityArray copy];
+        self.source = [communityDictArray copy];
         [self.tableView reloadData];
     }];
 }
