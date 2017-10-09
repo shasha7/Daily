@@ -24,15 +24,32 @@
 
 @implementation ViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-    [self subjectForDelegate];
++ (instancetype)allocWithZone:(struct _NSZone *)zone {
+    ViewController *vc = [super allocWithZone:zone];
+    [[vc rac_signalForSelector:@selector(viewDidLoad)] subscribeNext:^(RACTuple * _Nullable x) {
+        NSLog(@"viewDidLoad");
+    }];
+    
+    [[vc rac_signalForSelector:@selector(viewWillAppear:)] subscribeNext:^(RACTuple * _Nullable x) {
+        NSLog(@"viewWillAppear:");
+    }];
+    return vc;
 }
+//- (void)viewDidLoad {
+//    [super viewDidLoad];
+//    // Do any additional setup after loading the view, typically from a nib.
+//    [self monitorSelectorSend];
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)monitorSelectorSend {
+    [[self rac_signalForSelector:@selector(touchesBegan:withEvent:)] subscribeNext:^(RACTuple * _Nullable x) {
+        NSLog(@"%@",x);
+    }];
 }
 
 - (void)skip {
@@ -258,37 +275,151 @@
     [subject sendNext:@(123)];
 }
 
-- (void)command {
-    RACCommand *command = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
-        // input是execute:方法参数的值
+#pragma mark - RACCommand相关
+
+/*
+ RACCommand使用注意点
+ 1.内部必须返回RACSignal对象
+ 2.内部executionSignals属性 是一个包含信号的数组
+     [command.executionSignals subscribeNext:^(id x) {
+        NSLog(@"x=%@", x);
+        [x subscribeNext:^(id x) {
+            NSLog(@"x=%@", x);
+        }];
+     }];
+     // 如果想要获取内部创建的信号可以用过
+     2.1 execute:方法
+     2.2 command.executionSignals.switchToLatest
+ 3.executing判断是否正在执行
+     3.1 第一次不准确需要跳过 [command.executing skip:1]
+     3.2 一定要执行sendCompleted方法，否则永远不会执行完成
+ 4.必须执行execute:方法
+ RACCommand使用场景
+     4.1按钮点击、网络请求
+ */
+
+- (void)executionSignals {
+    RACCommand *command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        // input是execute:方法参数的值，此参数可以作为里面block的网络请求的请求参数
         NSLog(@"input=%@", input);
         return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
-            [subscriber sendNext:@"创建信号传出来的数据"];
-            return nil;
+            // 网络请求结束发送出来数据
+            [subscriber sendNext:@"内部已经订阅了信号，此信号传出来了数据"];
+            [subscriber sendCompleted];
+            return [RACDisposable disposableWithBlock:^{
+                NSLog(@"取消了订阅");
+            }];
         }];
     }];
-    
-    RACSignal *signal = [command execute:@(1)];
-    
-    [signal subscribeNext:^(id  _Nullable x) {
-        NSLog(@"%@", x);
+    // 信号中的信号
+    // @property RACSignal<RACSignal<ValueType> *> *executionSignals;
+    [command.executionSignals subscribeNext:^(id  _Nullable x) {
+        NSLog(@"x=%@", x);
+        [x subscribeNext:^(id  _Nullable x) {
+            NSLog(@"x=%@", x);
+        }];
     }];
+    [command execute:@(1)];
 }
+
+- (void)switchToLatest {
+    RACCommand *command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        // input是execute:方法参数的值，此参数可以作为里面block的网络请求的请求参数
+        NSLog(@"input=%@", input);
+        return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
+            // 网络请求结束发送出来数据
+            [subscriber sendNext:@"内部已经订阅了信号，此信号传出来了数据"];
+            [subscriber sendCompleted];
+            return [RACDisposable disposableWithBlock:^{
+                NSLog(@"取消了订阅");
+            }];
+        }];
+    }];
+    // switchToLatest 获取最近发送的信号
+    [command.executionSignals.switchToLatest subscribeNext:^(id  _Nullable x) {
+        NSLog(@"x=%@", x);
+    }];
+    [command execute:@(1)];
+}
+
+- (void)executing {
+    RACCommand *command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        // input是execute:方法参数的值，此参数可以作为里面block的网络请求的请求参数
+        NSLog(@"input=%@", input);
+        return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
+            // 网络请求结束发送出来数据
+            [subscriber sendNext:@"内部已经订阅了信号，此信号传出来了数据"];
+            [subscriber sendCompleted];
+            return [RACDisposable disposableWithBlock:^{
+                NSLog(@"取消了订阅");
+            }];
+        }];
+    }];
+    [[command.executing skip:1] subscribeNext:^(NSNumber *x) {
+        NSLog(@"x=%d", [x boolValue]);
+    }];
+    [command execute:@(1)];
+}
+
+// 原理
+- (void)commandPrinciple {
+    /*
+     1.执行initWithSignalBlock:方法
+     最主要的是将signalBlock block 保存到了RACCommand对象_signalBlock变量里
+     _signalBlock = [signalBlock copy];
+     2.只要执行了execute:方法就会调用signalBlock block
+     拿到signalBlock block返回值
+     [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
+        return [RACDisposable disposableWithBlock:^{
+            NSLog(@"取消了订阅");
+        }];
+     }]
+     */
+    RACDisposable *(^didSubscribe)(id<RACSubscriber>subscriber) = ^RACDisposable *(id<RACSubscriber>subscriber){
+        return [RACDisposable disposableWithBlock:^{
+            NSLog(@"取消了订阅");
+        }];
+    };
+    
+    RACSignal *(^signalBlock)(id input) = ^RACSignal *(id input) {
+        // input是execute:方法参数的值，此参数可以作为里面block的网络请求的请求参数
+        NSLog(@"input=%@", input);
+        return [RACSignal createSignal:didSubscribe];
+    };
+
+    RACCommand *command = [[RACCommand alloc] initWithSignalBlock:signalBlock];
+    
+    [command execute:@(1)];
+}
+
+#pragma mark - 解决RACSignal多次订阅的副作用
 
 - (void)connection {
     // 信号被订阅不止一次,单只执行一次block的内容
     RACDisposable *(^didSubscribe)(id<RACSubscriber> subscriber) = ^RACDisposable *(id<RACSubscriber> subscriber){
         NSLog(@"创建信号");
         [subscriber sendNext:@(1)];
-        //        return [RACDisposable disposableWithBlock:^{
-        //            NSLog(@"取消订阅");
-        //        }];
-        return nil;
+        return [RACDisposable disposableWithBlock:^{
+            NSLog(@"取消订阅");
+        }];
     };
     
     // RACSignal的createSignal方法 是首选的创建信号的方式
-    // 保存传进来的 didSubscribe block
+    // [RACDynamicSignal createSignal:didSubscribe];
+    // 保存传进来的 didSubscribe block  保存在RACDynamicSignal对象里面的_didSubscribe变量
     RACSignal *signal = [RACSignal createSignal:didSubscribe];
+    
+    /*
+     [signal publish]执行
+     RACSubject *subject = [[RACSubject subject] setNameWithFormat:@"[%@] -publish", self.name];
+     RACMulticastConnection *connection = [self multicast:subject];
+     - (RACMulticastConnection *)multicast:(RACSubject *)subject {
+        [subject setNameWithFormat:@"[%@] -multicast: %@", self.name, subject.name];
+        RACMulticastConnection *connection = [[RACMulticastConnection alloc] initWithSourceSignal:self subject:subject];
+        return connection;
+     }
+     */
+    // 这里才是关键点
     RACMulticastConnection *connection = [signal publish];
     
     [connection.signal subscribeNext:^(id  _Nullable x) {
@@ -298,6 +429,7 @@
         NSLog(@"订阅者2=%@", x);
     }];
     
+    // 这里才是关键点
     [connection connect];
 }
 
@@ -477,7 +609,39 @@
     }];
 }
 
-- (void)monitorBtnClick {
+- (void)commandMonitorBtnClick1 {
+    self.loginBtn.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
+        NSLog(@"点击了按钮=%@",input);
+        return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
+            [subscriber sendNext:@"hahahha"];
+            return nil;
+        }];
+    }];
+    
+    [self.loginBtn.rac_command.executionSignals.switchToLatest subscribeNext:^(id  _Nullable x) {
+        NSLog(@"x=%@",x);
+    }];
+}
+
+- (void)commandMonitorBtnClick2 {
+    RACSubject *enableSubject = [RACSubject subject];
+    self.loginBtn.rac_command = [[RACCommand alloc] initWithEnabled:enableSubject signalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
+        NSLog(@"点击了按钮=%@",input);
+        return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
+            [subscriber sendNext:@"hahahha"];
+            [subscriber sendCompleted];
+            return nil;
+        }];
+    }];
+    
+    // initWithEnabled:signalBlock:还可以这样使用 监听按钮是否可以点击
+    [[self.loginBtn.rac_command.executing skip:1] subscribeNext:^(NSNumber * _Nullable x) {
+        BOOL isExecuting = [x boolValue];
+        [enableSubject sendNext:@(!isExecuting)];
+    }];
+}
+
+- (void)rac_signalForSelector {
     RedView *redView = [RedView new];
     redView.frame = CGRectMake(0 , 40, self.view.bounds.size.width, 200);
     redView.backgroundColor = [UIColor redColor];
