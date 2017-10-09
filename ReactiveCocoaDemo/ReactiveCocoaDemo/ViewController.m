@@ -27,7 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    [self skip];
+    [self subjectForDelegate];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -301,13 +301,52 @@
     [connection connect];
 }
 
-- (void)subjectDemo {
+#pragma mark - RACSubject充当代理
+
+- (void)subjectForDelegate {
     RedView *redView = [RedView new];
     redView.frame = CGRectMake(0 , 40, self.view.bounds.size.width, 200);
     redView.backgroundColor = [UIColor redColor];
     [self.view addSubview:redView];
     
-    [redView.subject subscribeNext:^(id  _Nullable x) {
+    // 订阅信号
+    /*
+     subscribeNext:方法
+     创建真正的订阅者进行订阅
+     保存nextBlock  block
+     RACSubscriber *o = [RACSubscriber subscriberWithNext:nextBlock error:NULL completed:NULL];
+     return [self subscribe:o];
+     
+     - (RACDisposable *)subscribe:(id<RACSubscriber>)subscriber {
+        NSCParameterAssert(subscriber != nil);
+        // compoundDisposable 生成数组保存disposable
+        RACCompoundDisposable *disposable = [RACCompoundDisposable compoundDisposable];
+        subscriber = [[RACPassthroughSubscriber alloc] initWithSubscriber:subscriber signal:self disposable:disposable];
+     
+        // 保存订阅者
+        NSMutableArray *subscribers = self.subscribers;
+        @synchronized (subscribers) {
+            [subscribers addObject:subscriber];
+        }
+     
+        [disposable addDisposable:[RACDisposable disposableWithBlock:^{
+            @synchronized (subscribers) {
+                // Since newer subscribers are generally shorter-lived, search
+                // starting from the end of the list.
+                NSUInteger index = [subscribers indexOfObjectWithOptions:NSEnumerationReverse passingTest:^ BOOL (id<RACSubscriber> obj, NSUInteger index, BOOL *stop) {
+                    return obj == subscriber;
+                }];
+             
+                if (index != NSNotFound) {
+                    [subscribers removeObjectAtIndex:index];
+                }
+            }
+        }]];
+     
+        return disposable;
+     }
+     */
+    [redView.subject subscribeNext:^(id x) {
         NSLog(@"%@", x);
     }];
 }
@@ -335,14 +374,45 @@
 }
 
 - (void)signal {
-    // RACSubscriber协议
-    RACSignal *signal = [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
-        // 进行网络请求 拿到数据之后 进行发送
-        [subscriber sendNext:@(1)];
+    // 流程
+    /*
+     1.RACSignal类方法 createSignal:  需要一个block作为参数 该block有参数有返回值 参数id<RACSubscriber>subscriber   返回值RACDisposable *类型的实例对象
+     createSignal:内部调用的是return [RACDynamicSignal createSignal:didSubscribe];
+     RACDynamicSignal是RACSignal的子类  实际上是调用的RACDynamicSignal对象的createSignal:方法
+     2.RACDynamicSignal类方法 createSignal:
+     RACDynamicSignal *signal = [[self alloc] init];
+     signal->_didSubscribe = [didSubscribe copy];
+     return [signal setNameWithFormat:@"+createSignal:"];
+     
+     保存_didSubscribe block
+     */
+    RACSignal *signal = [RACSignal createSignal:^RACDisposable * (id<RACSubscriber>subscriber) {
+        NSLog(@"处理信号");
+        [subscriber sendNext:@{@"retcode":@(1)}];
+//        [subscriber sendCompleted];
         return [RACDisposable disposableWithBlock:^{
+            // 订阅者(signal)被销毁、发送error消息或者发送sendCompleted消息会调用这个block
             NSLog(@"取消订阅");
         }];
     }];
+    
+    //    [signal subscribeNext:^(id x) {
+    //        NSLog(@"值%@", x);
+    //    }];
+    //    [signal subscribeError:^(NSError * _Nullable error) {
+    //
+    //    }];
+    //    [signal subscribeCompleted:^{
+    //
+    //    }];
+    // 如果需要调阅多次  就用这个subscribeNext:error:completed:方法
+//    [signal subscribeNext:^(id  _Nullable x) {
+//        NSLog(@"值%@", x);
+//    } error:^(NSError * _Nullable error) {
+//        NSLog(@"error%@", error);
+//    } completed:^{
+//        NSLog(@"完成");
+//    }];
     
     RACDisposable *disposable = [signal subscribeNext:^(id  _Nullable x) {
         NSLog(@"%@", x);

@@ -31,8 +31,34 @@
 }
 
 - (void)btnClick:(UIButton *)sender {
-    [self.subject sendNext:@(1)];
     NSLog(@"红色View内的按钮被点击了");
+    [self.subject sendNext:@(1)];
+    /*
+     // 内部执行这个方法
+     - (void)sendNext:(id)value {
+        [self enumerateSubscribersUsingBlock:^(id<RACSubscriber> subscriber) {
+            [subscriber sendNext:value];
+        }];
+     }
+     - (void)enumerateSubscribersUsingBlock:(void (^)(id<RACSubscriber> subscriber))block {
+        NSArray *subscribers;
+        @synchronized (self.subscribers) {
+            subscribers = [self.subscribers copy];
+        }
+     
+        for (id<RACSubscriber> subscriber in subscribers) {
+            // 执行[subscriber sendNext:value];
+            block(subscriber);
+        }
+     }
+     - (void)sendNext:(id)value {
+        @synchronized (self) {
+            void (^nextBlock)(id) = [self.next copy];
+            if (nextBlock == nil) return;
+            nextBlock(value);
+        }
+     }
+     */
 }
 
 @end
