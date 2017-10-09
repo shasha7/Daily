@@ -7,16 +7,41 @@
 //
 
 #import "DBBroadcastViewController.h"
+#import "BroadcastViewModel.h"
+#import "BroadcastCommunityModel.h"
 
 @interface DBBroadcastViewController ()
+
+@property (nonatomic, strong) BroadcastViewModel *viewModel;
+@property (nonatomic, strong) NSArray *source;
 
 @end
 
 @implementation DBBroadcastViewController
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.title = @"广播";
+    }
+    return self;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    self.viewModel = [[BroadcastViewModel alloc] init];
+    RACSignal *signal = [self.viewModel.communityRequest execute:nil];
+    [signal subscribeNext:^(NSArray *communityDictArray) {
+        NSMutableArray *communityArray = [NSMutableArray array];
+        for (NSDictionary *dict in communityDictArray) {
+            [communityArray addObject:[BroadcastCommunityModel communityModelWithDict:dict]];
+        }
+        self.source = [communityArray copy];
+        [self.tableView reloadData];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -24,14 +49,23 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.source.count;
 }
-*/
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *identifier = @"cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (nil == cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    }
+    BroadcastCommunityModel *model = [self.source objectAtIndex:indexPath.row];
+    cell.textLabel.text = model.theme_name;
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 
 @end

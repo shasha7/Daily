@@ -10,4 +10,6 @@
 
 @interface DBTableViewController : DBViewController
 
+@property (nonatomic, strong) UITableView *tableView;
+
 @end

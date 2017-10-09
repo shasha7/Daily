@@ -34,6 +34,8 @@
 		AA625A471F821E11009E200E /* db_tab_home_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA625A3B1F821E11009E200E /* db_tab_home_selected@2x.png */; };
 		AA625A481F821E11009E200E /* db_tab_broadcast_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA625A3C1F821E11009E200E /* db_tab_broadcast_selected@2x.png */; };
 		AA625A491F821E11009E200E /* db_tab_group_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA625A3D1F821E11009E200E /* db_tab_group_selected@2x.png */; };
+		AAB1FEF81F84BB3E007AA4DB /* BroadcastViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB1FEF71F84BB3E007AA4DB /* BroadcastViewModel.m */; };
+		AAB1FEFB1F84BFE7007AA4DB /* BroadcastCommunityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB1FEFA1F84BFE7007AA4DB /* BroadcastCommunityModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,6 +79,10 @@
 		AA625A3B1F821E11009E200E /* db_tab_home_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "db_tab_home_selected@2x.png"; sourceTree = "<group>"; };
 		AA625A3C1F821E11009E200E /* db_tab_broadcast_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "db_tab_broadcast_selected@2x.png"; sourceTree = "<group>"; };
 		AA625A3D1F821E11009E200E /* db_tab_group_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "db_tab_group_selected@2x.png"; sourceTree = "<group>"; };
+		AAB1FEF61F84BB3E007AA4DB /* BroadcastViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BroadcastViewModel.h; sourceTree = "<group>"; };
+		AAB1FEF71F84BB3E007AA4DB /* BroadcastViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BroadcastViewModel.m; sourceTree = "<group>"; };
+		AAB1FEF91F84BFE7007AA4DB /* BroadcastCommunityModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BroadcastCommunityModel.h; sourceTree = "<group>"; };
+		AAB1FEFA1F84BFE7007AA4DB /* BroadcastCommunityModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BroadcastCommunityModel.m; sourceTree = "<group>"; };
 		F180E1DBF3E9DDB10BB30262 /* Pods-DouBan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DouBan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DouBan/Pods-DouBan.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -162,6 +168,8 @@
 		AA6259DF1F82140B009E200E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				AAB1FEF91F84BFE7007AA4DB /* BroadcastCommunityModel.h */,
+				AAB1FEFA1F84BFE7007AA4DB /* BroadcastCommunityModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -169,6 +177,8 @@
 		AA6259E01F82140B009E200E /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				AAB1FEF61F84BB3E007AA4DB /* BroadcastViewModel.h */,
+				AAB1FEF71F84BB3E007AA4DB /* BroadcastViewModel.m */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -531,7 +541,9 @@
 				AA6259FA1F82145E009E200E /* DBNavigationController.m in Sources */,
 				AA625A091F821AC4009E200E /* DBAudioBookViewController.m in Sources */,
 				AA625A121F821AFF009E200E /* DBProfileViewController.m in Sources */,
+				AAB1FEF81F84BB3E007AA4DB /* BroadcastViewModel.m in Sources */,
 				AA625A061F821AB0009E200E /* DBHomeViewController.m in Sources */,
+				AAB1FEFB1F84BFE7007AA4DB /* BroadcastCommunityModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
