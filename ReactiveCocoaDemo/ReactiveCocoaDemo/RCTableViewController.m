@@ -24,6 +24,14 @@
     return _viewModel;
 }
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.title = @"订阅频道";
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

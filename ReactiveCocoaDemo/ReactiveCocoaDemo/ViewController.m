@@ -29,7 +29,7 @@
     // rac_signalForSelector:检测方法的调用 本质上讲 是swizzle
     [[vc rac_signalForSelector:@selector(viewDidLoad)] subscribeNext:^(RACTuple * _Nullable x) {
         NSLog(@"viewDidLoad");
-        [vc combineReduce];
+        [vc kvo];
     }];
     
     [[vc rac_signalForSelector:@selector(viewWillAppear:)] subscribeNext:^(RACTuple * _Nullable x) {
@@ -567,8 +567,9 @@
     NSLog(@"%@-%@", one, two);
 }
 
+// kvo 监听属性值的变化
 - (void)kvo {
-    [[self rac_valuesForKeyPath:@"age" observer:self] subscribeNext:^(id  _Nullable x) {
+    [[self rac_valuesForKeyPath:@keypath(self, age) observer:self] subscribeNext:^(id  _Nullable x) {
         NSLog(@"监听到属性值的改变");
     }];
 }
