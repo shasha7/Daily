@@ -4,7 +4,7 @@
 //
 //  Created by 王伟虎 on 2017/9/30.
 //  Copyright © 2017年 wwh. All rights reserved.
-//  RAC高聚合，低耦合
+//  RAC优点-高聚合，低耦合
 
 #import "ViewController.h"
 #import <ReactiveObjC/ReactiveObjC.h>
@@ -26,30 +26,20 @@
 
 + (instancetype)allocWithZone:(struct _NSZone *)zone {
     ViewController *vc = [super allocWithZone:zone];
+    // rac_signalForSelector:检测方法的调用 本质上讲 是swizzle
     [[vc rac_signalForSelector:@selector(viewDidLoad)] subscribeNext:^(RACTuple * _Nullable x) {
         NSLog(@"viewDidLoad");
+        [vc combineReduce];
     }];
     
     [[vc rac_signalForSelector:@selector(viewWillAppear:)] subscribeNext:^(RACTuple * _Nullable x) {
         NSLog(@"viewWillAppear:");
     }];
-    return vc;
-}
-//- (void)viewDidLoad {
-//    [super viewDidLoad];
-//    // Do any additional setup after loading the view, typically from a nib.
-//    [self monitorSelectorSend];
-//}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)monitorSelectorSend {
-    [[self rac_signalForSelector:@selector(touchesBegan:withEvent:)] subscribeNext:^(RACTuple * _Nullable x) {
-        NSLog(@"%@",x);
+    
+    [[vc rac_signalForSelector:@selector(didReceiveMemoryWarning)] subscribeNext:^(RACTuple * _Nullable x) {
+        NSLog(@"didReceiveMemoryWarning");
     }];
+    return vc;
 }
 
 - (void)skip {

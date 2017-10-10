@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA341E9C1F8C5A0200349300 /* RCTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA341E9B1F8C5A0200349300 /* RCTableViewController.m */; };
+		AA341E9F1F8C5A5E00349300 /* RCRequestViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AA341E9E1F8C5A5E00349300 /* RCRequestViewModel.m */; };
+		AA341EA31F8C5CF200349300 /* RCModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AA341EA21F8C5CF200349300 /* RCModel.m */; };
+		AA341EA61F8C5EA000349300 /* RCTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA341EA51F8C5EA000349300 /* RCTableViewCell.m */; };
+		AA341EA91F8C622300349300 /* RCCellViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AA341EA81F8C622300349300 /* RCCellViewModel.m */; };
 		AA62599C1F8080EE009E200E /* Calculator.m in Sources */ = {isa = PBXBuildFile; fileRef = AA62599B1F8080EE009E200E /* Calculator.m */; };
 		AA6259B91F80CFDC009E200E /* Flag.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6259B81F80CFDC009E200E /* Flag.m */; };
 		AA7CDD241F7FBA2800ED03E6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7CDD231F7FBA2800ED03E6 /* AppDelegate.m */; };
@@ -23,6 +28,16 @@
 		0F48CBEA3F964ED6C145DD75 /* Pods-ReactiveCocoaDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactiveCocoaDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-ReactiveCocoaDemo/Pods-ReactiveCocoaDemo.release.xcconfig"; sourceTree = "<group>"; };
 		12F9AA6F3046FA6D4E267183 /* Pods_ReactiveCocoaDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReactiveCocoaDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C5EE9EFD7A56AE700F1943B /* Pods-ReactiveCocoaDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactiveCocoaDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReactiveCocoaDemo/Pods-ReactiveCocoaDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		AA341E9A1F8C5A0200349300 /* RCTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTableViewController.h; sourceTree = "<group>"; };
+		AA341E9B1F8C5A0200349300 /* RCTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTableViewController.m; sourceTree = "<group>"; };
+		AA341E9D1F8C5A5E00349300 /* RCRequestViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCRequestViewModel.h; sourceTree = "<group>"; };
+		AA341E9E1F8C5A5E00349300 /* RCRequestViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCRequestViewModel.m; sourceTree = "<group>"; };
+		AA341EA11F8C5CF200349300 /* RCModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCModel.h; sourceTree = "<group>"; };
+		AA341EA21F8C5CF200349300 /* RCModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCModel.m; sourceTree = "<group>"; };
+		AA341EA41F8C5EA000349300 /* RCTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTableViewCell.h; sourceTree = "<group>"; };
+		AA341EA51F8C5EA000349300 /* RCTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTableViewCell.m; sourceTree = "<group>"; };
+		AA341EA71F8C622300349300 /* RCCellViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCellViewModel.h; sourceTree = "<group>"; };
+		AA341EA81F8C622300349300 /* RCCellViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCCellViewModel.m; sourceTree = "<group>"; };
 		AA62599A1F8080EE009E200E /* Calculator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Calculator.h; sourceTree = "<group>"; };
 		AA62599B1F8080EE009E200E /* Calculator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Calculator.m; sourceTree = "<group>"; };
 		AA6259B71F80CFDC009E200E /* Flag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Flag.h; sourceTree = "<group>"; };
@@ -70,6 +85,80 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		AA341EAA1F8C670E00349300 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				AA341EA11F8C5CF200349300 /* RCModel.h */,
+				AA341EA21F8C5CF200349300 /* RCModel.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		AA341EAB1F8C671600349300 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				AA341E9D1F8C5A5E00349300 /* RCRequestViewModel.h */,
+				AA341E9E1F8C5A5E00349300 /* RCRequestViewModel.m */,
+				AA341EA71F8C622300349300 /* RCCellViewModel.h */,
+				AA341EA81F8C622300349300 /* RCCellViewModel.m */,
+			);
+			name = ViewModel;
+			sourceTree = "<group>";
+		};
+		AA341EAC1F8C671D00349300 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				AA341E9A1F8C5A0200349300 /* RCTableViewController.h */,
+				AA341E9B1F8C5A0200349300 /* RCTableViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		AA341EAD1F8C673D00349300 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AA341EA41F8C5EA000349300 /* RCTableViewCell.h */,
+				AA341EA51F8C5EA000349300 /* RCTableViewCell.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		AA341EAE1F8C675500349300 /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+				AA7CDD251F7FBA2800ED03E6 /* ViewController.h */,
+				AA7CDD261F7FBA2800ED03E6 /* ViewController.m */,
+				AA6259B71F80CFDC009E200E /* Flag.h */,
+				AA6259B81F80CFDC009E200E /* Flag.m */,
+				AA7CDD381F7FC8DE00ED03E6 /* RedView.h */,
+				AA7CDD391F7FC8DE00ED03E6 /* RedView.m */,
+			);
+			name = Demo;
+			sourceTree = "<group>";
+		};
+		AA341EAF1F8C676C00349300 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				AA7CDD281F7FBA2800ED03E6 /* Main.storyboard */,
+				AA7CDD2B1F7FBA2800ED03E6 /* Assets.xcassets */,
+				AA7CDD2D1F7FBA2800ED03E6 /* LaunchScreen.storyboard */,
+				AA7CDD301F7FBA2800ED03E6 /* Info.plist */,
+				AA7CDD311F7FBA2800ED03E6 /* main.m */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
+		AA341EB01F8C67A000349300 /* RACommandDemo */ = {
+			isa = PBXGroup;
+			children = (
+				AA341EAC1F8C671D00349300 /* Controller */,
+				AA341EAD1F8C673D00349300 /* View */,
+				AA341EAB1F8C671600349300 /* ViewModel */,
+				AA341EAA1F8C670E00349300 /* Model */,
+			);
+			name = RACommandDemo;
+			sourceTree = "<group>";
+		};
 		AA6259991F8080BC009E200E /* Calculate */ = {
 			isa = PBXGroup;
 			children = (
@@ -100,20 +189,12 @@
 		AA7CDD211F7FBA2800ED03E6 /* ReactiveCocoaDemo */ = {
 			isa = PBXGroup;
 			children = (
-				AA6259991F8080BC009E200E /* Calculate */,
 				AA7CDD221F7FBA2800ED03E6 /* AppDelegate.h */,
 				AA7CDD231F7FBA2800ED03E6 /* AppDelegate.m */,
-				AA7CDD251F7FBA2800ED03E6 /* ViewController.h */,
-				AA7CDD261F7FBA2800ED03E6 /* ViewController.m */,
-				AA6259B71F80CFDC009E200E /* Flag.h */,
-				AA6259B81F80CFDC009E200E /* Flag.m */,
-				AA7CDD381F7FC8DE00ED03E6 /* RedView.h */,
-				AA7CDD391F7FC8DE00ED03E6 /* RedView.m */,
-				AA7CDD281F7FBA2800ED03E6 /* Main.storyboard */,
-				AA7CDD2B1F7FBA2800ED03E6 /* Assets.xcassets */,
-				AA7CDD2D1F7FBA2800ED03E6 /* LaunchScreen.storyboard */,
-				AA7CDD301F7FBA2800ED03E6 /* Info.plist */,
-				AA7CDD311F7FBA2800ED03E6 /* main.m */,
+				AA341EB01F8C67A000349300 /* RACommandDemo */,
+				AA341EAE1F8C675500349300 /* Demo */,
+				AA341EAF1F8C676C00349300 /* Other */,
+				AA6259991F8080BC009E200E /* Calculate */,
 			);
 			path = ReactiveCocoaDemo;
 			sourceTree = "<group>";
@@ -194,13 +275,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ReactiveCocoaDemo-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		EA8F2DF4474C0B85D47CE894 /* [CP] Embed Pods Frameworks */ = {
@@ -209,9 +293,22 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-ReactiveCocoaDemo/Pods-ReactiveCocoaDemo-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
+				"${BUILT_PRODUCTS_DIR}/ReactiveObjC/ReactiveObjC.framework",
+				"${BUILT_PRODUCTS_DIR}/SAMKeychain/SAMKeychain.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveObjC.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SAMKeychain.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -240,10 +337,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA341EA61F8C5EA000349300 /* RCTableViewCell.m in Sources */,
+				AA341E9C1F8C5A0200349300 /* RCTableViewController.m in Sources */,
+				AA341E9F1F8C5A5E00349300 /* RCRequestViewModel.m in Sources */,
 				AA7CDD271F7FBA2800ED03E6 /* ViewController.m in Sources */,
 				AA6259B91F80CFDC009E200E /* Flag.m in Sources */,
 				AA7CDD321F7FBA2800ED03E6 /* main.m in Sources */,
 				AA7CDD3A1F7FC8DE00ED03E6 /* RedView.m in Sources */,
+				AA341EA31F8C5CF200349300 /* RCModel.m in Sources */,
+				AA341EA91F8C622300349300 /* RCCellViewModel.m in Sources */,
 				AA7CDD241F7FBA2800ED03E6 /* AppDelegate.m in Sources */,
 				AA62599C1F8080EE009E200E /* Calculator.m in Sources */,
 			);

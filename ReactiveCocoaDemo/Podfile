@@ -3,6 +3,11 @@ use_frameworks!
 
 target 'ReactiveCocoaDemo' do
     pod 'ReactiveObjC', '~> 3.0.0'
+    pod 'AFNetworking', '~> 3.1.0'
+    pod 'SDWebImage', '~> 4.0.0'
+    pod 'Masonry', '~> 1.0.2'
+    pod 'SAMKeychain', '~> 1.5.2'
+    pod 'MBProgressHUD', '~> 1.0.0'
 end
 
 
