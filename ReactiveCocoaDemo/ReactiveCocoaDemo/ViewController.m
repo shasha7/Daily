@@ -29,7 +29,7 @@
     // rac_signalForSelector:检测方法的调用 本质上讲 是swizzle
     [[vc rac_signalForSelector:@selector(viewDidLoad)] subscribeNext:^(RACTuple * _Nullable x) {
         NSLog(@"viewDidLoad");
-        [vc kvo];
+        [vc delay];
     }];
     
     [[vc rac_signalForSelector:@selector(viewWillAppear:)] subscribeNext:^(RACTuple * _Nullable x) {
@@ -42,6 +42,30 @@
     return vc;
 }
 
+#pragma mark - 计时器
+
+// 延迟执行操作
+- (void)delay {
+    RACSignal *signal = [[RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
+        [subscriber sendNext:@(111)];
+        return nil;
+    }] delay:2.0f];
+    
+    [signal subscribeNext:^(id x) {
+        NSLog(@"x=%@",x);
+    }];
+}
+
+// 计时器
+- (void)timer {
+    // RACScheduler 管理线程 
+    [[RACSignal interval:1.0f onScheduler:[RACScheduler mainThreadScheduler]] subscribeNext:^(NSDate * _Nullable x) {
+        NSLog(@"执行了定时器%@, %@", [NSThread currentThread], x);
+    }];
+}
+
+#pragma mark - 其他常用方法
+
 - (void)skip {
     /// Skips the first `skipCount` values in the receiver.
     ///
@@ -53,15 +77,14 @@
         NSLog(@"能否拿到值%@", x);
     }];
     [subject sendNext:@(1)];
-    [subject sendNext:@"2"];
+    [subject sendNext:@(2)];
     [subject sendNext:@(3)];
     [subject sendNext:@(4)];
     [subject sendNext:@(5)];
 }
 
 - (void)distinctUntilChanged {
-    /// Returns a signal of values for which -isEqual: returns NO when compared to the
-    /// previous value.
+    /// Returns a signal of values for which -isEqual: returns NO when compared to the previous value.
     RACSubject *subject = [RACSubject subject];
     [[subject distinctUntilChanged] subscribeNext:^(id  _Nullable x) {
         NSLog(@"能否拿到值%@", x);
@@ -130,9 +153,7 @@
     }];
 }
 
-- (IBAction)loginBtnClick:(UIButton *)sender {
-    NSLog(@"进行登录");
-}
+#pragma mark - 核心使用方法
 
 - (void)combineReduce {
     // 常用于登录界面业务逻辑处理  只有账号、密码都存在是 登录按钮才可以点击
