@@ -14,7 +14,6 @@ int main(int argc, const char * argv[]) {
         // insert code here...
         /*
          ASO概念和方法
-         互联网普及率51%  移动互联网普及率91%
          AppStoreOptimization搜索行为分析
          关键词覆盖率
             应用覆盖的关键词数量
