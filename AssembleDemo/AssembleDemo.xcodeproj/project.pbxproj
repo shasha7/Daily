@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA45FA311F944ADA00940377 /* OuterAssemble.s in Sources */ = {isa = PBXBuildFile; fileRef = AA45FA301F944ADA00940377 /* OuterAssemble.s */; };
+		AA45FA341F9454BF00940377 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = AA45FA331F9454BF00940377 /* Person.m */; };
 		AAAF6C191F8DB7B6001237C5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAF6C181F8DB7B6001237C5 /* main.m */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +25,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AA45FA301F944ADA00940377 /* OuterAssemble.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = OuterAssemble.s; sourceTree = "<group>"; };
+		AA45FA321F9454BF00940377 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
+		AA45FA331F9454BF00940377 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		AAAF6C151F8DB7B6001237C5 /* AssembleDemo */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AssembleDemo; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAAF6C181F8DB7B6001237C5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AAEB0E541F8E0465001D1251 /* HelloWorld.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelloWorld.h; sourceTree = "<group>"; };
@@ -64,6 +69,9 @@
 				AAEB0E541F8E0465001D1251 /* HelloWorld.h */,
 				AAEB0E551F8E0480001D1251 /* Stack.h */,
 				AAEB0E561F8E0D70001D1251 /* Call.h */,
+				AA45FA301F944ADA00940377 /* OuterAssemble.s */,
+				AA45FA321F9454BF00940377 /* Person.h */,
+				AA45FA331F9454BF00940377 /* Person.m */,
 			);
 			path = AssembleDemo;
 			sourceTree = "<group>";
@@ -126,7 +134,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA45FA341F9454BF00940377 /* Person.m in Sources */,
 				AAAF6C191F8DB7B6001237C5 /* main.m in Sources */,
+				AA45FA311F944ADA00940377 /* OuterAssemble.s in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,6 +236,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEVELOPMENT_TEAM = 8XH63VCP26;
+				GCC_CW_ASM_SYNTAX = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -234,6 +245,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEVELOPMENT_TEAM = 8XH63VCP26;
+				GCC_CW_ASM_SYNTAX = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
