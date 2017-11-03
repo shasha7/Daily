@@ -13,4 +13,5 @@ target 'DouBan' do
   pod 'MLLabel', '~> 1.10.3’
   pod 'SDWebImage', '~> 4.0.0'
   pod 'Realm', '~> 2.8.3'
+  pod 'WMPageController', '~> 2.4.0'
 end
