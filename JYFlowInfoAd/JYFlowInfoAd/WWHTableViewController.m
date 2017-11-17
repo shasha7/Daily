@@ -7,13 +7,12 @@
 //
 
 #import "WWHTableViewController.h"
-#import "JYADTableViewCell.h"
 #import "WWHTableViewCell.h"
-#import "JYFlowInfoManager.h"
+#import "UITableView+JYFlowInfoCell.h"
 
-@interface WWHTableViewController ()<JYADTableViewCellDelegate>
+static NSString *const kNormalIdentifier = @"Custom";
 
-@property (nonatomic, strong) JYADTableViewCell *flowInfoCell;
+@interface WWHTableViewController ()
 
 @end
 
@@ -23,7 +22,7 @@
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
-    [self.tableView registerClass:[WWHTableViewCell class] forCellReuseIdentifier:@"Custom"];
+    [self.tableView registerClass:[WWHTableViewCell class] forCellReuseIdentifier:kNormalIdentifier];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,19 +37,16 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 2) {
-        static NSString *identifier = @"AD";
-        JYADTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-        if (!cell) {
-            cell = [[JYADTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier indexPath:indexPath];
-        }
-        cell.textLabel.text = [NSString stringWithFormat:@"wwh-%ld-ad", (long)indexPath.row];
-        cell.delegate = self;
-        self.flowInfoCell = cell;
-        return cell;
-    }
-    WWHTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Custom" forIndexPath:indexPath];
+    WWHTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kNormalIdentifier forIndexPath:indexPath];
     cell.textLabel.text = [NSString stringWithFormat:@"wwh-%ld", (long)indexPath.row];
+    if (indexPath.row == 1) {
+        cell.jy_isMonitorDisplayCell = YES;
+        [cell jy_tableView:tableView cellForIndexPath:indexPath determineVisible:^(BOOL isVisible) {
+            if (isVisible) {
+                NSLog(@"首次加载在屏幕上可见");
+            }
+        }];
+    }
     return cell;
 }
 
@@ -60,28 +56,19 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.row == 2) {
-        NSLog(@"点击广告统计");
-    }
-}
-
-- (void)adTableViewCell:(JYADTableViewCell *)cell initIsDispalyFlowInfo:(BOOL)isDisplay {
-    if (isDisplay) {
-        NSLog(@"初次展示");
-    }
 }
 
 #pragma mark UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     // 判断是否可见
-    [JYADTableViewCell flowCell:self.flowInfoCell judgeVisible:self.tableView];
+    [((UITableView *)scrollView) jy_monitorDisplay];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     // 手指滑动离开屏幕动画结束调用
     // called when scroll view grinds to a halt
-    [JYADTableViewCell flowCell:self.flowInfoCell statistics:^{
+    [((UITableView *)scrollView) jy_monitorDisplayWithStatisticsBlock:^{
         NSLog(@"展示统计");
     }];
 }
@@ -90,7 +77,7 @@
     // end dragging
     // decelerate is true if it will continue moving afterwards
     if (!decelerate) {
-        [JYADTableViewCell flowCell:self.flowInfoCell statistics:^{
+        [((UITableView *)scrollView) jy_monitorDisplayWithStatisticsBlock:^{
             NSLog(@"展示统计");
         }];
     }

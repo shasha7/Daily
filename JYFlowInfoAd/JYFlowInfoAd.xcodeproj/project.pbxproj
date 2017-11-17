@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA842D8B1FBD377900E155A5 /* UITableView+JYFlowInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA842D8A1FBD377900E155A5 /* UITableView+JYFlowInfoCell.m */; };
 		AA9531801FB038D700322B99 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA95317F1FB038D700322B99 /* AppDelegate.m */; };
 		AA9531861FB038D700322B99 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA9531841FB038D700322B99 /* Main.storyboard */; };
 		AA9531881FB038D700322B99 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA9531871FB038D700322B99 /* Assets.xcassets */; };
@@ -19,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AA842D891FBD377900E155A5 /* UITableView+JYFlowInfoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITableView+JYFlowInfoCell.h"; sourceTree = "<group>"; };
+		AA842D8A1FBD377900E155A5 /* UITableView+JYFlowInfoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITableView+JYFlowInfoCell.m"; sourceTree = "<group>"; };
 		AA95317B1FB038D700322B99 /* JYFlowInfoAd.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JYFlowInfoAd.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA95317E1FB038D700322B99 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		AA95317F1FB038D700322B99 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -69,6 +72,8 @@
 			children = (
 				AA95317E1FB038D700322B99 /* AppDelegate.h */,
 				AA95317F1FB038D700322B99 /* AppDelegate.m */,
+				AA842D891FBD377900E155A5 /* UITableView+JYFlowInfoCell.h */,
+				AA842D8A1FBD377900E155A5 /* UITableView+JYFlowInfoCell.m */,
 				AA9531951FB038FD00322B99 /* WWHTableViewController.h */,
 				AA9531961FB038FD00322B99 /* WWHTableViewController.m */,
 				AA9531981FB0391000322B99 /* WWHTableViewCell.h */,
@@ -157,6 +162,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA842D8B1FBD377900E155A5 /* UITableView+JYFlowInfoCell.m in Sources */,
 				AA95319A1FB0391000322B99 /* WWHTableViewCell.m in Sources */,
 				AA95319D1FB0392A00322B99 /* JYADTableViewCell.m in Sources */,
 				AA9531971FB038FD00322B99 /* WWHTableViewController.m in Sources */,
