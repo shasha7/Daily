@@ -9,6 +9,7 @@
 #import "WWHTableViewController.h"
 #import "WWHTableViewCell.h"
 #import "UITableView+JYFlowInfoCell.h"
+#import "JYApplication.h"
 
 static NSString *const kNormalIdentifier = @"Custom";
 
@@ -62,6 +63,7 @@ static NSString *const kNormalIdentifier = @"Custom";
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     // 判断是否可见
+    [[JYApplication sharedApplication] sendAction:@selector(scrollViewDidScroll:) to:self from:scrollView forEvent:nil];
     [((UITableView *)scrollView) jy_monitorDisplay];
 }
 

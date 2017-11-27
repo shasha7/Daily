@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA7E5D3C1FCC0ADD007EF04E /* JYApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7E5D3B1FCC0ADD007EF04E /* JYApplication.m */; };
 		AA842D8B1FBD377900E155A5 /* UITableView+JYFlowInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA842D8A1FBD377900E155A5 /* UITableView+JYFlowInfoCell.m */; };
 		AA9531801FB038D700322B99 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA95317F1FB038D700322B99 /* AppDelegate.m */; };
 		AA9531861FB038D700322B99 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA9531841FB038D700322B99 /* Main.storyboard */; };
@@ -20,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AA7E5D3A1FCC0ADD007EF04E /* JYApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JYApplication.h; sourceTree = "<group>"; };
+		AA7E5D3B1FCC0ADD007EF04E /* JYApplication.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JYApplication.m; sourceTree = "<group>"; };
 		AA842D891FBD377900E155A5 /* UITableView+JYFlowInfoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITableView+JYFlowInfoCell.h"; sourceTree = "<group>"; };
 		AA842D8A1FBD377900E155A5 /* UITableView+JYFlowInfoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITableView+JYFlowInfoCell.m"; sourceTree = "<group>"; };
 		AA95317B1FB038D700322B99 /* JYFlowInfoAd.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JYFlowInfoAd.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,6 +90,8 @@
 				AA95318D1FB038D700322B99 /* main.m */,
 				AA95319E1FB052DA00322B99 /* JYFlowInfoManager.h */,
 				AA95319F1FB052DA00322B99 /* JYFlowInfoManager.m */,
+				AA7E5D3A1FCC0ADD007EF04E /* JYApplication.h */,
+				AA7E5D3B1FCC0ADD007EF04E /* JYApplication.m */,
 			);
 			path = JYFlowInfoAd;
 			sourceTree = "<group>";
@@ -163,6 +168,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA842D8B1FBD377900E155A5 /* UITableView+JYFlowInfoCell.m in Sources */,
+				AA7E5D3C1FCC0ADD007EF04E /* JYApplication.m in Sources */,
 				AA95319A1FB0391000322B99 /* WWHTableViewCell.m in Sources */,
 				AA95319D1FB0392A00322B99 /* JYADTableViewCell.m in Sources */,
 				AA9531971FB038FD00322B99 /* WWHTableViewController.m in Sources */,
