@@ -14,4 +14,5 @@ target 'DouBan' do
   pod 'SDWebImage', '~> 4.0.0'
   pod 'Realm', '~> 2.8.3'
   pod 'WMPageController', '~> 2.4.0'
+  pod 'YYCache', '~> 1.0.4'
 end

@@ -43,6 +43,7 @@ PODS:
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
   - WMPageController (2.4.0)
+  - YYCache (1.0.4)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.1.0)
@@ -57,6 +58,7 @@ DEPENDENCIES:
   - SAMKeychain (~> 1.5.2)
   - SDWebImage (~> 4.0.0)
   - WMPageController (~> 2.4.0)
+  - YYCache (~> 1.0.4)
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
@@ -71,7 +73,8 @@ SPEC CHECKSUMS:
   SAMKeychain: 1865333198217411f35327e8da61b43de79b635b
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   WMPageController: e9af37a2c7f259582578b35f2b67530b061e3862
+  YYCache: 8105b6638f5e849296c71f331ff83891a4942952
 
-PODFILE CHECKSUM: 003ed3eceaf30e56a4a9eea72349e88975a1f351
+PODFILE CHECKSUM: 026e72b4d84e0c1b4f56ad2bc246188d6be1e931
 
 COCOAPODS: 1.3.1
