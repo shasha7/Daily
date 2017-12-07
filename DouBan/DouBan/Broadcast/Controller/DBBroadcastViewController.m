@@ -9,11 +9,13 @@
 #import "DBBroadcastViewController.h"
 #import "BroadcastViewModel.h"
 #import "BroadcastCommunityModel.h"
+#import <YYCache/YYCache.h>
 
 @interface DBBroadcastViewController ()
 
 @property (nonatomic, strong) BroadcastViewModel *viewModel;
 @property (nonatomic, strong) NSArray *source;
+@property (nonatomic, strong) YYCache *yyCache;
 
 @end
 
@@ -24,6 +26,7 @@
     self = [super init];
     if (self) {
         self.title = @"广播";
+        self.yyCache = [[YYCache alloc] initWithName:@"广播"];
     }
     return self;
 }
@@ -36,6 +39,9 @@
     RACSignal *signal = [self.viewModel.communityRequest execute:nil];
     [signal subscribeNext:^(NSArray *communityDictArray) {
         self.source = [communityDictArray copy];
+        for (BroadcastCommunityModel *model in [communityDictArray copy]) {
+            [self.yyCache setObject:model.info forKey:model.theme_name];
+        }
         [self.tableView reloadData];
     }];
 }
