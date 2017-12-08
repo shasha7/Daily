@@ -44,6 +44,7 @@ static NSString *const kTrashDirectoryName = @"trash";
  
  SQL:
  create table if not exists manifest (
+     键                  类型
     key                 text,
     filename            text,
     size                integer,
@@ -51,7 +52,7 @@ static NSString *const kTrashDirectoryName = @"trash";
     modification_time   integer,
     last_access_time    integer,
     extended_data       blob,
-    primary key(key)
+    primary key(key)    //主键
  ); 
  create index if not exists last_access_time_idx on manifest(last_access_time);
  */
@@ -162,6 +163,19 @@ static UIApplication *_YYSharedApplication() {
 }
 
 - (BOOL)_dbInitialize {
+    /*
+     pragma journal_mode = wal;，如果成功，会返回"wal"
+     
+     1.如何设置：
+     pragma synchronous = OFF; (0)
+     pragma synchronous = NORMAL; (1)
+     pragma synchronous = FULL; (2)
+     
+     2.参数含义：
+     设置为synchronous OFF (0)时，SQLite在传递数据给系统以后直接继续而不暂停。若运行SQLite的应用程序崩溃,数据不会损伤,但在系统崩溃或写入数据时意外断电的情况下数据库可能会损坏。另一方面，在synchronous OFF时 一些操作可能会快50倍甚至更多。在SQLite 2中，缺省值为NORMAL.而在3中修改为FULL
+     当synchronous设置为NORMAL, SQLite数据库引擎在大部分紧急时刻会暂停，但不像FULL模式下那么频繁。 NORMAL模式下有很小的几率(但不是不存在)发生电源故障导致数据库损坏的情况。但实际上，在这种情况下很可能你的硬盘已经不能使用，或者发生了其他的不可恢复的硬件错误。
+     当synchronous设置为FULL (2), SQLite数据库引擎在紧急时刻会暂停以确定数据已经写入磁盘。这使系统崩溃或电源出问题时能确保数据库在重起后不会损坏。FULL synchronous很安全但很慢。
+     */
     NSString *sql = @"pragma journal_mode = wal; pragma synchronous = normal; create table if not exists manifest (key text, filename text, size integer, inline_data blob, modification_time integer, last_access_time integer, extended_data blob, primary key(key)); create index if not exists last_access_time_idx on manifest(last_access_time);";
     return [self _dbExecute:sql];
 }
@@ -261,19 +275,27 @@ static UIApplication *_YYSharedApplication() {
 }
 
 - (BOOL)_dbUpdateAccessTimeWithKeys:(NSArray *)keys {
+    // sqlite3_open()
     if (![self _dbCheck]) return NO;
-    int t = (int)time(NULL);
-     NSString *sql = [NSString stringWithFormat:@"update manifest set last_access_time = %d where key in (%@);", t, [self _dbJoinedKeys:keys]];
+    int t = (int)time(NULL);//取得从1970年1月1日至今的秒数
     
+    NSString *sql = [NSString stringWithFormat:@"update manifest set last_access_time = %d where key in (%@);", t, [self _dbJoinedKeys:keys]];
     sqlite3_stmt *stmt = NULL;
+    
+    // sqlite3_prepare_v2()准备语句
     int result = sqlite3_prepare_v2(_db, sql.UTF8String, -1, &stmt, NULL);
     if (result != SQLITE_OK) {
         if (_errorLogsEnabled)  NSLog(@"%s line:%d sqlite stmt prepare error (%d): %s", __FUNCTION__, __LINE__, result, sqlite3_errmsg(_db));
         return NO;
     }
     
+    // sqlite3_bind_text()绑定参数
     [self _dbBindJoinedKeys:keys stmt:stmt fromIndex:1];
+    
+    // sqlite3_step()执行语句
     result = sqlite3_step(stmt);
+    
+    // sqlite3_finalize()销毁对象
     sqlite3_finalize(stmt);
     if (result != SQLITE_DONE) {
         if (_errorLogsEnabled) NSLog(@"%s line:%d sqlite update error (%d): %s", __FUNCTION__, __LINE__, result, sqlite3_errmsg(_db));
@@ -366,6 +388,8 @@ static UIApplication *_YYSharedApplication() {
 }
 
 - (YYKVStorageItem *)_dbGetItemWithKey:(NSString *)key excludeInlineData:(BOOL)excludeInlineData {
+    // excludeInlineData 查找制定key的YYKVStorageItem是否有lineData数据
+    // Yes 表示不查找、NO 表示查找
     NSString *sql = excludeInlineData ? @"select key, filename, size, modification_time, last_access_time, extended_data from manifest where key = ?1;" : @"select key, filename, size, inline_data, modification_time, last_access_time, extended_data from manifest where key = ?1;";
     sqlite3_stmt *stmt = [self _dbPrepareStmt:sql];
     if (!stmt) return nil;
