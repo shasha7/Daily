@@ -95,10 +95,12 @@ static void _YYDiskCacheSetGlobal(YYDiskCache *cache) {
 
 - (void)_trimInBackground {
     __weak typeof(self) _self = self;
+    // 异步任务在并行队列，在多个子线程中并行执行
     dispatch_async(_queue, ^{
         __strong typeof(_self) self = _self;
         if (!self) return;
         Lock();
+        NSLog(@"%@",[NSThread currentThread]);
         [self _trimToCost:self.costLimit];
         [self _trimToCount:self.countLimit];
         [self _trimToAge:self.ageLimit];
