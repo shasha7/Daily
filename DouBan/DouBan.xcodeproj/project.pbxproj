@@ -34,6 +34,7 @@
 		AA625A471F821E11009E200E /* db_tab_home_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA625A3B1F821E11009E200E /* db_tab_home_selected@2x.png */; };
 		AA625A481F821E11009E200E /* db_tab_broadcast_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA625A3C1F821E11009E200E /* db_tab_broadcast_selected@2x.png */; };
 		AA625A491F821E11009E200E /* db_tab_group_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA625A3D1F821E11009E200E /* db_tab_group_selected@2x.png */; };
+		AA7871581FE26D5E00379F9D /* UITableView+JYFlowInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7871561FE26D5D00379F9D /* UITableView+JYFlowInfoCell.m */; };
 		AAB1FEF81F84BB3E007AA4DB /* BroadcastViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB1FEF71F84BB3E007AA4DB /* BroadcastViewModel.m */; };
 		AAB1FEFB1F84BFE7007AA4DB /* BroadcastCommunityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB1FEFA1F84BFE7007AA4DB /* BroadcastCommunityModel.m */; };
 /* End PBXBuildFile section */
@@ -79,6 +80,8 @@
 		AA625A3B1F821E11009E200E /* db_tab_home_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "db_tab_home_selected@2x.png"; sourceTree = "<group>"; };
 		AA625A3C1F821E11009E200E /* db_tab_broadcast_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "db_tab_broadcast_selected@2x.png"; sourceTree = "<group>"; };
 		AA625A3D1F821E11009E200E /* db_tab_group_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "db_tab_group_selected@2x.png"; sourceTree = "<group>"; };
+		AA7871561FE26D5D00379F9D /* UITableView+JYFlowInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+JYFlowInfoCell.m"; sourceTree = "<group>"; };
+		AA7871571FE26D5E00379F9D /* UITableView+JYFlowInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+JYFlowInfoCell.h"; sourceTree = "<group>"; };
 		AAB1FEF61F84BB3E007AA4DB /* BroadcastViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BroadcastViewModel.h; sourceTree = "<group>"; };
 		AAB1FEF71F84BB3E007AA4DB /* BroadcastViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BroadcastViewModel.m; sourceTree = "<group>"; };
 		AAB1FEF91F84BFE7007AA4DB /* BroadcastCommunityModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BroadcastCommunityModel.h; sourceTree = "<group>"; };
@@ -251,6 +254,8 @@
 		AA6259E81F82140C009E200E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				AA7871571FE26D5E00379F9D /* UITableView+JYFlowInfoCell.h */,
+				AA7871561FE26D5D00379F9D /* UITableView+JYFlowInfoCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -561,6 +566,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA7871581FE26D5E00379F9D /* UITableView+JYFlowInfoCell.m in Sources */,
 				AA6259F71F821445009E200E /* DBTabBarController.m in Sources */,
 				AA625A031F821A7E009E200E /* DBTableViewController.m in Sources */,
 				AA6259D71F80DBDA009E200E /* main.m in Sources */,

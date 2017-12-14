@@ -7,6 +7,7 @@
 //
 
 #import "DBHomeViewController.h"
+#import "UITableView+JYFlowInfoCell.h"
 
 /*
  Storage class specifier关键字
@@ -94,11 +95,35 @@ static NSDictionary *FillParameters(NSDictionary *parameters, NSURL *url) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     cell.textLabel.text = [NSString stringWithFormat:@"cell-%ld", (long)indexPath.row];
+    // 统计
+    [tableView jy_tableView:tableView cellForIndexPath:indexPath isMonitor:(indexPath.row%3 == 1)];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self.tableView jy_monitorDisplay];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    // 手指滑动离开屏幕动画结束调用
+    // called when scroll view grinds to a halt
+    [self.tableView jy_monitorDisplayWithStatisticsBlock:^{
+        NSLog(@"展示统计");
+    }];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    // end dragging
+    // decelerate is true if it will continue moving afterwards
+    if (!decelerate) {
+        [self.tableView jy_monitorDisplayWithStatisticsBlock:^{
+            NSLog(@"展示统计");
+        }];
+    }
 }
 
 @end
