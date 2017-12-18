@@ -449,6 +449,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Posted when a task resumes.
+ 任务开始
  */
 FOUNDATION_EXPORT NSString * const AFNetworkingTaskDidResumeNotification;
 

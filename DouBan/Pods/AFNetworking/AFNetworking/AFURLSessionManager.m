@@ -388,7 +388,7 @@ static NSString * const AFNSURLSessionTaskDidSuspendNotification = @"com.alamofi
     if (NSClassFromString(@"NSURLSessionTask")) {
         /**
          iOS 7 and iOS 8 differ in NSURLSessionTask implementation, which makes the next bit of code a bit tricky.
-         Many Unit Tests have been built to validate as much of this behavior has possible.
+         Many Unit Tests have been built to validate(验证) as much of this behavior has possible.
          Here is what we know:
             - NSURLSessionTasks are implemented with class clusters, meaning the class you request from the API isn't actually the type of class you will get back.
             - Simply referencing `[NSURLSessionTask class]` will not work. You need to ask an `NSURLSession` to actually create an object, and grab the class from there.
@@ -538,6 +538,7 @@ static NSString * const AFNSURLSessionTaskDidSuspendNotification = @"com.alamofi
     self.lock = [[NSLock alloc] init];
     self.lock.name = AFURLSessionManagerLockName;
 
+    // 使用getTasksWithCompletionHandler:这一巧妙的函数返回所有的 task，然后存储到各自的数组中
     [self.session getTasksWithCompletionHandler:^(NSArray *dataTasks, NSArray *uploadTasks, NSArray *downloadTasks) {
         for (NSURLSessionDataTask *task in dataTasks) {
             [self addDelegateForDataTask:task uploadProgress:nil downloadProgress:nil completionHandler:nil];

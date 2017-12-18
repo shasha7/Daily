@@ -462,8 +462,12 @@ static NSString * const kDBTokenInvalid = @"com.jiayuan.token.invalid";
     
     id sessionTask = nil;
     switch (requestType) {
-        case DBRequestTypeGET:
+        case DBRequestTypeGET:{
             sessionTask = [self.httpSessionManager GET:URLString parameters:FillParameters(parameters, [NSURL URLWithString:URLString]) progress:nil success:successBlock failure:failureBlock];
+            [self.httpSessionManager setTaskDidCompleteBlock:^(NSURLSession * _Nonnull session, NSURLSessionTask *task, NSError *error) {
+                NSLog(@"URLString=%@,error=%@,请求完成",URLString, error);
+            }];
+        }
             break;
         case DBRequestTypePOST:
             sessionTask = [self.httpSessionManager POST:URLString parameters:FillParameters(parameters, [NSURL URLWithString:URLString]) progress:nil success:successBlock failure:failureBlock];
