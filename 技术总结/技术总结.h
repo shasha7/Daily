@@ -5,6 +5,8 @@
 -------------------------
 2016.5.24
 
+
+#define FIX-Photo Brower Crash  宏也是可以当做注释使用的
 #define kCellH
 UIKIT_EXTERN static const CGFloat kcellw = 0;
 FOUNDATION_EXTERN CGFloat const kInfoSegmentHeight;
@@ -202,43 +204,46 @@ if (_timer) {
 -------------------------
 2016.5.31
 
-//cell 重用问题
+// cell重用问题
+/*
+ 数据源不同时候，对cell同一子控件设置数据时，需谨记用同一个方法去设置
+ eg:
+ 在给self.adButton设置title时，切记不可同时同事调用setAttributedTitle:forState|setTitle:forState两个设置方法
+ NSString *title = self.friendsCircleItem.dynamicStatusItem.linkItem.htmlText;
+ if (title.length <= 0) {
+    title = self.friendsCircleItem.dynamicStatusItem.linkItem.text;
+ }
+ NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithData:[title dataUsingEncoding:NSUnicodeStringEncoding] options:@{NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType} documentAttributes:nil error:nil];
+ [attrStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15.0f] range:NSMakeRange(0, attrStr.length)];
+ [self.adButton setAttributedTitle:attrStr forState:UIControlStateNormal];
+ */
 
-if ([[userInfo.rank getStringValueForKey:@"pic" defaultValue:nil] length]) {
+/*
+ 凡是需要重用的东西,用之前清空状态,防止之后使用出现BUG
+ if ([[userInfo.rank getStringValueForKey:@"pic" defaultValue:nil] length]) {
     self.rankButton.hidden = NO;
-}else {
+ }else {
     self.rankButton.hidden = YES;
-}
-//重点在于这个重置button里面UIImageView里面的图片,后续用就没有问题了
-[self.rankButton jy_setBackgroundImageWithURL:[NSURL URLWithString:[userInfo.rank getStringValueForKey:@"pic" defaultValue:nil]] forState:UIControlStateNormal placeholder:nil];
-
--------------------------
-2016.6.1
-
-凡是需要重用的东西,用之前清空状态,防止之后使用出现BUG
+ }
+ 重点在于这个重置button里面UIImageView里面的图片,后续用就没有问题了
+ [self.rankButton jy_setBackgroundImageWithURL:[NSURL URLWithString:[userInfo.rank getStringValueForKey:@"pic" defaultValue:nil]] forState:UIControlStateNormal placeholder:nil];
+ */
 
 -------------------------
 2016.6.2
 
-关于今天处理js调用oc方法的bug处理解决方案   调用时间上不正确
+关于今天处理js调用oc方法的bug处理解决方案 调用时间上不正确
 应该在网页加载完毕之后(webViewDidFinishLoad:)调用才会收到奇效
+关于网页加载完毕说法理解：只是网页js、以及布局style加载完毕，内部资源并不一定已经加载完成
+只有当 document.readyState 这个为complete时候 代表资源全部加载完成了。
 
-e.g:
-- (void)webViewDidFinishLoad:(UIWebView *)webView
-{
-    //js调用oc方法
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    // js调用oc方法
     [self jscallOCMethods:webView];
 }
 
 JSPatch:
-为项目动态添加模块，或替换项目原生代码动态修复 bug
-
-
--------------------------
-2016.6.3
-
-//音视频处理
-AudioFileStreamer   时提到它的作用是用来读取采样率、码率、时长等基本信息以及分离音频帧
+为项目动态添加模块，或替换项目原生代码动态修复bug
 
 -------------------------
 2016.6.15
@@ -543,7 +548,7 @@ tableView.cellLayoutMarginsFollowReadableWidth = NO;
 tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 
 //最后一行分割线顶头
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == self.allData.count - 1) {
         // Remove seperator inset
@@ -567,27 +572,10 @@ tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
 //FIXME:现在的代码很可能是错的
 //TODO: 以后需要做的事情
-
-+ (NSString *)currentMachine {
-    
-    size_t size; /* sizeof() */
-    sysctlbyname("hw.machine", NULL, &size, NULL, 0);
-    
-    // Allocate the space to store name
-    char *name = (char *)malloc(size);
-    // Get the platform name
-    sysctlbyname("hw.machine", name, &size, NULL, 0);
-    // Place name into a string
-    NSString *machine = [NSString stringWithUTF8String:name];
-    // Done with this
-    free(name);
-    return machine;
-}
-    
+   
 -------------------------
 2016.7.7
 
-    
 SDWebImage 源码学习
 
 UIImageView 下载图片过程
@@ -636,7 +624,6 @@ self.backgroundTaskId = [[UIApplication sharedApplication] beginBackgroundTaskWi
 -------------------------
 2016.9.27
 
-    
 //单例情况下几种禁用init的方法；个人推荐第一种
 // 1.声明
 - (instancetype)init __attribute__((unavailable("Disabled. Use +sharedInstance instead")));
@@ -731,561 +718,3 @@ AsyncDisplayKit的使用
 
 AsyncDisplayKit 有对应的方案，着力解决文字渲染、图像渲染两个难题。
 
-    
-聊天API  AyncSocket
-
-世纪佳缘
-打开应用后 进入SplashScreenViewControlle.view界面 持续时间2秒 @“拒绝等待，我是行动派” 图片
-
-1.在没有账户登录时
-1.1	登陆登出接口
-登陆接口1：
-示例：
-http://www.miuu.cn/api/sign/signon.php?name=xxxx&password=xxxx&channel=xxx&ver=xxxx&deviceid=xxxx&clientid=xxxx&reallogin=1
-参数：
-name-用户名
-password-密码
-channel-渠道号
-ver-软件版本
-deviceid -手机唯一串号
-clientid- 11-iPhone, 13-Android
-reallogin- 1表示真正的登陆计数，0表示token过期时，重新登陆获取新的token。
-返回值：
-{"token":"822bb53960177f550fae09c41d71f4214d58b8284b2d89.71866708","uid":"24894690","retcode":1}
-token-唯一票据
-retcode-
-1	登录成功
--7	1.未提供用户名或密码及渠道信息
-2.提供的用户名信息错误(手机号/邮箱/佳缘ID)
-2	用户名或密码填写错误
-3	登录过于频繁
-4	未提供ChannelId
--1	黑名单会员登录
--2	资料关闭会员登录
--5 	准黑会员登录
-kNotificationSign  登录状态 通知方法processSignEvent
-/**
- *  当登录状态发生该变时  需要对NavBar进行改变
- */
-- (void)processSignEvent:(NSNotification *)notification
-{
-    int status = [[[ notification userInfo ] objectForKey: @"SignStatus"] intValue];
-    if (status == 1) {
-        [self refreshNavBar];
-    }
-    
-}
-
-显示的是 WelcomeViewController继承自UIViewController 用CRNavigationController包装
-而CRNavigationController的根控制器则是RecommendViewController
-在WelcomeViewController中tabBar:didSelectItem:方法中实现登陆与否的切换
-#pragma mark - UITabBarDelegate
-- (void)tabBar:(UITabBar *)theTabBar didSelectItem:(UITabBarItem *)item
-{
-    [theTabBar setSelectedItem:nil];
-    NSUInteger index = item.tag;
-    [self statTrackerEvent:[NSString stringWithFormat:@"%lu",(unsigned long)[kAppDelegate tranlateTabbarIndexToAdIndex:index]]];
-    JiaYuanAppDelegate *appDelegate = (JiaYuanAppDelegate *)[[UIApplication sharedApplication]delegate];
-    if ( [[ShareData sharedInstance] canUseTheModel:[kAppDelegate tranlateTabbarIndexToAdIndex:index]]) {
-        [self dismissViewControllerAnimated:NO completion:^{
-            
-        }];
-        appDelegate.mainTabBarController.selectedIndex = index;
-    }else{
-        [appDelegate switchToLoginView:[kAppDelegate tranlateTabbarIndexToAdIndex:index]];
-    }
-}
-2.在有账户登录时
-显示的是 UITabBarController 它的controllers是
-/**
- *  缘分 界面
- */
-MatchViewController2
-/**
- *  搜索 界面
- */
-SearchTableViewController
-/**
- *  消息 界面
- */
-ChatListViewController
-/**
- *  发现 界面
- */
-DiscoveryViewController
-/**
- *  我  界面
- */
-PslCenterViewController
-
-缘分 界面
-FateViewController //点击有眼缘按钮 弹出的控制器
-
-
-3.每一个模块包含以下内容
-3.1未登录时的欢迎界面
-ChoiceCell //九宫格cell视图(点击ChoiceCell则会跳到UserInfoViewController//个人资料界面)
-UserInfoViewController     //个人资料界面
-3.2登录注册界面
-LoginViewController        //登录界面
-RegisterPNViewController   //注册界面
-
-/**
- *  消息界面
- */
-ChatListViewController
-//联系人
-ContactsMainViewController
-//联系人界面下的控制器
-ChatRequestListViewController //我发起的
-ChatFriendViewController      //聊友
-NewContactsViewController     //新联系人
-ChatIntimateViewController    //亲密聊友
-AttentionListViewController   //我关注的
-SubscribeAndNewsViewController//佳缘订阅
-SubscribeListViewController   //佳缘提醒
-
-4.发现 界面
-DiscoveryViewController
-/**
- *  缘分圈
- */
-FriendsCircleViewController
-SquareItem 数据模型 缘分圈 附近的人 热聊群租 活动
-UnitView   视图模型 缘分圈 附近的人 热聊群租 活动
-
-GroupMoreViewController  热聊群组界面之设置里面的内容
-群组详情
-聊天表情
-聊天背景
-聊天气泡
-
-/**
- *  发布动态
- */
-FriendCircleDynamicViewController  //发布动态
-/**
- *  附近的人
- */
-NearViewController                 //附近的人 点击结果列表 头像 进入个人资料 界面
-                                   //点击cell介入 聊天 界面
-/**
- *  热聊群组
- */
-HotChatGroupViewController
-/**
- *  谁看过我
- */
-WhoLookMeViewController_iPhone     //谁看过我 界面 WhoLikeMeViewController 谁中意我
-/**
- *  擦肩而过
- */
-IntimateViewController
-
-TogetherSearchViewController       //心有灵犀
-LoveCampViewController             //爱情训练营
-CalendarViewController             //签到墙控制器
-/**
- *  明星脸 界面
- */
-AppearanceViewController           //搜脸
-StarListViewController             //选取明星
-JYImageProcessController           //请选择图片 UIActionSheet
-CoupleViewController               //夫妻相
-StarFaceViewController             //最佳明星脸
-MeetViewController                 //碰面
-MeetListViewController             //碰面之缘分纪录
-/**
- *  摇摇缘分
- */
-SquareShakeViewController          //摇摇缘分
-SquareShakeUserInfoView            //摇摇 结果视图
-/**
- *  找回缘分
- */
-FindFateController                 //找回缘分
-FindFateSearchController           //找回缘分
-WeekFindController                 //本周找回
-
-
-/**
- *  丘比特之箭
- */
-CupidArrowViewController
-
-FriendCircleDynamicViewController  //发布动态 控制器
-JYPlaceHolderTextView －发布动态控制器 头部视图是一个自定义有占位符的UITextView和PhotosView图片视图
-
-NoFriendView     //当提醒谁看没有人时显示的界面
-SelectRemindViewController   //提醒谁看－选择提醒的人
-CalendarDayView              //签到墙
-
-Subscribe 订阅号 界面
-
-LoadMoreCell                //加载更多cell
-JYGridView                  //
-ComplainViewController      //举报 控制器
-ComplainHeaderView          //举报界面 头部 视图
-
-
-
-/**
- *  聊天 界面
- */
-ChatViewController
-ChatViewDrawData           聊天气泡小尾巴左右位置发送消息成功失败等等
-ChatViewDrawDataUnit       聊天类型 文本、音频、图片、表情。。。。
-kNotificationMsgClearChatMsgHistory 通知
-
-
-/**
- *  "我"界面控制器
- */
-PslCenterViewController
-PslCenterHeader//“我界面”的头部视图 点击靠谱度按钮 跳转到我的靠谱度TrustViewController控制器
-TrustViewController  我的靠谱度     控制器
-TrustHeaderView      靠谱度        头部视图
-SpiderView           靠谱评分项目   头部视图子视图
-
-PurchaseViewController  购买 界面
-
-
-PslCenterHeaderDelegate//点击头部视图按钮调用的委托方法
-/**
- *  上传头像
- */
-- (void)pslCenterHeaderUploadAvatar:(PslCenterHeader *)pslCenterHeader;
-/**
- *  上传生活照片
- */
-- (void)pslCenterHeaderUploadPhoto:(PslCenterHeader *)pslCenterHeader;
-/**
- *
- */
-- (void)pslCenterHeaderTrust:(PslCenterHeader *)pslCenterHeader;
-/**
- *
- */
-- (void)pslCenterHeaderBindMobile:(PslCenterHeader *)pslCenterHeader;
-/**
- *
- */
-- (void)pslCenterHeader:(PslCenterHeader *)pslCenterHeader go:(NSInteger)tag;
-
-/**
- * 酷炫特权、特色服务、专享特权、实用特权、精准特权模块  数据模型
- */
-PslCenterSectionModel
-/**
- * 酷炫特权、特色服务、专享特权、实用特权、精准特权模块  视图模型
- */
-PslCenterCellView
-PslCenterXktqView//酷炫特权
-PslCenterTsfwView//特色服务
-PslCenterZxtqView//专享特权
-PslCenterSytqView//实用特权
-PslCenterJztqView//精准特权
-
-我 界面 设置按钮
-MyInfoViewController        //我的资料
-PropertyPickerViewController//个人资料属性修改
-
-LifephotosViewController    //我的相册－我的生活照
-MyContactsViewController    //我的往来
-
-SetPushViewController       //提醒设置
-SettingViewController       //位置设置
-SetMatchViewController      //问候语设置
-
-FeedBackViewController      //意见反馈
-
-HowToViewController         //使用指南
-AboutViewController         //关于软件
-MemberIconCell              //会员头像的单元格
-LogoutCell                  //注销的单元格
-
-网络模块
-聊天模块
-内购模块
-PurchaseViewController  购买 界面
-#pragma mark - 内购模块
-
-SKProductsRequest *request = [[SKProductsRequest alloc] initWithProductIdentifiers:[NSSet setWithObject:identifier]];
-request.delegate = self;
-[request start];
-
-/**
- *  拦截模块
- */
-[kAppDelegate gotoView:0 withAddDict:[[kAppDelegate assistManager] interceptDict:userInfo] rootVc:self];
-
-EmptyContentView *noContentView    无网络时或网络环境不好的情况出现的蒙板提示
-JYAdViewController          //广告
-curUser.uid != JiaYuanSystemUserCustomer //佳缘客服
-ConstellationViewController   //星座适配
-SearchResultViewController    //搜索按钮
-
-
-/**
- *  统一进入个人资料界面
- *
- *  @param tag  从那个界面进入的标记
- *  @param info 谁的个人资料
- */
-- (void)enterUserInfoViewControllerWithTag:(JYAD)tag userInfo:(UserInfo *)info;
-/*
- *  进入聊天上下文统一方法
- *  @param tag      从哪个界面来得
- *  @param info     和谁聊天
- *  @param tempMsgs 临时聊天记录，没有可传nil
- */
-- (void)enterChatViewControllerWithTag:(JYAD)tag userInfo:(UserInfo *)info tempMsgs:(NSArray *)tempMsgs;
-
-
-/**
- *  我的账号
- */
-ServiceDetailView  //服务具体解释视图
-
-
-
-/*******************************************************************************************/
-#pragma mark - 拦截层需要的方法重写
--(void)purchase:(PurchaseingViewController *)purchaseingViewController successed:(ProductInfo *)productInfo
-{
-    NSDictionary *dic = @{@"rid":self.currentRid};
-    [[JYCommandManager defaultManager] performActionsWithCommand:7 params:dic rootViewControl:self];
-    
-    self.purchaseingViewController = nil;
-    
-}
-- (void)ConsLeftBtnClicked{
-    
-    NSDictionary *dic = @{@"rid":self.currentRid};
-    [[JYCommandManager defaultManager] performActionsWithCommand:7 params:dic rootViewControl:self];
-}
-/*******************************************************************************************/
-/**
- *  当再次进入到该界面时 更新数据
- */
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    if (_isNeedRefresh) {
-        [self loadData];
-    }
-    _isNeedRefresh = YES;
-}
-/**
- *  初始化操作只进行一次，每次进入该界面时刷新数据在viewWillAppear中进行
- */
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    [self setConfigurationInfo];
-    
-    [self createTableView];
-    [self createEmptyView];
-    
-    [self showWaitingView:nil];
-    
-    [self loadData];
-    
-}
-
-/**
- *  单聊 过程
- */
-//1.开启聊天 接收发数据
-[self startChat];
-- (void)startChat
-{
-    [[ChatDataController sharedInstance] beginChatWith:curUser.uid];
-    [[ChatDataController sharedInstance] setDelegate:self];
-}
-//和谁聊天---uid
--(void)beginChatWith:(NSUInteger)uid{
-    if (uid == 0) {
-        return;
-    }
-    （NSUInteger）chatingWithUserId = uid;
-    [database setChatMsgIsReadFromUser:uid];
-    UserInfo *u = [database getChatFriendWithUid:uid];
-    if (u.uid == uid && [ShareData sharedInstance].deviceInfo.bangeNumber >= u.unreadMsgNumber)
-    {
-        [ShareData sharedInstance].deviceInfo.bangeNumber -= u.unreadMsgNumber;
-    }
-    u.unreadMsgNumber = 0;
-    if (u.uid == uid)
-    {
-        [database updateChatFriend:u];
-    }
-    time_t t = [database getChatMsgCreatedAtWithUid:uid latest:YES];
-    if (t && uid != JiaYuanSystemUserCustomer)
-    {
-        [clientSocket sendMessage:[NSString stringWithFormat:@"{\"cmd\":2001,\"uid\":%lu,\"before\":0,\"updateTime\":%ld}",(unsigned long)uid,t]];
-    }
-    if (uid != JiaYuanSystemUserCustomer)
-    {
-        [clientSocket sendMessage:[NSString stringWithFormat:@"{\"cmd\":2005,\"uid\":%lu}",(unsigned long)uid]];
-    }
-    
-    NSNumber *number = [NSNumber numberWithUnsignedInteger:uid];
-    [[NSNotificationCenter defaultCenter]postNotificationName:kNotificationOpenChatView object:number userInfo:nil];
-    
-    [self notifyNewMsgCountChanged];
-}
-//消息来源
-- (BOOL)setChatMsgIsReadFromUser:(NSUInteger)uid{
-    __block BOOL ret = NO;
-    [self.queue inDatabase:^(FMDatabase *db) {
-        ret = [db executeUpdate:@"update  chat_log set isRead = 1  where  friendUid =?", [NSNumber numberWithUnsignedInteger:uid]];
-        
-        
-    }];
-    return  ret;
-}
-//获取聊天人信息
-- (UserInfo*)getChatFriendWithUid:(NSUInteger)uid{
-    
-    __block UserInfo *chatFriend = [[UserInfo alloc] init];
-    [self.queue inDatabase:^(FMDatabase *db) {
-        
-        /*
-         Change the contents of this block to suit your needs.
-         */
-        
-        FMResultSet *rs = [db executeQuery:@"select avatar, nick, education, prov, city, marriage, birthday, birthday_year, isMember, unRead, isLock, ctime, msgId, msgType, content, mailId from chat_friend where tauid = ?",[NSNumber numberWithUnsignedInteger:uid]];
-        
-        
-        while ([rs next]) {
-            // just print out what we've got in a number of formats.
-            
-            
-            chatFriend.uid = uid;
-            chatFriend.avatarURL = [rs stringForColumn:@"avatar"];
-            chatFriend.nickName = [rs stringForColumn:@"nick"];
-            chatFriend.degree = [rs stringForColumn:@"education"];
-            
-            chatFriend.location = [rs stringForColumn:@"prov"];
-            chatFriend.subLocation = [rs stringForColumn:@"city"];
-            chatFriend.marriage = [rs stringForColumn:@"marriage"];
-            chatFriend.birthday = [rs stringForColumn:@"birthday"];
-            chatFriend.birthday_year = [rs stringForColumn:@"birthday_year"];
-            [chatFriend generateAge];
-            chatFriend.isMember = [rs intForColumn:@"isMember"];
-            chatFriend.unreadMsgNumber = [rs intForColumn:@"unRead"];
-            chatFriend.isLocked = [rs intForColumn:@"isLock"];
-            chatFriend.mostRecentDate = [rs longForColumn:@"ctime"];;
-            chatFriend.mostRecentMsgId = [rs stringForColumn:@"msgId"];
-            chatFriend.msgType =  [rs intForColumn:@"msgType"];
-            chatFriend.mostRecentMessage = [rs stringForColumn:@"content"];
-            chatFriend.mostRecentMailId = [rs stringForColumn:@"mailId"];
-            break;
-            
-        }
-        [rs close];
-    }];
-    return [chatFriend autorelease];
-}
-//2.开启聊天 接收发数据
-/**
- *  我的账号
- */
-AccountViewController
-ServiceExchangeViewController   //服务 ----web
-
-缘分 点击大图 送礼 进入此页面
-GiftInterceptView  礼物购买页
-PurchaseingViewController 购买过程控制器
-    
-typedef CF_OPTIONS( uint32_t, CMTimeFlags ) {
-    kCMTimeFlags_Valid = 1UL<<0,
-    kCMTimeFlags_HasBeenRounded = 1UL<<1,
-    kCMTimeFlags_PositiveInfinity = 1UL<<2,
-    kCMTimeFlags_NegativeInfinity = 1UL<<3,
-    kCMTimeFlags_Indefinite = 1UL<<4,
-    kCMTimeFlags_ImpliedValueFlagsMask = kCMTimeFlags_PositiveInfinity | kCMTimeFlags_NegativeInfinity | kCMTimeFlags_Indefinite
-};
-/*
- CMTime定义是一个C语言的结构体，是專門用來表示影片時間用的類別
- 他的用法為: CMTimeMake(value, timescale)
- value指的是第几帧  int64_t--long long
- timeScale指的是1秒需要由幾個frame構成(可以視為fps)  int32_t--int
- */
-typedef struct
-{
-    /*! @field value The value of the CMTime. value/timescale = seconds. */
-    CMTimeValue	value;//long long
-    
-    /*! @field timescale The timescale of the CMTime. value/timescale = seconds.  */
-    CMTimeScale	timescale;//int
-    
-    /*! @field flags The flags, eg. kCMTimeFlags_Valid, kCMTimeFlags_PositiveInfinity, etc. */
-    CMTimeFlags	flags;//枚举
-    
-    /*
-     @field epoch Differentiates between equal timestamps that are actually different because
-     of looping, multi-item sequencing, etc.
-     Will be used during comparison: greater epochs happen after lesser ones.
-     Additions/subtraction is only possible within a single epoch,
-     however, since epoch length may be unknown/variable. 
-     */
-    CMTimeEpoch	epoch;//long long
-    
-} CMTime;
-    
-typedef struct
-{
-    /*! @field duration
-     The duration of the sample. If a single struct applies to
-     each of the samples, they all will have this duration. */
-    CMTime duration;
-    
-    /*! @field presentationTimeStamp
-     The time at which the sample will be presented. If a single
-     struct applies to each of the samples, this is the presentationTime of the
-     first sample. The presentationTime of subsequent samples will be derived by
-     repeatedly adding the sample duration. */
-    CMTime presentationTimeStamp;
-    
-    /*! @field decodeTimeStamp
-     The time at which the sample will be decoded. If the samples
-     are in presentation order, this must be set to kCMTimeInvalid. */
-    CMTime decodeTimeStamp;
-    
-} CMSampleTimingInfo;
-    
-    
-    
-typedef struct {
-    GLfloat x;
-    GLfloat y;
-    GLfloat z;
-} Vertex3D;
-    
-Vertex3D vertex;
-vertex.x = 10.0;
-vertex.y = 23.75;
-vertex.z = -12.532;
-    
-GLfloat vertex[3];
-vertex[0] = 10.0;    // x
-vertex[1] = 23.75;   // y
-vertex[2] = -12.532; // z
-    
-static inline Vertex3D Vertex3DMake(CGFloat inX, CGFloat inY, CGFloat inZ){
-    Vertex3D ret;
-    ret.x = inX;
-    ret.y = inY;
-    ret.z = inZ;
-    return ret;
-}
-    
-static inline GLfloat Vertex3DCalculateDistanceBetweenVertices (Vertex3D first, Vertex3D second) {
-    GLfloat deltaX = second.x - first.x;
-    GLfloat deltaY = second.y - first.y;
-    GLfloat deltaZ = second.z - first.z;
-    return sqrtf(deltaX*deltaX + deltaY*deltaY + deltaZ*deltaZ );
-}
