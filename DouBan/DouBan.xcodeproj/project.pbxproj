@@ -38,6 +38,9 @@
 		AA6AE0951FE7642500832F41 /* DBRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6AE0931FE7642400832F41 /* DBRequestManager.m */; };
 		AA6AE0981FE764F400832F41 /* DeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6AE0971FE764F400832F41 /* DeviceInfo.m */; };
 		AA6AE09C1FE7659F00832F41 /* DBShareData.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6AE09B1FE7659F00832F41 /* DBShareData.m */; };
+		AA6AE0A31FE7721800832F41 /* DBSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6AE0A21FE7721800832F41 /* DBSettingViewController.m */; };
+		AA6AE0A71FE772C800832F41 /* UINavigationController+ExchangeToTopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6AE0A61FE772C800832F41 /* UINavigationController+ExchangeToTopViewController.m */; };
+		AA6AE0AA1FE7917200832F41 /* DBHomeDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6AE0A91FE7917200832F41 /* DBHomeDetailViewController.m */; };
 		AA7871581FE26D5E00379F9D /* UITableView+JYFlowInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7871561FE26D5D00379F9D /* UITableView+JYFlowInfoCell.m */; };
 		AA8EE65B1FE37BF7004F7212 /* DBFrequentLimit.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8EE65A1FE37BF7004F7212 /* DBFrequentLimit.m */; };
 		AA8EE6601FE3B2E6004F7212 /* PAirSandbox.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8EE65E1FE3B2E6004F7212 /* PAirSandbox.m */; };
@@ -94,6 +97,12 @@
 		AA6AE0991FE7652B00832F41 /* DBMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBMacro.h; sourceTree = "<group>"; };
 		AA6AE09A1FE7659F00832F41 /* DBShareData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBShareData.h; sourceTree = "<group>"; };
 		AA6AE09B1FE7659F00832F41 /* DBShareData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBShareData.m; sourceTree = "<group>"; };
+		AA6AE0A11FE7721800832F41 /* DBSettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBSettingViewController.h; sourceTree = "<group>"; };
+		AA6AE0A21FE7721800832F41 /* DBSettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBSettingViewController.m; sourceTree = "<group>"; };
+		AA6AE0A51FE772C800832F41 /* UINavigationController+ExchangeToTopViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+ExchangeToTopViewController.h"; sourceTree = "<group>"; };
+		AA6AE0A61FE772C800832F41 /* UINavigationController+ExchangeToTopViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+ExchangeToTopViewController.m"; sourceTree = "<group>"; };
+		AA6AE0A81FE7917200832F41 /* DBHomeDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBHomeDetailViewController.h; sourceTree = "<group>"; };
+		AA6AE0A91FE7917200832F41 /* DBHomeDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBHomeDetailViewController.m; sourceTree = "<group>"; };
 		AA7871561FE26D5D00379F9D /* UITableView+JYFlowInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+JYFlowInfoCell.m"; sourceTree = "<group>"; };
 		AA7871571FE26D5E00379F9D /* UITableView+JYFlowInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+JYFlowInfoCell.h"; sourceTree = "<group>"; };
 		AA8EE6591FE37BF7004F7212 /* DBFrequentLimit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBFrequentLimit.h; sourceTree = "<group>"; };
@@ -159,8 +168,9 @@
 				AA6259F11F82140C009E200E /* Group */,
 				AA6259ED1F82140C009E200E /* Profile */,
 				AA625A231F821C5E009E200E /* Resource */,
-				AA6259CD1F80DBDA009E200E /* Main.storyboard */,
+				AA6AE0A41FE7729B00832F41 /* Extension */,
 				AA6259D01F80DBDA009E200E /* Assets.xcassets */,
+				AA6259CD1F80DBDA009E200E /* Main.storyboard */,
 				AA6259D21F80DBDA009E200E /* LaunchScreen.storyboard */,
 				AA6259D51F80DBDA009E200E /* Info.plist */,
 				AA6259D61F80DBDA009E200E /* main.m */,
@@ -302,6 +312,8 @@
 			children = (
 				AA625A041F821AB0009E200E /* DBHomeViewController.h */,
 				AA625A051F821AB0009E200E /* DBHomeViewController.m */,
+				AA6AE0A81FE7917200832F41 /* DBHomeDetailViewController.h */,
+				AA6AE0A91FE7917200832F41 /* DBHomeDetailViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -323,6 +335,7 @@
 		AA6259ED1F82140C009E200E /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				AA6AE09D1FE771F800832F41 /* Setting */,
 				AA6259EE1F82140C009E200E /* Controller */,
 				AA6259EF1F82140C009E200E /* Model */,
 				AA6259F01F82140C009E200E /* ViewModel */,
@@ -437,6 +450,48 @@
 				AA6AE0931FE7642400832F41 /* DBRequestManager.m */,
 			);
 			path = DBNet;
+			sourceTree = "<group>";
+		};
+		AA6AE09D1FE771F800832F41 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				AA6AE09F1FE771F800832F41 /* Controller */,
+				AA6AE09E1FE771F800832F41 /* ViewModel */,
+				AA6AE0A01FE771F800832F41 /* View */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		AA6AE09E1FE771F800832F41 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		AA6AE09F1FE771F800832F41 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				AA6AE0A11FE7721800832F41 /* DBSettingViewController.h */,
+				AA6AE0A21FE7721800832F41 /* DBSettingViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		AA6AE0A01FE771F800832F41 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		AA6AE0A41FE7729B00832F41 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				AA6AE0A51FE772C800832F41 /* UINavigationController+ExchangeToTopViewController.h */,
+				AA6AE0A61FE772C800832F41 /* UINavigationController+ExchangeToTopViewController.m */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		AA8EE65C1FE3B2E6004F7212 /* Tool */ = {
@@ -640,6 +695,7 @@
 				AA8EE6601FE3B2E6004F7212 /* PAirSandbox.m in Sources */,
 				AA6259D71F80DBDA009E200E /* main.m in Sources */,
 				AA8EE65B1FE37BF7004F7212 /* DBFrequentLimit.m in Sources */,
+				AA6AE0A71FE772C800832F41 /* UINavigationController+ExchangeToTopViewController.m in Sources */,
 				AA625A0C1F821AE0009E200E /* DBBroadcastViewController.m in Sources */,
 				AA6AE09C1FE7659F00832F41 /* DBShareData.m in Sources */,
 				AA6259C91F80DBDA009E200E /* AppDelegate.m in Sources */,
@@ -647,10 +703,12 @@
 				AA625A0F1F821AEF009E200E /* DBGroupViewController.m in Sources */,
 				AA6259FA1F82145E009E200E /* DBNavigationController.m in Sources */,
 				AA625A091F821AC4009E200E /* DBAudioBookViewController.m in Sources */,
+				AA6AE0AA1FE7917200832F41 /* DBHomeDetailViewController.m in Sources */,
 				AA6AE0951FE7642500832F41 /* DBRequestManager.m in Sources */,
 				AA6AE0981FE764F400832F41 /* DeviceInfo.m in Sources */,
 				AA625A121F821AFF009E200E /* DBProfileViewController.m in Sources */,
 				AAB1FEF81F84BB3E007AA4DB /* BroadcastViewModel.m in Sources */,
+				AA6AE0A31FE7721800832F41 /* DBSettingViewController.m in Sources */,
 				AA6AE0911FE7511B00832F41 /* XMLDictionary.m in Sources */,
 				AA625A061F821AB0009E200E /* DBHomeViewController.m in Sources */,
 				AAB1FEFB1F84BFE7007AA4DB /* BroadcastCommunityModel.m in Sources */,

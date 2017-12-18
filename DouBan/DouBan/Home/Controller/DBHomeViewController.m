@@ -7,8 +7,8 @@
 //
 
 #import "DBHomeViewController.h"
-#import "UITableView+JYFlowInfoCell.h"
-#import "DBFrequentLimit.h"
+#import "DBHomeDetailViewController.h"
+#import "UINavigationController+ExchangeToTopViewController.h"
 
 /*
  Storage class specifier关键字
@@ -36,17 +36,22 @@
 
 @implementation DBHomeViewController
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.title = @"首页";
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.title = @"首页";
     self.view.backgroundColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"频率测试" style:UIBarButtonItemStylePlain target:self action:@selector(continueClick)];
     
     if (@available(iOS 11.0, *)) {
-        UISearchController *searchController = [[UISearchController alloc]initWithSearchResultsController:nil];
+        UISearchController *searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
         self.navigationItem.searchController = searchController;
         
         // If this property is true (the default), the searchController’s search bar will hide as the user scrolls in the top view controller’s scroll view. If false, the search bar will remain visible and pinned underneath the navigation bar.
@@ -98,48 +103,14 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     cell.textLabel.text = [NSString stringWithFormat:@"cell-%ld", (long)indexPath.row];
-    // 统计
-    [tableView jy_tableView:tableView cellForIndexPath:indexPath isMonitor:(indexPath.row%3 == 1)];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [self.tableView jy_monitorDisplay];
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    // 手指滑动离开屏幕动画结束调用
-    // called when scroll view grinds to a halt
-    [self.tableView jy_monitorDisplayWithStatisticsBlock:^{
-        NSLog(@"展示统计");
-    }];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    // end dragging
-    // decelerate is true if it will continue moving afterwards
-    if (!decelerate) {
-        [self.tableView jy_monitorDisplayWithStatisticsBlock:^{
-            NSLog(@"展示统计");
-        }];
-    }
-}
-
-- (void)continueClick {
-    static DBFrequentLimit *frequentLimit = nil;
     
-    if (!frequentLimit) {
-        frequentLimit = [[DBFrequentLimit alloc] initWithCountLimit:2 secondsLimit:1];
-    }
-    NSLog(@"frequentLimit=%@", frequentLimit);
-    if (![frequentLimit canTrigger]) {
-        return;
-    }
-    NSLog(@"continueClick");
+    DBHomeDetailViewController *deatilVC = [[DBHomeDetailViewController alloc] init];
+    [self.navigationController exchangeToTopViewController:deatilVC animated:YES];
 }
 
 @end
