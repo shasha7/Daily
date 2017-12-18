@@ -8,6 +8,9 @@
 
 #import "AppDelegate.h"
 #import "DBTabBarController.h"
+#import "PAirSandbox.h"
+
+#define DEBUG 1
 
 @interface AppDelegate ()
 
@@ -21,6 +24,9 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.rootViewController = [DBTabBarController new];
     [self.window makeKeyAndVisible];
+#ifdef DEBUG
+    [[PAirSandbox sharedInstance] enableSwipe];
+#endif
     return YES;
 }
 

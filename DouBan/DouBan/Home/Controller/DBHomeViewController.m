@@ -8,6 +8,7 @@
 
 #import "DBHomeViewController.h"
 #import "UITableView+JYFlowInfoCell.h"
+#import "DBFrequentLimit.h"
 
 /*
  Storage class specifier关键字
@@ -22,11 +23,12 @@
  static指函数是内部函数，不允许外部调用
  全局变量全部存放在静态存储区中，在程序开始执行时给全局变量分配存储区，程序执行完毕就释放
  动态存储区中存放以下数据：1.函数形式参数；2.自动变量；3.函数调用时的现场保存和返回地址
- */
-static NSDictionary *FillParameters(NSDictionary *parameters, NSURL *url) {
+ 
+ static NSDictionary *FillParameters(NSDictionary *parameters, NSURL *url) {
     NSLog(@"parameters=%@, url=%@",parameters, url);
     return parameters;
-}
+ }
+ */
 
 @interface DBHomeViewController ()
 
@@ -41,6 +43,7 @@ static NSDictionary *FillParameters(NSDictionary *parameters, NSURL *url) {
     
     self.title = @"首页";
     self.view.backgroundColor = [UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"频率测试" style:UIBarButtonItemStylePlain target:self action:@selector(continueClick)];
     
     if (@available(iOS 11.0, *)) {
         UISearchController *searchController = [[UISearchController alloc]initWithSearchResultsController:nil];
@@ -124,6 +127,19 @@ static NSDictionary *FillParameters(NSDictionary *parameters, NSURL *url) {
             NSLog(@"展示统计");
         }];
     }
+}
+
+- (void)continueClick {
+    static DBFrequentLimit *frequentLimit = nil;
+    
+    if (!frequentLimit) {
+        frequentLimit = [[DBFrequentLimit alloc] initWithCountLimit:2 secondsLimit:1];
+    }
+    NSLog(@"frequentLimit=%@", frequentLimit);
+    if (![frequentLimit canTrigger]) {
+        return;
+    }
+    NSLog(@"continueClick");
 }
 
 @end

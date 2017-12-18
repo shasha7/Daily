@@ -1,5 +1,6 @@
+
 platform :ios, ‘8.0’
-use_frameworks!
+inhibit_all_warnings!
 
 target 'DouBan' do
   pod 'ReactiveObjC', '~> 3.0.0'

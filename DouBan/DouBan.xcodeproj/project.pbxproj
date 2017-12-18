@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0185D96F3F607D0A7E6A8983 /* Pods_DouBan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5920CFF72396F6BDAB3A7947 /* Pods_DouBan.framework */; };
+		8C57257CDBE76B8B18943C1D /* libPods-DouBan.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9CE53C46A15DC31A7960D55 /* libPods-DouBan.a */; };
 		AA6259C91F80DBDA009E200E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6259C81F80DBDA009E200E /* AppDelegate.m */; };
 		AA6259CF1F80DBDA009E200E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA6259CD1F80DBDA009E200E /* Main.storyboard */; };
 		AA6259D11F80DBDA009E200E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA6259D01F80DBDA009E200E /* Assets.xcassets */; };
@@ -34,14 +34,16 @@
 		AA625A471F821E11009E200E /* db_tab_home_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA625A3B1F821E11009E200E /* db_tab_home_selected@2x.png */; };
 		AA625A481F821E11009E200E /* db_tab_broadcast_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA625A3C1F821E11009E200E /* db_tab_broadcast_selected@2x.png */; };
 		AA625A491F821E11009E200E /* db_tab_group_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA625A3D1F821E11009E200E /* db_tab_group_selected@2x.png */; };
+		AA6AE0911FE7511B00832F41 /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6AE0901FE7511B00832F41 /* XMLDictionary.m */; };
 		AA7871581FE26D5E00379F9D /* UITableView+JYFlowInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7871561FE26D5D00379F9D /* UITableView+JYFlowInfoCell.m */; };
+		AA8EE65B1FE37BF7004F7212 /* DBFrequentLimit.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8EE65A1FE37BF7004F7212 /* DBFrequentLimit.m */; };
+		AA8EE6601FE3B2E6004F7212 /* PAirSandbox.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8EE65E1FE3B2E6004F7212 /* PAirSandbox.m */; };
 		AAB1FEF81F84BB3E007AA4DB /* BroadcastViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB1FEF71F84BB3E007AA4DB /* BroadcastViewModel.m */; };
 		AAB1FEFB1F84BFE7007AA4DB /* BroadcastCommunityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB1FEFA1F84BFE7007AA4DB /* BroadcastCommunityModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		129DA7CB8FAC5ABCDF37B388 /* Pods-DouBan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DouBan.release.xcconfig"; path = "Pods/Target Support Files/Pods-DouBan/Pods-DouBan.release.xcconfig"; sourceTree = "<group>"; };
-		5920CFF72396F6BDAB3A7947 /* Pods_DouBan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DouBan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA6259C41F80DBDA009E200E /* DouBan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DouBan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA6259C71F80DBDA009E200E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		AA6259C81F80DBDA009E200E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -80,12 +82,19 @@
 		AA625A3B1F821E11009E200E /* db_tab_home_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "db_tab_home_selected@2x.png"; sourceTree = "<group>"; };
 		AA625A3C1F821E11009E200E /* db_tab_broadcast_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "db_tab_broadcast_selected@2x.png"; sourceTree = "<group>"; };
 		AA625A3D1F821E11009E200E /* db_tab_group_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "db_tab_group_selected@2x.png"; sourceTree = "<group>"; };
+		AA6AE08F1FE7511B00832F41 /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDictionary.h; sourceTree = "<group>"; };
+		AA6AE0901FE7511B00832F41 /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLDictionary.m; sourceTree = "<group>"; };
 		AA7871561FE26D5D00379F9D /* UITableView+JYFlowInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+JYFlowInfoCell.m"; sourceTree = "<group>"; };
 		AA7871571FE26D5E00379F9D /* UITableView+JYFlowInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+JYFlowInfoCell.h"; sourceTree = "<group>"; };
+		AA8EE6591FE37BF7004F7212 /* DBFrequentLimit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBFrequentLimit.h; sourceTree = "<group>"; };
+		AA8EE65A1FE37BF7004F7212 /* DBFrequentLimit.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBFrequentLimit.m; sourceTree = "<group>"; };
+		AA8EE65E1FE3B2E6004F7212 /* PAirSandbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAirSandbox.m; sourceTree = "<group>"; };
+		AA8EE65F1FE3B2E6004F7212 /* PAirSandbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAirSandbox.h; sourceTree = "<group>"; };
 		AAB1FEF61F84BB3E007AA4DB /* BroadcastViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BroadcastViewModel.h; sourceTree = "<group>"; };
 		AAB1FEF71F84BB3E007AA4DB /* BroadcastViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BroadcastViewModel.m; sourceTree = "<group>"; };
 		AAB1FEF91F84BFE7007AA4DB /* BroadcastCommunityModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BroadcastCommunityModel.h; sourceTree = "<group>"; };
 		AAB1FEFA1F84BFE7007AA4DB /* BroadcastCommunityModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BroadcastCommunityModel.m; sourceTree = "<group>"; };
+		E9CE53C46A15DC31A7960D55 /* libPods-DouBan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DouBan.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F180E1DBF3E9DDB10BB30262 /* Pods-DouBan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DouBan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DouBan/Pods-DouBan.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -94,7 +103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0185D96F3F607D0A7E6A8983 /* Pods_DouBan.framework in Frameworks */,
+				8C57257CDBE76B8B18943C1D /* libPods-DouBan.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,6 +231,7 @@
 		AA6259E51F82140C009E200E /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				AA8EE65C1FE3B2E6004F7212 /* Tool */,
 				AA6259E61F82140C009E200E /* Controller */,
 				AA6259E71F82140C009E200E /* Model */,
 				AA6259E81F82140C009E200E /* View */,
@@ -247,6 +257,8 @@
 		AA6259E71F82140C009E200E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				AA8EE6591FE37BF7004F7212 /* DBFrequentLimit.h */,
+				AA8EE65A1FE37BF7004F7212 /* DBFrequentLimit.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -394,10 +406,37 @@
 			path = TabBar;
 			sourceTree = "<group>";
 		};
+		AA6AE08E1FE7511B00832F41 /* XMLDictionary */ = {
+			isa = PBXGroup;
+			children = (
+				AA6AE08F1FE7511B00832F41 /* XMLDictionary.h */,
+				AA6AE0901FE7511B00832F41 /* XMLDictionary.m */,
+			);
+			path = XMLDictionary;
+			sourceTree = "<group>";
+		};
+		AA8EE65C1FE3B2E6004F7212 /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				AA6AE08E1FE7511B00832F41 /* XMLDictionary */,
+				AA8EE65D1FE3B2E6004F7212 /* AirSandbox */,
+			);
+			path = Tool;
+			sourceTree = "<group>";
+		};
+		AA8EE65D1FE3B2E6004F7212 /* AirSandbox */ = {
+			isa = PBXGroup;
+			children = (
+				AA8EE65F1FE3B2E6004F7212 /* PAirSandbox.h */,
+				AA8EE65E1FE3B2E6004F7212 /* PAirSandbox.m */,
+			);
+			path = AirSandbox;
+			sourceTree = "<group>";
+		};
 		B4B3CBC6A8554E76DCE56E01 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5920CFF72396F6BDAB3A7947 /* Pods_DouBan.framework */,
+				E9CE53C46A15DC31A7960D55 /* libPods-DouBan.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -532,9 +571,13 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-DouBan/Pods-DouBan-resources.sh",
+				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
+				"${PODS_ROOT}/SAMKeychain/Support/SAMKeychain.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -569,7 +612,9 @@
 				AA7871581FE26D5E00379F9D /* UITableView+JYFlowInfoCell.m in Sources */,
 				AA6259F71F821445009E200E /* DBTabBarController.m in Sources */,
 				AA625A031F821A7E009E200E /* DBTableViewController.m in Sources */,
+				AA8EE6601FE3B2E6004F7212 /* PAirSandbox.m in Sources */,
 				AA6259D71F80DBDA009E200E /* main.m in Sources */,
+				AA8EE65B1FE37BF7004F7212 /* DBFrequentLimit.m in Sources */,
 				AA625A0C1F821AE0009E200E /* DBBroadcastViewController.m in Sources */,
 				AA6259C91F80DBDA009E200E /* AppDelegate.m in Sources */,
 				AA625A001F821A64009E200E /* DBViewController.m in Sources */,
@@ -578,6 +623,7 @@
 				AA625A091F821AC4009E200E /* DBAudioBookViewController.m in Sources */,
 				AA625A121F821AFF009E200E /* DBProfileViewController.m in Sources */,
 				AAB1FEF81F84BB3E007AA4DB /* BroadcastViewModel.m in Sources */,
+				AA6AE0911FE7511B00832F41 /* XMLDictionary.m in Sources */,
 				AA625A061F821AB0009E200E /* DBHomeViewController.m in Sources */,
 				AAB1FEFB1F84BFE7007AA4DB /* BroadcastCommunityModel.m in Sources */,
 			);
@@ -717,6 +763,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8XH63VCP26;
+				GCC_WARN_INHIBIT_ALL_WARNINGS = NO;
 				INFOPLIST_FILE = DouBan/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = wangweihu.DouBan;
@@ -733,6 +780,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8XH63VCP26;
+				GCC_WARN_INHIBIT_ALL_WARNINGS = NO;
 				INFOPLIST_FILE = DouBan/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = wangweihu.DouBan;

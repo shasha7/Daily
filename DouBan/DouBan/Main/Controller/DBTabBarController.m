@@ -42,6 +42,13 @@ static DBTabBarItem tabBarList[] = {
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    // 设置UITabBar标签选中颜色
+    [[UITabBar appearance] setTintColor:[UIColor colorWithRed:55/255.0f green:173/255.0f blue:66/255.0f alpha:1]];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
