@@ -35,6 +35,9 @@
 		AA625A481F821E11009E200E /* db_tab_broadcast_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA625A3C1F821E11009E200E /* db_tab_broadcast_selected@2x.png */; };
 		AA625A491F821E11009E200E /* db_tab_group_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA625A3D1F821E11009E200E /* db_tab_group_selected@2x.png */; };
 		AA6AE0911FE7511B00832F41 /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6AE0901FE7511B00832F41 /* XMLDictionary.m */; };
+		AA6AE0951FE7642500832F41 /* DBRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6AE0931FE7642400832F41 /* DBRequestManager.m */; };
+		AA6AE0981FE764F400832F41 /* DeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6AE0971FE764F400832F41 /* DeviceInfo.m */; };
+		AA6AE09C1FE7659F00832F41 /* DBShareData.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6AE09B1FE7659F00832F41 /* DBShareData.m */; };
 		AA7871581FE26D5E00379F9D /* UITableView+JYFlowInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7871561FE26D5D00379F9D /* UITableView+JYFlowInfoCell.m */; };
 		AA8EE65B1FE37BF7004F7212 /* DBFrequentLimit.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8EE65A1FE37BF7004F7212 /* DBFrequentLimit.m */; };
 		AA8EE6601FE3B2E6004F7212 /* PAirSandbox.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8EE65E1FE3B2E6004F7212 /* PAirSandbox.m */; };
@@ -84,6 +87,13 @@
 		AA625A3D1F821E11009E200E /* db_tab_group_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "db_tab_group_selected@2x.png"; sourceTree = "<group>"; };
 		AA6AE08F1FE7511B00832F41 /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDictionary.h; sourceTree = "<group>"; };
 		AA6AE0901FE7511B00832F41 /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLDictionary.m; sourceTree = "<group>"; };
+		AA6AE0931FE7642400832F41 /* DBRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBRequestManager.m; sourceTree = "<group>"; };
+		AA6AE0941FE7642400832F41 /* DBRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBRequestManager.h; sourceTree = "<group>"; };
+		AA6AE0961FE764F400832F41 /* DeviceInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeviceInfo.h; sourceTree = "<group>"; };
+		AA6AE0971FE764F400832F41 /* DeviceInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeviceInfo.m; sourceTree = "<group>"; };
+		AA6AE0991FE7652B00832F41 /* DBMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBMacro.h; sourceTree = "<group>"; };
+		AA6AE09A1FE7659F00832F41 /* DBShareData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBShareData.h; sourceTree = "<group>"; };
+		AA6AE09B1FE7659F00832F41 /* DBShareData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBShareData.m; sourceTree = "<group>"; };
 		AA7871561FE26D5D00379F9D /* UITableView+JYFlowInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+JYFlowInfoCell.m"; sourceTree = "<group>"; };
 		AA7871571FE26D5E00379F9D /* UITableView+JYFlowInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+JYFlowInfoCell.h"; sourceTree = "<group>"; };
 		AA8EE6591FE37BF7004F7212 /* DBFrequentLimit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBFrequentLimit.h; sourceTree = "<group>"; };
@@ -257,8 +267,13 @@
 		AA6259E71F82140C009E200E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				AA6AE0991FE7652B00832F41 /* DBMacro.h */,
 				AA8EE6591FE37BF7004F7212 /* DBFrequentLimit.h */,
 				AA8EE65A1FE37BF7004F7212 /* DBFrequentLimit.m */,
+				AA6AE0961FE764F400832F41 /* DeviceInfo.h */,
+				AA6AE0971FE764F400832F41 /* DeviceInfo.m */,
+				AA6AE09A1FE7659F00832F41 /* DBShareData.h */,
+				AA6AE09B1FE7659F00832F41 /* DBShareData.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -415,9 +430,19 @@
 			path = XMLDictionary;
 			sourceTree = "<group>";
 		};
+		AA6AE0921FE7642400832F41 /* DBNet */ = {
+			isa = PBXGroup;
+			children = (
+				AA6AE0941FE7642400832F41 /* DBRequestManager.h */,
+				AA6AE0931FE7642400832F41 /* DBRequestManager.m */,
+			);
+			path = DBNet;
+			sourceTree = "<group>";
+		};
 		AA8EE65C1FE3B2E6004F7212 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				AA6AE0921FE7642400832F41 /* DBNet */,
 				AA6AE08E1FE7511B00832F41 /* XMLDictionary */,
 				AA8EE65D1FE3B2E6004F7212 /* AirSandbox */,
 			);
@@ -616,11 +641,14 @@
 				AA6259D71F80DBDA009E200E /* main.m in Sources */,
 				AA8EE65B1FE37BF7004F7212 /* DBFrequentLimit.m in Sources */,
 				AA625A0C1F821AE0009E200E /* DBBroadcastViewController.m in Sources */,
+				AA6AE09C1FE7659F00832F41 /* DBShareData.m in Sources */,
 				AA6259C91F80DBDA009E200E /* AppDelegate.m in Sources */,
 				AA625A001F821A64009E200E /* DBViewController.m in Sources */,
 				AA625A0F1F821AEF009E200E /* DBGroupViewController.m in Sources */,
 				AA6259FA1F82145E009E200E /* DBNavigationController.m in Sources */,
 				AA625A091F821AC4009E200E /* DBAudioBookViewController.m in Sources */,
+				AA6AE0951FE7642500832F41 /* DBRequestManager.m in Sources */,
+				AA6AE0981FE764F400832F41 /* DeviceInfo.m in Sources */,
 				AA625A121F821AFF009E200E /* DBProfileViewController.m in Sources */,
 				AAB1FEF81F84BB3E007AA4DB /* BroadcastViewModel.m in Sources */,
 				AA6AE0911FE7511B00832F41 /* XMLDictionary.m in Sources */,

@@ -27,7 +27,7 @@
  */
 
 #import "BroadcastViewModel.h"
-#import <AFNetworking/AFNetworking.h>
+#import "DBRequestManager.h"
 #import "BroadcastCommunityModel.h"
 
 @interface BroadcastViewModel ()
@@ -57,14 +57,14 @@
                 NSLog(@"key=%@,value=%@", key, value);
             }];
             
-            [[AFHTTPSessionManager manager] GET:@"http://d.api.budejie.com/forum/subscribe/bs0315-iphone-4.5.7.json" parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary * responseObject) {
-                NSArray *communityArray = [responseObject objectForKey:@"list"];
+            [[DBRequestManager manager] GET:@"http://d.api.budejie.com/forum/subscribe/bs0315-iphone-4.5.7.json" requestID:@"" parameters:nil success:^(id  _Nullable result) {
+                NSArray *communityArray = [result objectForKey:@"list"];
                 // 2.字典转模型
                 [subscriber sendNext:[[communityArray.rac_sequence map:^BroadcastCommunityModel *(NSDictionary *value) {
                     return [BroadcastCommunityModel communityModelWithDict:value];
                 }] array]];
-            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                [subscriber sendNext:error];
+            } failure:^(NSString * _Nonnull errorDesc) {
+                [subscriber sendNext:errorDesc];
             }];
             return nil;
         }];
