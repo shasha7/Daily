@@ -349,6 +349,7 @@ forHTTPHeaderField:(NSString *)field
                                 parameters:(id)parameters
                                      error:(NSError *__autoreleasing *)error
 {
+    // step1
     NSParameterAssert(method);
     NSParameterAssert(URLString);
 
@@ -381,9 +382,12 @@ forHTTPHeaderField:(NSString *)field
 
     NSMutableURLRequest *mutableRequest = [self requestWithMethod:method URLString:URLString parameters:nil error:error];
 
+    // 创建表单
     __block AFStreamingMultipartFormData *formData = [[AFStreamingMultipartFormData alloc] initWithURLRequest:mutableRequest stringEncoding:NSUTF8StringEncoding];
 
     if (parameters) {
+        // 创建表单step1
+        // 将参数转化为装有AFQueryStringPair实例对象的数组
         for (AFQueryStringPair *pair in AFQueryStringPairsFromDictionary(parameters)) {
             NSData *data = nil;
             if ([pair.value isKindOfClass:[NSData class]]) {
@@ -395,6 +399,10 @@ forHTTPHeaderField:(NSString *)field
             }
 
             if (data) {
+                // 创建表单step2
+                // HTTPBodyParts数组存储AFHTTPBodyPart实例对象
+                // [self.HTTPBodyParts addObject:bodyPart];
+                // [formData appendPartWithFormData:pair.value name:pair.field]
                 [formData appendPartWithFormData:data name:[pair.field description]];
             }
         }
@@ -404,6 +412,64 @@ forHTTPHeaderField:(NSString *)field
         block(formData);
     }
 
+    // 创建表单step3
+    /*
+    POST /photo/http_upload.php HTTP/1.1
+    Host: api.jiayuan.com
+    Content-Type: multipart/form-data; boundary=Boundary+A3EFC08F345B801A
+    Cookie: SESSION_HASH=ed915543fb845514093d4b6456502a24fa547418; PHPSESSID=17706c21b1a7fed47669ce0b74ff3474; w_uk=20171214qDMcjYz1t51
+    Connection: keep-alive
+    Accept:****
+    User-Agent: JiaYuan/6.8 (iPhone; iOS 11.1; Scale/3.00)
+    Accept-Language: zh-Hans-US;q=1, en-US;q=0.9, en;q=0.8
+    Content-Length: 269117
+    Accept-Encoding: gzip, deflate
+    
+    --Boundary+A3EFC08F345B801A
+    Content-Disposition: form-data; name="channel"
+    
+    1
+    --Boundary+A3EFC08F345B801A
+    Content-Disposition: form-data; name="channelid"
+    
+    1
+    --Boundary+A3EFC08F345B801A
+    Content-Disposition: form-data; name="clientid"
+    
+    11
+    --Boundary+A3EFC08F345B801A
+    Content-Disposition: form-data; name="idfa"
+    
+    46BF0017-D9A3-4698-BB87-B67B691ACE28
+    --Boundary+A3EFC08F345B801A
+    Content-Disposition: form-data; name="isJailbreak"
+    
+    0
+    --Boundary+A3EFC08F345B801A
+    Content-Disposition: form-data; name="lang"
+    
+    zh-Hans-US
+    --Boundary+A3EFC08F345B801A
+    Content-Disposition: form-data; name="token"
+    
+    b669ead350aa1a639a2ae543979668b55a38bc9bcb1cb6.17023839
+    --Boundary+A3EFC08F345B801A
+    Content-Disposition: form-data; name="type"
+    
+    photo
+    --Boundary+A3EFC08F345B801A
+    Content-Disposition: form-data; name="uid"
+    
+    124909822
+    --Boundary+A3EFC08F345B801A
+    Content-Disposition: form-data; name="ver"
+    
+    6.8
+    --Boundary+A3EFC08F345B801A
+    Content-Disposition: form-data; name="upload_file"; filename="image.jpg"
+    Content-Type: image/jpeg
+    --Boundary+A3EFC08F345B801A--
+     */
     return [formData requestByFinalizingMultipartFormData];
 }
 
@@ -467,10 +533,12 @@ forHTTPHeaderField:(NSString *)field
                                withParameters:(id)parameters
                                         error:(NSError *__autoreleasing *)error
 {
+    // step2
     NSParameterAssert(request);
 
     NSMutableURLRequest *mutableRequest = [request mutableCopy];
 
+    // mutableHTTPRequestHeaders
     [self.HTTPRequestHeaders enumerateKeysAndObjectsUsingBlock:^(id field, id value, BOOL * __unused stop) {
         if (![request valueForHTTPHeaderField:field]) {
             [mutableRequest setValue:value forHTTPHeaderField:field];
@@ -508,6 +576,8 @@ forHTTPHeaderField:(NSString *)field
         if (!query) {
             query = @"";
         }
+        // x-www-form-urlencoded只能上传键值对，并且键值对都是间隔分开的
+        // http://blog.csdn.net/ye1992/article/details/49998511
         if (![mutableRequest valueForHTTPHeaderField:@"Content-Type"]) {
             [mutableRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
         }
@@ -661,6 +731,7 @@ NSTimeInterval const kAFUploadStream3GSuggestedDelay = 0.2;
 
     self.request = urlRequest;
     self.stringEncoding = encoding;
+    // [NSString stringWithFormat:@"Boundary+%08X%08X", arc4random(), arc4random()]
     self.boundary = AFCreateMultipartFormBoundary();
     self.bodyStream = [[AFMultipartBodyStream alloc] initWithStringEncoding:encoding];
 
@@ -791,6 +862,8 @@ NSTimeInterval const kAFUploadStream3GSuggestedDelay = 0.2;
     bodyPart.bodyContentLength = [body length];
     bodyPart.body = body;
 
+    // HTTPBodyParts数组存储bodyPart
+    // [self.HTTPBodyParts addObject:bodyPart];
     [self.bodyStream appendHTTPBodyPart:bodyPart];
 }
 
