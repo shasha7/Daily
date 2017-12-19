@@ -253,6 +253,9 @@ static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingO
         return nil;
     }
 
+    // Whether to remove keys with `NSNull` values from response JSON. Defaults to `NO`.
+    // php在返回数据的时候某个字段的值可能是<null> 对应的oc对象NSNull实例对象
+    // 客户端在解析过程中会出现崩溃，视解析工具决定要不要设置removesKeysWithNullValues为Yes用以剔除value为NSNull的keys
     if (self.removesKeysWithNullValues && responseObject) {
         responseObject = AFJSONObjectByRemovingKeysWithNullValues(responseObject, self.readingOptions);
     }
