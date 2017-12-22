@@ -30,8 +30,10 @@
 #endif
 
 /**
+ `AFURLSessionManager`创建并管理着一个基于NSURLSessionConfiguration配置的且实现了NSURLSessionTaskDelegate、NSURLSessionDataDelegate、NSURLSessionDownloadDelegate、NSURLSessionDelegate等诸多协议的NSURLSession对象。
  `AFURLSessionManager` creates and manages an `NSURLSession` object based on a specified `NSURLSessionConfiguration` object, which conforms to `<NSURLSessionTaskDelegate>`, `<NSURLSessionDataDelegate>`, `<NSURLSessionDownloadDelegate>`, and `<NSURLSessionDelegate>`.
 
+ ## 子类
  ## Subclassing Notes
 
  This is the base class for `AFHTTPSessionManager`, which adds functionality specific to making HTTP requests. If you are looking to extend `AFURLSessionManager` specifically for HTTP, consider subclassing `AFHTTPSessionManager` instead.
@@ -100,6 +102,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, nonatomic, strong) NSOperationQueue *operationQueue;
 
 /**
+ By default, this property is set to an instance of `AFJSONResponseSerializer
  Responses sent from the server in data tasks created with `dataTaskWithRequest:success:failure:` and run using the `GET` / `POST` / et al. convenience methods are automatically validated and serialized by the response serializer. By default, this property is set to an instance of `AFJSONResponseSerializer`.
 
  @warning `responseSerializer` must not be `nil`.
@@ -111,6 +114,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///-------------------------------
 
 /**
+ defaultPolicy
  The security policy used by created session to evaluate server trust for secure connections. `AFURLSessionManager` uses the `defaultPolicy` unless otherwise specified.
  */
 @property (nonatomic, strong) AFSecurityPolicy *securityPolicy;
@@ -191,6 +195,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithSessionConfiguration:(nullable NSURLSessionConfiguration *)configuration NS_DESIGNATED_INITIALIZER;
 
 /**
+ 使被管理的session失效，是否选择性的取消正在进行的任务
  Invalidates the managed session, optionally canceling pending tasks.
 
  @param cancelPendingTasks Whether or not to cancel pending tasks.
