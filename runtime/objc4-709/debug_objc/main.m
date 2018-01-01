@@ -15,15 +15,36 @@ int main(int argc, const char * argv[]) {
 
     @autoreleasepool {
         // insert code here...
-        char *name = "wangweihu";
-//        int age = 20;
-        struct {
-            char *name;
-            int age;
-        }stu = {name, age};
-        
-        NSLog(@"%s", stu.name);
+        NSObject *stu = [[NSObject alloc] init];
+        __weak id ptr = stu;
+        __weak id ptr2 = ptr;
         /*
+         内部调用这个方法
+         newObj = stu
+         *location = ptr
+         location = &ptr
+         id objc_initWeak(id *location, id newObj) {
+            // 检查newObj的有效性
+            if (!newObj) {
+                *location = nil;
+                return nil;
+            }
+            // 这里传递了三个bool数值
+            // 使用template进行常量参数传递是为了优化性能
+            return storeWeak<DontHaveOld, DoHaveNew, DoCrashIfDeallocating>
+                (location, (objc_object*)newObj);
+        }
+         */
+        
+        /*
+         char *name = "wangweihu";
+         //        int age = 20;
+         struct {
+         char *name;
+         int age;
+         }stu = {name, age};
+         
+         NSLog(@"%s", stu.name);
          debug_objc`main:
          0x100000ef0 <+0>:   pushq  %rbp
          0x100000ef1 <+1>:   movq   %rsp, %rbp
