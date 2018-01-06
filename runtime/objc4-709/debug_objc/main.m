@@ -7,7 +7,44 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "Dog.h"
+/*
+ struct objc_class {
+    Class isa                                                OBJC_ISA_AVAILABILITY;
+ #if !__OBJC2__
+    Class super_class                                        OBJC2_UNAVAILABLE;
+    const char *name                                         OBJC2_UNAVAILABLE;
+    long version                                             OBJC2_UNAVAILABLE;
+    long info                                                OBJC2_UNAVAILABLE;
+    long instance_size                                       OBJC2_UNAVAILABLE;
+    struct objc_ivar_list *ivars                             OBJC2_UNAVAILABLE;
+    struct objc_method_list **methodLists                    OBJC2_UNAVAILABLE;
+    struct objc_cache *cache                                 OBJC2_UNAVAILABLE;
+    struct objc_protocol_list *protocols                     OBJC2_UNAVAILABLE;
+ #endif
+ } OBJC2_UNAVAILABLE;
+ 这里如果动态修改*methodLists的值来添加成员方法，这也是Category实现的原理，同样解释了Category不能添加属性的原因
+ https://tech.meituan.com/?l=320&pos=0
+ https://tech.meituan.com/DiveIntoCategory.html
+ 所有的OC类和对象，在runtime层都是用struct表示的，category也不例外，在runtime层，category用结构体category_t（在objc-runtime-new.h中可以找到此定义），它包含了
+ 1)、类的名字（name）
+ 2)、类（cls）
+ 3)、category中所有给类添加的实例方法的列表（instanceMethods）
+ 4)、category中所有添加的类方法的列表（classMethods）
+ 5)、category实现的所有协议的列表（protocols）
+ 6)、category中添加的所有属性（instanceProperties）
+ typedef struct category_t {
+    const char *name;
+    classref_t cls;
+    struct method_list_t *instanceMethods;
+    struct method_list_t *classMethods;
+    struct protocol_list_t *protocols;
+    struct property_list_t *instanceProperties;
+ } category_t;
+ 从category的定义也可以看出category的可为（可以添加实例方法，类方法，甚至可以实现协议，添加属性）和不可为（无法添加实例变量）。
+ 1)、把category的实例方法、协议以及属性添加到类上
+ 2)、把category的类方法和协议添加到类的metaclass上
+ */
 // 全局变量 在该文件内谁都可以改 所以应该通过内存地址去查值
 int age = 3;
 
@@ -15,9 +52,10 @@ int main(int argc, const char * argv[]) {
 
     @autoreleasepool {
         // insert code here...
-        NSObject *stu = [[NSObject alloc] init];
-        __weak id ptr = stu;
-        __weak id ptr2 = ptr;
+        Dog *dog = [[Dog alloc] init];
+        NSLog(@"dog=%@",dog);
+//        __weak id ptr = stu;
+//        __weak id ptr2 = ptr;
         /*
          内部调用这个方法
          newObj = stu
