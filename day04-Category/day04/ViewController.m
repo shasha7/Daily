@@ -9,17 +9,46 @@
 #import "ViewController.h"
 #import "CategoryDemo.h"
 #import "CategoryDemo+attribute.h"
+#import "CategoryDemo+attribute1.h"
 #import <objc/runtime.h>
 
-/**
- *  类扩展就像匿名的分类一样,但是类扩展声明必须在.m文件中;可以声明变量、添加属性、添加方法
- *  在类扩展中声明的方法，不实现的话就会报警告Method definition for 'xxx' not found
- */
 @interface ViewController ()
 
 @end
 
 @implementation ViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    CategoryDemo *categoryDemo = [[CategoryDemo alloc] init];
+    [categoryDemo method1]; // 打印结果：CategoryDemo+attribute
+    
+    // 如何调用被分类覆盖了的原类已有的方法？？？
+    unsigned int methodCount = 0;
+    SEL lastSel = NULL;
+    IMP lastImp = NULL;
+    Method *methods = class_copyMethodList([CategoryDemo class], &methodCount);
+    for (int i = 0; i < methodCount; i++) {
+        Method method = methods[i];
+        const char *name = sel_getName(method_getName(method));
+        NSString *methodName = [NSString stringWithCString:name encoding:NSUTF8StringEncoding];
+        if ([@"method1" isEqualToString:methodName]) {
+            lastSel = method_getName(method);
+            lastImp = method_getImplementation(method);
+        }
+    }
+    
+    typedef void (*fn)(id,SEL);
+    
+    if (lastImp != NULL) {
+        fn f = (fn)lastImp;
+        f(categoryDemo,lastSel);
+        // 打印结果：CategoryDemo
+    }
+
+    free(methods);
+}
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     
