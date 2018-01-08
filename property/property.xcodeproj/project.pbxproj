@@ -15,6 +15,7 @@
 		AA34CC0F200055EE009258A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA34CC0E200055EE009258A4 /* main.m */; };
 		AA34CC17200064F3009258A4 /* Dog.m in Sources */ = {isa = PBXBuildFile; fileRef = AA34CC16200064F3009258A4 /* Dog.m */; };
 		AA34CC1A2000C31E009258A4 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = AA34CC192000C31E009258A4 /* Person.m */; };
+		AA5B74F620036CF400DC436E /* Animal.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5B74F520036CF400DC436E /* Animal.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,8 @@
 		AA34CC16200064F3009258A4 /* Dog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Dog.m; sourceTree = "<group>"; };
 		AA34CC182000C31E009258A4 /* Person.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
 		AA34CC192000C31E009258A4 /* Person.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
+		AA5B74F420036CF400DC436E /* Animal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Animal.h; sourceTree = "<group>"; };
+		AA5B74F520036CF400DC436E /* Animal.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Animal.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +71,10 @@
 				AA34CC00200055EE009258A4 /* AppDelegate.m */,
 				AA34CC02200055EE009258A4 /* ViewController.h */,
 				AA34CC03200055EE009258A4 /* ViewController.m */,
+				AA5B74F420036CF400DC436E /* Animal.h */,
+				AA5B74F520036CF400DC436E /* Animal.m */,
+				AA34CC182000C31E009258A4 /* Person.h */,
+				AA34CC192000C31E009258A4 /* Person.m */,
 				AA34CC15200064F3009258A4 /* Dog.h */,
 				AA34CC16200064F3009258A4 /* Dog.m */,
 				AA34CC05200055EE009258A4 /* Main.storyboard */,
@@ -75,8 +82,6 @@
 				AA34CC0A200055EE009258A4 /* LaunchScreen.storyboard */,
 				AA34CC0D200055EE009258A4 /* Info.plist */,
 				AA34CC0E200055EE009258A4 /* main.m */,
-				AA34CC182000C31E009258A4 /* Person.h */,
-				AA34CC192000C31E009258A4 /* Person.m */,
 			);
 			path = property;
 			sourceTree = "<group>";
@@ -155,6 +160,7 @@
 				AA34CC04200055EE009258A4 /* ViewController.m in Sources */,
 				AA34CC0F200055EE009258A4 /* main.m in Sources */,
 				AA34CC1A2000C31E009258A4 /* Person.m in Sources */,
+				AA5B74F620036CF400DC436E /* Animal.m in Sources */,
 				AA34CC17200064F3009258A4 /* Dog.m in Sources */,
 				AA34CC01200055EE009258A4 /* AppDelegate.m in Sources */,
 			);

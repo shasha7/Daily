@@ -6,8 +6,8 @@
 //  Copyright © 2018年 wwh. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "Animal.h"
 
-@interface Person : NSObject
+@interface Person : Animal
 
 @end

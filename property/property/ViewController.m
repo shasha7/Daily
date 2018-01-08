@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "Dog.h"
+#import "Person.h"
 #import <objc/runtime.h>
 #import "Person.h"
 
@@ -30,11 +31,12 @@ void TestClass() {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    Class cls = objc_allocateClassPair([NSObject class], "Animal", 0);
-    
-    class_addMethod(cls, @selector(TestClass), (IMP)TestClass, "v@:");
-    
-    objc_registerClassPair(cls);
+    __unused Person *p = [Person new];
+//    Class cls = objc_allocateClassPair([NSObject class], "Animal", 0);
+//
+//    class_addMethod(cls, @selector(TestClass), (IMP)TestClass, "v@:");
+//
+//    objc_registerClassPair(cls);
     
     
 //    NSLog(@"self = %@", self);
