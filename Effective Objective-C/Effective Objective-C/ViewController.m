@@ -1,9 +1,9 @@
 //
 //  ViewController.m
-//  day04
+//  Effective Objective-C
 //
-//  Created by 王伟虎 on 17/2/10.
-//  Copyright © 2017年 wwh. All rights reserved.
+//  Created by 王伟虎 on 2018/1/11.
+//  Copyright © 2018年 wwh. All rights reserved.
 //
 
 #import "ViewController.h"
@@ -11,6 +11,7 @@
 #import "CategoryDemo+attribute.h"
 #import "CategoryDemo+attribute1.h"
 #import <objc/runtime.h>
+#include "DataType.h"
 
 @interface ViewController ()
 
@@ -20,7 +21,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
+    int a = 10;
+    testPointerNoParameter();
+    testPointer(&a);
+    NSLog(@"A value equal to %d", a);
+}
+
+// 分类覆盖原有类的方法测试
+- (void)coverMethodTest {
     CategoryDemo *categoryDemo = [[CategoryDemo alloc] init];
     [categoryDemo method1]; // 打印结果：CategoryDemo+attribute
     
@@ -46,7 +55,7 @@
         f(categoryDemo,lastSel);
         // 打印结果：CategoryDemo
     }
-
+    
     free(methods);
 }
 

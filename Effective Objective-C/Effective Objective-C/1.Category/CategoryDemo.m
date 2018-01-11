@@ -9,7 +9,6 @@
 #import "CategoryDemo.h"
 
 @interface CategoryDemo ()
-
 /**
  *  类扩展看上去像一个匿名的分类，但却是两个完全不同的东西
  *  类扩展声明必须在.m文件中，可以声明变量、添加属性、添加方法
@@ -48,4 +47,5 @@
 - (void)method_extention2 {
     
 }
+
 @end
