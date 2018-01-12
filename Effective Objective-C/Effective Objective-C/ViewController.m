@@ -12,8 +12,13 @@
 #import "CategoryDemo+attribute1.h"
 #import <objc/runtime.h>
 #include "DataType.h"
+#import "Enumerating.h"
+#import "WWHCache.h"
 
 @interface ViewController ()
+
+@property (nonatomic, strong) NSCache *cache;
+@property (nonatomic, strong) WWHCache *wwhCache;
 
 @end
 
@@ -22,6 +27,35 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    NSCache *cache = [[NSCache alloc] init];
+    cache.name = @"com.wangweihu.cache";
+    cache.countLimit = 5;
+    cache.totalCostLimit = 5 * 1024 *1024;
+    self.cache = cache;
+    
+    WWHCache *wwhCache = [WWHCache new];
+    cache.delegate = wwhCache;
+    self.wwhCache = wwhCache;
+
+    for (NSInteger i = 0; i < 10; i++) {
+        [cache setObject:[NSString stringWithFormat:@"JiaYuan_%ld", (long)i] forKey:[NSString stringWithFormat:@"wwh_%ld", (long)i]];
+    }
+    
+    
+    for (NSInteger i = 0; i < 10; i++) {
+        NSLog(@"Value class = %@", [[cache objectForKey:[NSString stringWithFormat:@"wwh_%ld", (long)i]] class]);
+    }
+}
+
+// 按位掩码枚举测试
+- (void)EnumeratingTest {
+    Enumerating *obj = [Enumerating new];
+    obj.roundedMakType = WWHAutoRoundedMakTypeLT | WWHAutoRoundedMakTypeLB;
+    obj.connectStateType = WWHNetConnectStateTypeWIFI;
+}
+
+// 指针间接修改实参的值测试
+- (void)pointerTest {
     int a = 10;
     testPointerNoParameter();
     testPointer(&a);

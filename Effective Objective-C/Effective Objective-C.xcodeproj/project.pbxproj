@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA779CB920086F670034994A /* WWHCache.m in Sources */ = {isa = PBXBuildFile; fileRef = AA779CB820086F660034994A /* WWHCache.m */; };
+		AA779CBB20086F7B0034994A /* WWHCache.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AA779CBA20086F7B0034994A /* WWHCache.rtf */; };
 		AADF60D62006FE5B00B6F705 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AADF60D52006FE5B00B6F705 /* AppDelegate.m */; };
 		AADF60D92006FE5B00B6F705 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AADF60D82006FE5B00B6F705 /* ViewController.m */; };
 		AADF60DC2006FE5B00B6F705 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AADF60DA2006FE5B00B6F705 /* Main.storyboard */; };
@@ -19,9 +21,14 @@
 		AADF60F62006FFE500B6F705 /* Category.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AADF60F52006FFE500B6F705 /* Category.rtf */; };
 		AADF60FA200700C500B6F705 /* DataType.c in Sources */ = {isa = PBXBuildFile; fileRef = AADF60F9200700C500B6F705 /* DataType.c */; };
 		AADF60FC2007013B00B6F705 /* Data type.rtfd in Resources */ = {isa = PBXBuildFile; fileRef = AADF60FB2007013B00B6F705 /* Data type.rtfd */; };
+		AADF61002007198500B6F705 /* Enumerating.m in Sources */ = {isa = PBXBuildFile; fileRef = AADF60FF2007198500B6F705 /* Enumerating.m */; };
+		AADF610220073AC100B6F705 /* 3. Enumerating.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AADF610120073AC100B6F705 /* 3. Enumerating.rtf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AA779CB720086F660034994A /* WWHCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WWHCache.h; sourceTree = "<group>"; };
+		AA779CB820086F660034994A /* WWHCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WWHCache.m; sourceTree = "<group>"; };
+		AA779CBA20086F7B0034994A /* WWHCache.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = WWHCache.rtf; sourceTree = "<group>"; };
 		AADF60D12006FE5B00B6F705 /* Effective Objective-C.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Effective Objective-C.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AADF60D42006FE5B00B6F705 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		AADF60D52006FE5B00B6F705 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -42,6 +49,9 @@
 		AADF60F8200700C500B6F705 /* DataType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataType.h; sourceTree = "<group>"; };
 		AADF60F9200700C500B6F705 /* DataType.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = DataType.c; sourceTree = "<group>"; };
 		AADF60FB2007013B00B6F705 /* Data type.rtfd */ = {isa = PBXFileReference; lastKnownFileType = wrapper.rtfd; path = "Data type.rtfd"; sourceTree = "<group>"; };
+		AADF60FE2007198500B6F705 /* Enumerating.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Enumerating.h; sourceTree = "<group>"; };
+		AADF60FF2007198500B6F705 /* Enumerating.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Enumerating.m; sourceTree = "<group>"; };
+		AADF610120073AC100B6F705 /* 3. Enumerating.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "3. Enumerating.rtf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +65,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AA779CB620086F170034994A /* 4.NSCache&NSDictionary */ = {
+			isa = PBXGroup;
+			children = (
+				AA779CB720086F660034994A /* WWHCache.h */,
+				AA779CB820086F660034994A /* WWHCache.m */,
+				AA779CBA20086F7B0034994A /* WWHCache.rtf */,
+			);
+			path = "4.NSCache&NSDictionary";
+			sourceTree = "<group>";
+		};
 		AADF60C82006FE5B00B6F705 = {
 			isa = PBXGroup;
 			children = (
@@ -76,6 +96,8 @@
 			children = (
 				AADF60EB2006FEA200B6F705 /* 1.Category */,
 				AADF60F72007008200B6F705 /* 2.Data type */,
+				AADF60FD2007194900B6F705 /* 3. Enumerating */,
+				AA779CB620086F170034994A /* 4.NSCache&NSDictionary */,
 				AADF60D42006FE5B00B6F705 /* AppDelegate.h */,
 				AADF60D52006FE5B00B6F705 /* AppDelegate.m */,
 				AADF60D72006FE5B00B6F705 /* ViewController.h */,
@@ -119,6 +141,16 @@
 				AADF60FB2007013B00B6F705 /* Data type.rtfd */,
 			);
 			path = "2.Data type";
+			sourceTree = "<group>";
+		};
+		AADF60FD2007194900B6F705 /* 3. Enumerating */ = {
+			isa = PBXGroup;
+			children = (
+				AADF60FE2007198500B6F705 /* Enumerating.h */,
+				AADF60FF2007198500B6F705 /* Enumerating.m */,
+				AADF610120073AC100B6F705 /* 3. Enumerating.rtf */,
+			);
+			path = "3. Enumerating";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -179,10 +211,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA779CBB20086F7B0034994A /* WWHCache.rtf in Resources */,
 				AADF60FC2007013B00B6F705 /* Data type.rtfd in Resources */,
 				AADF60F62006FFE500B6F705 /* Category.rtf in Resources */,
 				AADF60E12006FE5B00B6F705 /* LaunchScreen.storyboard in Resources */,
 				AADF60DE2006FE5B00B6F705 /* Assets.xcassets in Resources */,
+				AADF610220073AC100B6F705 /* 3. Enumerating.rtf in Resources */,
 				AADF60DC2006FE5B00B6F705 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -197,10 +231,12 @@
 				AADF60D92006FE5B00B6F705 /* ViewController.m in Sources */,
 				AADF60F32006FF7700B6F705 /* CategoryDemo.m in Sources */,
 				AADF60E42006FE5B00B6F705 /* main.m in Sources */,
+				AA779CB920086F670034994A /* WWHCache.m in Sources */,
 				AADF60D62006FE5B00B6F705 /* AppDelegate.m in Sources */,
 				AADF60F22006FF7700B6F705 /* CategoryDemo+attribute1.m in Sources */,
 				AADF60F42006FF7700B6F705 /* CategoryDemo+attribute.m in Sources */,
 				AADF60FA200700C500B6F705 /* DataType.c in Sources */,
+				AADF61002007198500B6F705 /* Enumerating.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
