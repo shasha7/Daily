@@ -120,6 +120,7 @@
         self.currentMemoryUsage += cacheImage.totalBytes;
     });
 
+    // LRU淘汰算法简单明了，但缺点是取出全部缓存按访问时间进行排序
     dispatch_barrier_async(self.synchronizationQueue, ^{
         if (self.currentMemoryUsage > self.memoryCapacity) {
             UInt64 bytesToPurge = self.currentMemoryUsage - self.preferredMemoryUsageAfterPurge;
