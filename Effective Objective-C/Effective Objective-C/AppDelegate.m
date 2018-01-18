@@ -20,7 +20,15 @@
     return YES;
 }
 
-
+/*
+ 应用状态
+ 活跃状态：UIApplicationStateActive
+ The app is running in the foreground and currently receiving events.
+ 非活跃状态：UIApplicationStateInactive
+ The app is running in the foreground but is not receiving events. This might happen as a result of an interruption or because the app is transitioning to or from the background.
+ 后台状态：UIApplicationStateBackground
+ The app is running in the background.
+ */
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.

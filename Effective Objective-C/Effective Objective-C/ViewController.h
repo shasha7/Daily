@@ -9,7 +9,15 @@
 #import <UIKit/UIKit.h>
 
 @interface ViewController : UIViewController
-
-
+{
+@private
+    NSInteger _edu;
+@public
+    NSInteger _sex;
+@protected
+    NSInteger _income;
+    @package
+    NSInteger _married;
+}
 @end
 

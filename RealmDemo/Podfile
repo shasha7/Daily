@@ -1,7 +1,0 @@
-platform :ios, ‘8.0’
-
-target 'RealmDemo' do
-
-pod 'Realm', '~> 2.8.3'
-
-end
