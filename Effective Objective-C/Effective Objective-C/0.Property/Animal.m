@@ -14,7 +14,7 @@
 // +initialize 只会在对应类的方法第一次被使用时，才会被调用
 // 未初始化的类发送 +initialize 消息，不过会强制父类先发送 +initialize
 + (void)initialize {
-    NSLog(@"%@",NSStringFromSelector(_cmd));
+    NSLog(@"Animal%@",NSStringFromSelector(_cmd));
 }
 
 - (instancetype)init {
@@ -63,11 +63,11 @@ NSString *binaryWithInter(NSUInteger decInt) {
 + (void)load {
     /*
      load 与 Initialize的区别
-     正常情况下(即没有在 load 方法中调用相关类方法)，load 和 Initialize 方法都在实例化对象之前调用，load相当于装载方法，都在main()函数之前调用，Initialize方法都在main() 函数之后调用。
-     如果在A类的 load 方法中调用 B 类的类方法，那么在调用A的Load 方法之前，会先调用一下B类的initialize 方法，但是B类的load 方法还是按照 Compile Source 顺序进行加载
-     所有类的 load 方法都会被调用，先调用父类、再调用子类，多个分类会按照Compile Sources 顺序加载。但是Initialize 方法会被覆盖，子类父类分类中只会执行一个
-     load 方法内部一般用来实现 Method Swizzle，Initialize方法一般用来初始化全局变量或者静态变量
-     两个方法都不能主动调用，也不需要通过 super 继承父类方法，但是 Initialize 方法会在子类没有实现的时候调用父类的该方法，而 load 不会
+     正常情况下(即没有在load方法中调用相关类方法)，load和Initialize方法都在实例化对象之前调用，load相当于装载方法，都在main()函数之前调用，initialize方法都在main()函数之后调用。
+     如果在A类的load方法中调用B类的类方法，那么在调用A的Load方法之前，会先调用一下B类的initialize方法，但是B类的load方法还是按照Compile Source顺序进行加载
+     所有类的load方法都会被调用，先调用父类、再调用子类，多个分类会按照Compile Sources顺序加载。但是initialize方法会被覆盖，子类父类分类中只会执行一个
+     load方法内部一般用来实现Method Swizzle，initialize方法一般用来初始化全局变量或者静态变量
+     两个方法都不能主动调用，也不需要通过super继承父类方法，但是initialize方法会在子类没有实现的时候调用父类的该方法，而load不会
      */
     // http://nshipster.cn/method-swizzling/
     // When swizzling a class method, use the following:
@@ -117,6 +117,5 @@ NSString *binaryWithInter(NSUInteger decInt) {
     Class class = [self class];
     return [NSString stringWithFormat:@"class=%@", class];
 }
-
 
 @end

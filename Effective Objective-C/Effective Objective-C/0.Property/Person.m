@@ -7,12 +7,18 @@
 //
 
 #import "Person.h"
+#import "Dog.h"
 
 @implementation Person
 
++ (void)load {
+    NSLog(@"Person load");
+    [Dog eat];
+}
+
 + (void)initialize {
-    if ([self isKindOfClass:[Person class]]) {
-        NSLog(@"%@",NSStringFromSelector(_cmd));
+    if (self == [Person class]) {
+        NSLog(@"Person%@",NSStringFromSelector(_cmd));
     }
 }
 

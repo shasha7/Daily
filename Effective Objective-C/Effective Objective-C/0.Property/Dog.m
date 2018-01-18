@@ -10,6 +10,12 @@
 
 @implementation Dog
 
++ (void)initialize {
+    if (self == [Dog class]) {
+        NSLog(@"Dog%@",NSStringFromSelector(_cmd));
+    }
+}
+
 - (void)eat {
     NSLog(@"The dog of name is %@ eatting %p", self.name, self.name);
 }

@@ -13,6 +13,7 @@
 		AA17A34720107392007B8535 /* Property.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AA17A34620107392007B8535 /* Property.rtf */; };
 		AA17A34B201076A1007B8535 /* HomeHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA17A349201076A0007B8535 /* HomeHeaderView.m */; };
 		AA17A34D20107805007B8535 /* ViewController.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AA17A34C20107805007B8535 /* ViewController.rtf */; };
+		AA17A34F20109447007B8535 /* HomeHeaderView.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AA17A34E20109447007B8535 /* HomeHeaderView.rtf */; };
 		AA779CB920086F670034994A /* WWHCache.m in Sources */ = {isa = PBXBuildFile; fileRef = AA779CB820086F660034994A /* WWHCache.m */; };
 		AA779CBB20086F7B0034994A /* WWHCache.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AA779CBA20086F7B0034994A /* WWHCache.rtf */; };
 		AADF60D62006FE5B00B6F705 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AADF60D52006FE5B00B6F705 /* AppDelegate.m */; };
@@ -42,6 +43,7 @@
 		AA17A349201076A0007B8535 /* HomeHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeHeaderView.m; sourceTree = "<group>"; };
 		AA17A34A201076A1007B8535 /* HomeHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeHeaderView.h; sourceTree = "<group>"; };
 		AA17A34C20107805007B8535 /* ViewController.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = ViewController.rtf; sourceTree = "<group>"; };
+		AA17A34E20109447007B8535 /* HomeHeaderView.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = HomeHeaderView.rtf; sourceTree = "<group>"; };
 		AA779CB720086F660034994A /* WWHCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WWHCache.h; sourceTree = "<group>"; };
 		AA779CB820086F660034994A /* WWHCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WWHCache.m; sourceTree = "<group>"; };
 		AA779CBA20086F7B0034994A /* WWHCache.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = WWHCache.rtf; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 			children = (
 				AA17A34A201076A1007B8535 /* HomeHeaderView.h */,
 				AA17A349201076A0007B8535 /* HomeHeaderView.m */,
+				AA17A34E20109447007B8535 /* HomeHeaderView.rtf */,
 			);
 			path = "5.UIView&CALayer";
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA779CBB20086F7B0034994A /* WWHCache.rtf in Resources */,
+				AA17A34F20109447007B8535 /* HomeHeaderView.rtf in Resources */,
 				AADF60FC2007013B00B6F705 /* Data type.rtfd in Resources */,
 				AADF60F62006FFE500B6F705 /* Category.rtf in Resources */,
 				AA17A34720107392007B8535 /* Property.rtf in Resources */,
@@ -275,7 +279,6 @@
 				AADF60D92006FE5B00B6F705 /* ViewController.m in Sources */,
 				AADF60F32006FF7700B6F705 /* CategoryDemo.m in Sources */,
 				AA17A344201071F5007B8535 /* Person.m in Sources */,
-				AA17A343201071F5007B8535 /* Dog.m in Sources */,
 				AA17A34B201076A1007B8535 /* HomeHeaderView.m in Sources */,
 				AADF60E42006FE5B00B6F705 /* main.m in Sources */,
 				AA779CB920086F670034994A /* WWHCache.m in Sources */,
@@ -284,6 +287,7 @@
 				AADF60F42006FF7700B6F705 /* CategoryDemo+attribute.m in Sources */,
 				AA17A345201071F5007B8535 /* Animal.m in Sources */,
 				AADF60FA200700C500B6F705 /* DataType.c in Sources */,
+				AA17A343201071F5007B8535 /* Dog.m in Sources */,
 				AADF61002007198500B6F705 /* Enumerating.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

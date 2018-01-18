@@ -17,6 +17,7 @@
 #import "Dog.h"
 #import "Person.h"
 #import <objc/runtime.h>
+#import "HomeHeaderView.h"
 
 @interface ViewController ()
 /*
@@ -44,7 +45,7 @@
 @property (nonatomic, copy) NSString *firstName;
 @property (nonatomic, copy) NSString *lastName;
 @property (nonatomic, assign, getter=isOn) BOOL on;
-- (NSString *)fullName;
+//- (NSString *)fullName;
 
 @end
 
@@ -53,6 +54,106 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    HomeHeaderView * view = [[HomeHeaderView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    [self.view addSubview:view];
+    
+    [UIView animateWithDuration:1.25 animations:^{
+        view.center = CGPointMake(80, 80);
+    } completion:^(BOOL finished) {
+        NSLog(@"aaa");
+    }];
+    
+//    Person *person = [Person new];
+//    NSLog(@"person = %@", person);
+    
+    // copyTest
+//    [self copyTest];
+}
+
+- (void)copyTest {
+    // https://www.cnblogs.com/acBool/p/5146639.html
+    // 浅拷贝
+    // C语言
+    char *ptr1 = (char *)malloc(100);
+    char *ptr2 = ptr1;
+    
+    printf("ptr1 = %p, ptr2 = %p \n", ptr1, ptr2);
+    // 打印结果 ptr1 = 0x6040000c8500, ptr2 = 0x6040000c8500
+    // 由此可知两个指针指向同一块内存区域，对ptr1、ptr1取地址结果不言而喻，肯定是不同的
+    printf("&ptr1 = %p, &ptr2 = %p \n", &ptr1, &ptr2);
+    // &ptr1 = 0x7ffee48dbb18, &ptr2 = 0x7ffee48dbb10
+    // 浅拷贝可以简单的理解为多个指针指向同一块内存区域即创建另一个变量指向同一块内存区域
+    
+    free(ptr1);//销毁内存 这时在访问这一块内存就会出现野指针错误,至于会不会造成崩溃就看编译器了
+    // 当内存销毁时，指向该内存的其他指针需重新指向，否则将成为野指针
+    printf("ptr2 = %s \n", ptr2);
+    
+    /*
+     Objective-C
+     (1)可变对象的copy和mutableCopy方法都是深复制
+     (2)不可变对象的copy方法是浅复制，mutableCopy方法是深复制
+     (3)copy方法返回的对象是不可变对象
+     */
+    NSMutableArray *array1 = [NSMutableArray arrayWithObjects:@"wangweihu", @"wushanshan", nil];
+    NSMutableArray *array2 = [array1 copy];
+    NSLog(@"array1 = %p, array2 = %p", array1, array2);
+    // array1 = 0x600000451d60, array2 = 0x6000002088c0
+    
+    NSMutableArray *array3 = [array1 mutableCopy];
+    NSLog(@"array1 = %p, array3 = %p", array1, array3);
+    // array1 = 0x6000004414d0, array3 = 0x600000441860
+    
+    NSArray *array4 = @[@"wangweihu",@"wushanshan"];
+    NSArray *array5 = [array4 copy];
+    NSLog(@"array4 = %p, array5 = %p", array4, array5);
+    // array4 = 0x10bafc198, array5 = 0x10bafc198
+    
+    NSArray *array6 = [array4 mutableCopy];
+    NSLog(@"array4 = %p, array6 = %p", array4, array6);
+    // array4 = 0x60000001ca70, array6 = 0x600000256f80
+    
+    NSLog(@"array2 class is immutable = %@", NSStringFromClass([array1 class]));
+    // __NSArrayM
+    NSLog(@"array2 class is immutable = %@", NSStringFromClass([array2 class]));
+    // __NSSingleObjectArrayI(数组中只有一个对象) __NSArrayI
+    
+    // 可变集合执行copy操作，无疑的是会执行深层拷贝，创建一块不同的内存块
+    // 但是不同的是里面的元素指向的还是原来可变集合中元素内存区域
+    NSMutableString *a = [NSMutableString stringWithString:@"wangweihu"];
+    NSMutableArray *realA1 = [NSMutableArray arrayWithObjects:a, @"wushanshan", nil];
+    NSMutableArray *realA2 = [realA1 mutableCopy];//或[realA1 Copy];
+    NSLog(@"realA1 = %p, realA2 = %p", realA1, realA2);
+    // realA1 = 0x60000024f9c0, realA2 = 0x600000433fe0
+    [realA2[0] stringByAppendingString:@"love"];
+    
+    for (NSString *str in realA1) {
+        NSLog(@"realA1 str = %@,%p", str, str);
+        //realA1 str = wangweihu,0x60000024f720
+        //realA1 str = wushanshan,0x10b4541c0
+    }
+    
+    for (NSString *str in realA2) {
+        NSLog(@"realA2 str = %@,%p", str, str);
+        //realA1 str = wangweihu,0x60000024f720
+        //realA1 str = wushanshan,0x10b4541c0
+    }
+    
+    // 要想里面的元素也是深拷贝
+    NSArray *realA3 = [[NSArray alloc] initWithArray:realA1 copyItems:YES];
+    for (NSString *str in realA3) {
+        NSLog(@"realA3 str = %@,%p", str, str);
+        //realA3 str = wangweihu,0xa2420b6a40015509
+        //realA3 str = wushanshan,0x10c40e1c0
+    }
+    NSArray *realA4 = [NSKeyedUnarchiver unarchiveTopLevelObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:realA1] error:nil];
+    for (NSString *str in realA4) {
+        NSLog(@"realA4 str = %@,%p", str, str);
+        //realA3 str = wangweihu,0x6040004432d0
+        //realA3 str = wushanshan,0x60400023a080
+    }
+}
+
+- (void)cacheTest {
     NSCache *cache = [[NSCache alloc] init];
     cache.name = @"com.wangweihu.cache";
     cache.countLimit = 5;
@@ -62,7 +163,7 @@
     WWHCache *wwhCache = [WWHCache new];
     cache.delegate = wwhCache;
     self.wwhCache = wwhCache;
-
+    
     for (NSInteger i = 0; i < 10; i++) {
         [cache setObject:[NSString stringWithFormat:@"JiaYuan_%ld", (long)i] forKey:[NSString stringWithFormat:@"wwh_%ld", (long)i]];
     }
