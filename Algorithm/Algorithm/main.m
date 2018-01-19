@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#include <string.h>
 
 // 获取一串字符串中第一次出现一次的字母(数字、字母)如果被检查字符串包含中文怎么办???
 // https://wenku.baidu.com/view/11e99207bed5b9f3f90f1cff.html
@@ -37,11 +38,32 @@ char getFirstSingleElement(char * string) {
     return '\0';
 }
 
+// 反转字符串
+// 递归算法
+void inverseStr(char *sourceStr, char *destinationStr) {
+    if (sourceStr == NULL || destinationStr == NULL) {
+        return;
+    }
+    if (*sourceStr == '\0') {
+        return;
+    }
+    sourceStr++;
+    inverseStr(sourceStr, destinationStr);
+    printf("sourceStr = %c \n", *sourceStr);
+    // 拼接字符传
+    strncat(destinationStr, sourceStr, 1);
+}
+
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         // insert code here...
-        char first = getFirstSingleElement(NULL);
-        printf("first = %c\n",first);
+//        char first = getFirstSingleElement(NULL);
+//        printf("first = %c\n",first);
+        
+//        char *sourceStr = "wangweihu";
+//        char destinationStr[1024] = {0};
+//        inverseStr(sourceStr, destinationStr);
+//        printf("destinationStr = %s \n", destinationStr);
     }
     return 0;
 }
