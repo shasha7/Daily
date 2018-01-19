@@ -50,10 +50,20 @@
 @end
 
 @implementation ViewController
+// __kindof : 告诉编译器返回值可能是NSString,也可能是NSMutableString
+- (__kindof NSString *)dequeueXXX{
+    //    NSMutableString *mutaString = @"wangweihu";
+    NSString *mutaString = @"wangweihu";
+    NSLog(@"%@",mutaString);
+    return mutaString;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+}
+
+- (void)layerTest {
     HomeHeaderView * view = [[HomeHeaderView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
     [self.view addSubview:view];
     
@@ -62,12 +72,6 @@
     } completion:^(BOOL finished) {
         NSLog(@"aaa");
     }];
-    
-//    Person *person = [Person new];
-//    NSLog(@"person = %@", person);
-    
-    // copyTest
-//    [self copyTest];
 }
 
 - (void)copyTest {

@@ -12,13 +12,13 @@
 @implementation Person
 
 + (void)load {
-    NSLog(@"Person load");
+//    NSLog(@"Person load");
     [Dog eat];
 }
 
 + (void)initialize {
     if (self == [Person class]) {
-        NSLog(@"Person%@",NSStringFromSelector(_cmd));
+//        NSLog(@"Person%@",NSStringFromSelector(_cmd));
     }
 }
 

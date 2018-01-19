@@ -47,7 +47,7 @@ static const NSString *attributeKey = @"attribute4";
     return operations;
 }
 
-- (void)method1 {
+- (void)method11 {
     NSLog(@"CategoryDemo+attribute");
 }
 

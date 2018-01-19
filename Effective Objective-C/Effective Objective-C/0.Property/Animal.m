@@ -14,16 +14,16 @@
 // +initialize 只会在对应类的方法第一次被使用时，才会被调用
 // 未初始化的类发送 +initialize 消息，不过会强制父类先发送 +initialize
 + (void)initialize {
-    NSLog(@"Animal%@",NSStringFromSelector(_cmd));
+//    NSLog(@"Animal%@",NSStringFromSelector(_cmd));
 }
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        struct objc_object *objct = (__bridge struct objc_object *)([NSObject new]);
+//        struct objc_object *objct = (__bridge struct objc_object *)([NSObject new]);
         // 使用整个指针大小的内存来存储isa指针有些浪费，尤其在64位的CPU上。在ARM64运行的iOS只使用了 33位作为指针(与结构体中的33位无关，Mac OS上为34位)，而剩下的31位用于其它目的。类的指针也同样根据字节对齐了，每一个类指针的地址都能够被8整除，也就是使最后3bits为0，为isa留下34位用于性能的优化。
-        NSLog(@"%@", binaryWithInter(objct->isa));
-        NSLog(@"%@", binaryWithInter((uintptr_t)[NSObject class]));
+//        NSLog(@"%@", binaryWithInter(objct->isa));
+//        NSLog(@"%@", binaryWithInter((uintptr_t)[NSObject class]));
         // 0000000001011101111111111111111110010000110100100000000101000001补全64位
         // 11111111111111110010000110100100000000101000000
     }

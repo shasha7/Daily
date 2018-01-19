@@ -19,5 +19,9 @@
     @package
     NSInteger _married;
 }
+
+// __kindof : 告诉编译器返回值可能是NSString,也可能是NSMutableString
+- (__kindof NSString *)dequeueXXX;
+
 @end
 

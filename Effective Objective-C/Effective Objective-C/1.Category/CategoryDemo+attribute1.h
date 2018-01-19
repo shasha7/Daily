@@ -10,6 +10,6 @@
 
 @interface CategoryDemo (attribute1)
 
-@property (nonatomic, copy) NSString *attribute5;
+//@property (nonatomic, copy) NSString *attribute5;
 
 @end
