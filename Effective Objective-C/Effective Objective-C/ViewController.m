@@ -18,6 +18,7 @@
 #import "Person.h"
 #import <objc/runtime.h>
 #import "HomeHeaderView.h"
+#import "List.h"
 
 @interface ViewController ()
 /*
@@ -60,7 +61,42 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self listTest];
+}
 
+- (void)listTest {
+    NodeList *list = CreateList();
+    int a1 = 10;
+    int a2 = 20;
+    int a3 = 30;
+    int a4 = 40;
+    int a5 = 50;
+    int a6 = 25;
+//    int pos = 0;
+    // 插入数据
+    InsertNodeTail(list, a1);
+    InsertNodeTail(list, a2);
+    InsertNodeTail(list, a3);
+    InsertNodeTail(list, a4);
+    InsertNodeTail(list, a5);
+    
+    // 插入数据
+    InsertNode(list, a6, 1);
+    
+    // 打印链表
+//    PrintList(list);
+    
+    // 查询数据
+//    GetNodeData(list, 25, &pos, NULL);
+//    printf("GetNode data position %d \n", pos);
+    
+    // 删除数据
+    DeleteNodeData(list, 30);
+    PrintList(list);
+    
+    // 销毁链表
+    DestoryList(&list);
 }
 
 - (void)layerTest {

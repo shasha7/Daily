@@ -30,6 +30,7 @@
 		AA9A05DE2011E3AE00AB4EE5 /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9A05C92011E3AE00AB4EE5 /* NSString+Base64.m */; };
 		AA9A05DF2011E3AE00AB4EE5 /* NSData+CommonCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9A05CE2011E3AE00AB4EE5 /* NSData+CommonCrypto.m */; };
 		AA9A05E02011E3AE00AB4EE5 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9A05CF2011E3AE00AB4EE5 /* NSData+Base64.m */; };
+		AAA6353420158DBF000F32F4 /* List.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA6353320158DBF000F32F4 /* List.m */; };
 		AADF60D62006FE5B00B6F705 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AADF60D52006FE5B00B6F705 /* AppDelegate.m */; };
 		AADF60D92006FE5B00B6F705 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AADF60D82006FE5B00B6F705 /* ViewController.m */; };
 		AADF60DC2006FE5B00B6F705 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AADF60DA2006FE5B00B6F705 /* Main.storyboard */; };
@@ -89,6 +90,8 @@
 		AA9A05CD2011E3AE00AB4EE5 /* NSString+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Base64.h"; sourceTree = "<group>"; };
 		AA9A05CE2011E3AE00AB4EE5 /* NSData+CommonCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+CommonCrypto.m"; sourceTree = "<group>"; };
 		AA9A05CF2011E3AE00AB4EE5 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
+		AAA6353220158DBF000F32F4 /* List.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = List.h; sourceTree = "<group>"; };
+		AAA6353320158DBF000F32F4 /* List.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = List.m; sourceTree = "<group>"; };
 		AADF60D12006FE5B00B6F705 /* Effective Objective-C.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Effective Objective-C.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AADF60D42006FE5B00B6F705 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		AADF60D52006FE5B00B6F705 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -162,6 +165,8 @@
 		AA9A059B2011D83900AB4EE5 /* 6.List */ = {
 			isa = PBXGroup;
 			children = (
+				AAA6353220158DBF000F32F4 /* List.h */,
+				AAA6353320158DBF000F32F4 /* List.m */,
 				AA9A059C2011D87400AB4EE5 /* SingleList.h */,
 				AA9A059D2011D87400AB4EE5 /* SingleList.m */,
 				AA9A059F2011D9DC00AB4EE5 /* SingleList.rtf */,
@@ -432,6 +437,7 @@
 				AA9A059E2011D87400AB4EE5 /* SingleList.m in Sources */,
 				AA9A05D32011E3AE00AB4EE5 /* DES3Util.m in Sources */,
 				AA17A345201071F5007B8535 /* Animal.m in Sources */,
+				AAA6353420158DBF000F32F4 /* List.m in Sources */,
 				AA9A05DE2011E3AE00AB4EE5 /* NSString+Base64.m in Sources */,
 				AA9A05DD2011E3AE00AB4EE5 /* AES.m in Sources */,
 				AADF60FA200700C500B6F705 /* DataType.c in Sources */,
