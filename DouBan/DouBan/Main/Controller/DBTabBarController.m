@@ -10,10 +10,7 @@
 #import "DBNavigationController.h"
 
 #import "DBHomeViewController.h"
-#import "DBAudioBookViewController.h"
 #import "DBBroadcastViewController.h"
-#import "DBGroupViewController.h"
-#import "DBProfileViewController.h"
 
 typedef struct DBTabBarItem {
     __unsafe_unretained NSString *title;
@@ -23,10 +20,7 @@ typedef struct DBTabBarItem {
 
 static DBTabBarItem tabBarList[] = {
     {@"首页", @"db_tab_home", @"db_tab_home_selected"},
-    {@"书影音", @"db_tab_audiobook", @"db_tab_audiobook_selected"},
-    {@"广播", @"db_tab_broadcast", @"db_tab_broadcast_selected"},
-    {@"小组", @"db_tab_group", @"db_tab_group_selected"},
-    {@"我的", @"db_tab_profile", @"db_tab_profile_selected"}
+    {@"广播", @"db_tab_broadcast", @"db_tab_broadcast_selected"}
 };
 
 @interface DBTabBarController ()
@@ -65,18 +59,9 @@ static DBTabBarItem tabBarList[] = {
 - (void)addChildViewControllers {
     DBHomeViewController *homeVC = [DBHomeViewController new];
     [self addChildViewController:homeVC title:tabBarList[0].title image:tabBarList[0].image selectedImage:tabBarList[0].selectedImage];
-    
-    DBAudioBookViewController *audioBookVC = [DBAudioBookViewController new];
-    [self addChildViewController:audioBookVC title:tabBarList[1].title image:tabBarList[1].image selectedImage:tabBarList[1].selectedImage];
-    
+
     DBBroadcastViewController *broadcastVC = [DBBroadcastViewController new];
-    [self addChildViewController:broadcastVC title:tabBarList[2].title image:tabBarList[2].image selectedImage:tabBarList[2].selectedImage];
-    
-    DBGroupViewController *groupVC = [DBGroupViewController new];
-    [self addChildViewController:groupVC title:tabBarList[3].title image:tabBarList[3].image selectedImage:tabBarList[3].selectedImage];
-    
-    DBProfileViewController *profileVC = [DBProfileViewController new];
-    [self addChildViewController:profileVC title:tabBarList[4].title image:tabBarList[4].image selectedImage:tabBarList[4].selectedImage];
+    [self addChildViewController:broadcastVC title:tabBarList[1].title image:tabBarList[1].image selectedImage:tabBarList[1].selectedImage];
 }
 
 - (void)addChildViewController:(UIViewController *)childController title:(NSString *)title image:(NSString *)image selectedImage:(NSString *)selectedImage {

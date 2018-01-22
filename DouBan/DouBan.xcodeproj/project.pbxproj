@@ -18,27 +18,15 @@
 		AA625A001F821A64009E200E /* DBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6259FF1F821A64009E200E /* DBViewController.m */; };
 		AA625A031F821A7E009E200E /* DBTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA625A021F821A7E009E200E /* DBTableViewController.m */; };
 		AA625A061F821AB0009E200E /* DBHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA625A051F821AB0009E200E /* DBHomeViewController.m */; };
-		AA625A091F821AC4009E200E /* DBAudioBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA625A081F821AC4009E200E /* DBAudioBookViewController.m */; };
 		AA625A0C1F821AE0009E200E /* DBBroadcastViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA625A0B1F821AE0009E200E /* DBBroadcastViewController.m */; };
-		AA625A0F1F821AEF009E200E /* DBGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA625A0E1F821AEF009E200E /* DBGroupViewController.m */; };
-		AA625A121F821AFF009E200E /* DBProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA625A111F821AFF009E200E /* DBProfileViewController.m */; };
-		AA625A3E1F821E11009E200E /* db_tab_audiobook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA625A321F821E10009E200E /* db_tab_audiobook@2x.png */; };
 		AA625A3F1F821E11009E200E /* db_tab_home@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA625A331F821E10009E200E /* db_tab_home@2x.png */; };
-		AA625A401F821E11009E200E /* db_tab_profile_female_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA625A341F821E10009E200E /* db_tab_profile_female_selected@2x.png */; };
-		AA625A411F821E11009E200E /* db_tab_profile_female@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA625A351F821E10009E200E /* db_tab_profile_female@2x.png */; };
-		AA625A421F821E11009E200E /* db_tab_profile_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA625A361F821E10009E200E /* db_tab_profile_selected@2x.png */; };
-		AA625A431F821E11009E200E /* db_tab_group@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA625A371F821E10009E200E /* db_tab_group@2x.png */; };
 		AA625A441F821E11009E200E /* db_tab_broadcast@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA625A381F821E11009E200E /* db_tab_broadcast@2x.png */; };
-		AA625A451F821E11009E200E /* db_tab_profile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA625A391F821E11009E200E /* db_tab_profile@2x.png */; };
-		AA625A461F821E11009E200E /* db_tab_audiobook_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA625A3A1F821E11009E200E /* db_tab_audiobook_selected@2x.png */; };
 		AA625A471F821E11009E200E /* db_tab_home_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA625A3B1F821E11009E200E /* db_tab_home_selected@2x.png */; };
 		AA625A481F821E11009E200E /* db_tab_broadcast_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA625A3C1F821E11009E200E /* db_tab_broadcast_selected@2x.png */; };
-		AA625A491F821E11009E200E /* db_tab_group_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA625A3D1F821E11009E200E /* db_tab_group_selected@2x.png */; };
 		AA6AE0911FE7511B00832F41 /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6AE0901FE7511B00832F41 /* XMLDictionary.m */; };
 		AA6AE0951FE7642500832F41 /* DBRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6AE0931FE7642400832F41 /* DBRequestManager.m */; };
 		AA6AE0981FE764F400832F41 /* DeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6AE0971FE764F400832F41 /* DeviceInfo.m */; };
 		AA6AE09C1FE7659F00832F41 /* DBShareData.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6AE09B1FE7659F00832F41 /* DBShareData.m */; };
-		AA6AE0A31FE7721800832F41 /* DBSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6AE0A21FE7721800832F41 /* DBSettingViewController.m */; };
 		AA6AE0A71FE772C800832F41 /* UINavigationController+ExchangeToTopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6AE0A61FE772C800832F41 /* UINavigationController+ExchangeToTopViewController.m */; };
 		AA6AE0AA1FE7917200832F41 /* DBHomeDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6AE0A91FE7917200832F41 /* DBHomeDetailViewController.m */; };
 		AA7871581FE26D5E00379F9D /* UITableView+JYFlowInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7871561FE26D5D00379F9D /* UITableView+JYFlowInfoCell.m */; };
@@ -68,26 +56,12 @@
 		AA625A021F821A7E009E200E /* DBTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBTableViewController.m; sourceTree = "<group>"; };
 		AA625A041F821AB0009E200E /* DBHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBHomeViewController.h; sourceTree = "<group>"; };
 		AA625A051F821AB0009E200E /* DBHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBHomeViewController.m; sourceTree = "<group>"; };
-		AA625A071F821AC4009E200E /* DBAudioBookViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBAudioBookViewController.h; sourceTree = "<group>"; };
-		AA625A081F821AC4009E200E /* DBAudioBookViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBAudioBookViewController.m; sourceTree = "<group>"; };
 		AA625A0A1F821AE0009E200E /* DBBroadcastViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBBroadcastViewController.h; sourceTree = "<group>"; };
 		AA625A0B1F821AE0009E200E /* DBBroadcastViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBBroadcastViewController.m; sourceTree = "<group>"; };
-		AA625A0D1F821AEF009E200E /* DBGroupViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBGroupViewController.h; sourceTree = "<group>"; };
-		AA625A0E1F821AEF009E200E /* DBGroupViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBGroupViewController.m; sourceTree = "<group>"; };
-		AA625A101F821AFF009E200E /* DBProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBProfileViewController.h; sourceTree = "<group>"; };
-		AA625A111F821AFF009E200E /* DBProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBProfileViewController.m; sourceTree = "<group>"; };
-		AA625A321F821E10009E200E /* db_tab_audiobook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "db_tab_audiobook@2x.png"; sourceTree = "<group>"; };
 		AA625A331F821E10009E200E /* db_tab_home@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "db_tab_home@2x.png"; sourceTree = "<group>"; };
-		AA625A341F821E10009E200E /* db_tab_profile_female_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "db_tab_profile_female_selected@2x.png"; sourceTree = "<group>"; };
-		AA625A351F821E10009E200E /* db_tab_profile_female@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "db_tab_profile_female@2x.png"; sourceTree = "<group>"; };
-		AA625A361F821E10009E200E /* db_tab_profile_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "db_tab_profile_selected@2x.png"; sourceTree = "<group>"; };
-		AA625A371F821E10009E200E /* db_tab_group@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "db_tab_group@2x.png"; sourceTree = "<group>"; };
 		AA625A381F821E11009E200E /* db_tab_broadcast@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "db_tab_broadcast@2x.png"; sourceTree = "<group>"; };
-		AA625A391F821E11009E200E /* db_tab_profile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "db_tab_profile@2x.png"; sourceTree = "<group>"; };
-		AA625A3A1F821E11009E200E /* db_tab_audiobook_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "db_tab_audiobook_selected@2x.png"; sourceTree = "<group>"; };
 		AA625A3B1F821E11009E200E /* db_tab_home_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "db_tab_home_selected@2x.png"; sourceTree = "<group>"; };
 		AA625A3C1F821E11009E200E /* db_tab_broadcast_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "db_tab_broadcast_selected@2x.png"; sourceTree = "<group>"; };
-		AA625A3D1F821E11009E200E /* db_tab_group_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "db_tab_group_selected@2x.png"; sourceTree = "<group>"; };
 		AA6AE08F1FE7511B00832F41 /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDictionary.h; sourceTree = "<group>"; };
 		AA6AE0901FE7511B00832F41 /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLDictionary.m; sourceTree = "<group>"; };
 		AA6AE0931FE7642400832F41 /* DBRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBRequestManager.m; sourceTree = "<group>"; };
@@ -97,8 +71,6 @@
 		AA6AE0991FE7652B00832F41 /* DBMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBMacro.h; sourceTree = "<group>"; };
 		AA6AE09A1FE7659F00832F41 /* DBShareData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBShareData.h; sourceTree = "<group>"; };
 		AA6AE09B1FE7659F00832F41 /* DBShareData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBShareData.m; sourceTree = "<group>"; };
-		AA6AE0A11FE7721800832F41 /* DBSettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBSettingViewController.h; sourceTree = "<group>"; };
-		AA6AE0A21FE7721800832F41 /* DBSettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBSettingViewController.m; sourceTree = "<group>"; };
 		AA6AE0A51FE772C800832F41 /* UINavigationController+ExchangeToTopViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+ExchangeToTopViewController.h"; sourceTree = "<group>"; };
 		AA6AE0A61FE772C800832F41 /* UINavigationController+ExchangeToTopViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+ExchangeToTopViewController.m"; sourceTree = "<group>"; };
 		AA6AE0A81FE7917200832F41 /* DBHomeDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBHomeDetailViewController.h; sourceTree = "<group>"; };
@@ -163,10 +135,7 @@
 				AA6259C81F80DBDA009E200E /* AppDelegate.m */,
 				AA6259E51F82140C009E200E /* Main */,
 				AA6259E91F82140C009E200E /* Home */,
-				AA6259E11F82140C009E200E /* AudioBook */,
 				AA6259DD1F82140B009E200E /* Broadcast */,
-				AA6259F11F82140C009E200E /* Group */,
-				AA6259ED1F82140C009E200E /* Profile */,
 				AA625A231F821C5E009E200E /* Resource */,
 				AA6AE0A41FE7729B00832F41 /* Extension */,
 				AA6259D01F80DBDA009E200E /* Assets.xcassets */,
@@ -211,39 +180,6 @@
 			children = (
 				AAB1FEF61F84BB3E007AA4DB /* BroadcastViewModel.h */,
 				AAB1FEF71F84BB3E007AA4DB /* BroadcastViewModel.m */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		AA6259E11F82140C009E200E /* AudioBook */ = {
-			isa = PBXGroup;
-			children = (
-				AA6259E21F82140C009E200E /* Controller */,
-				AA6259E31F82140C009E200E /* Model */,
-				AA6259E41F82140C009E200E /* ViewModel */,
-			);
-			path = AudioBook;
-			sourceTree = "<group>";
-		};
-		AA6259E21F82140C009E200E /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				AA625A071F821AC4009E200E /* DBAudioBookViewController.h */,
-				AA625A081F821AC4009E200E /* DBAudioBookViewController.m */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		AA6259E31F82140C009E200E /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		AA6259E41F82140C009E200E /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -301,8 +237,6 @@
 			isa = PBXGroup;
 			children = (
 				AA6259EA1F82140C009E200E /* Controller */,
-				AA6259EB1F82140C009E200E /* Model */,
-				AA6259EC1F82140C009E200E /* ViewModel */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -316,87 +250,6 @@
 				AA6AE0A91FE7917200832F41 /* DBHomeDetailViewController.m */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		AA6259EB1F82140C009E200E /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		AA6259EC1F82140C009E200E /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		AA6259ED1F82140C009E200E /* Profile */ = {
-			isa = PBXGroup;
-			children = (
-				AA6AE09D1FE771F800832F41 /* Setting */,
-				AA6259EE1F82140C009E200E /* Controller */,
-				AA6259EF1F82140C009E200E /* Model */,
-				AA6259F01F82140C009E200E /* ViewModel */,
-			);
-			path = Profile;
-			sourceTree = "<group>";
-		};
-		AA6259EE1F82140C009E200E /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				AA625A101F821AFF009E200E /* DBProfileViewController.h */,
-				AA625A111F821AFF009E200E /* DBProfileViewController.m */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		AA6259EF1F82140C009E200E /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		AA6259F01F82140C009E200E /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		AA6259F11F82140C009E200E /* Group */ = {
-			isa = PBXGroup;
-			children = (
-				AA6259F21F82140C009E200E /* Controller */,
-				AA6259F31F82140C009E200E /* Model */,
-				AA6259F41F82140C009E200E /* ViewModel */,
-			);
-			path = Group;
-			sourceTree = "<group>";
-		};
-		AA6259F21F82140C009E200E /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				AA625A0D1F821AEF009E200E /* DBGroupViewController.h */,
-				AA625A0E1F821AEF009E200E /* DBGroupViewController.m */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		AA6259F31F82140C009E200E /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		AA6259F41F82140C009E200E /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		AA625A231F821C5E009E200E /* Resource */ = {
@@ -418,18 +271,10 @@
 		AA625A251F821C5E009E200E /* TabBar */ = {
 			isa = PBXGroup;
 			children = (
-				AA625A3A1F821E11009E200E /* db_tab_audiobook_selected@2x.png */,
-				AA625A321F821E10009E200E /* db_tab_audiobook@2x.png */,
 				AA625A3C1F821E11009E200E /* db_tab_broadcast_selected@2x.png */,
 				AA625A381F821E11009E200E /* db_tab_broadcast@2x.png */,
-				AA625A3D1F821E11009E200E /* db_tab_group_selected@2x.png */,
-				AA625A371F821E10009E200E /* db_tab_group@2x.png */,
 				AA625A3B1F821E11009E200E /* db_tab_home_selected@2x.png */,
 				AA625A331F821E10009E200E /* db_tab_home@2x.png */,
-				AA625A341F821E10009E200E /* db_tab_profile_female_selected@2x.png */,
-				AA625A351F821E10009E200E /* db_tab_profile_female@2x.png */,
-				AA625A361F821E10009E200E /* db_tab_profile_selected@2x.png */,
-				AA625A391F821E11009E200E /* db_tab_profile@2x.png */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -450,39 +295,6 @@
 				AA6AE0931FE7642400832F41 /* DBRequestManager.m */,
 			);
 			path = DBNet;
-			sourceTree = "<group>";
-		};
-		AA6AE09D1FE771F800832F41 /* Setting */ = {
-			isa = PBXGroup;
-			children = (
-				AA6AE09F1FE771F800832F41 /* Controller */,
-				AA6AE09E1FE771F800832F41 /* ViewModel */,
-				AA6AE0A01FE771F800832F41 /* View */,
-			);
-			path = Setting;
-			sourceTree = "<group>";
-		};
-		AA6AE09E1FE771F800832F41 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		AA6AE09F1FE771F800832F41 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				AA6AE0A11FE7721800832F41 /* DBSettingViewController.h */,
-				AA6AE0A21FE7721800832F41 /* DBSettingViewController.m */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		AA6AE0A01FE771F800832F41 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		AA6AE0A41FE7729B00832F41 /* Extension */ = {
@@ -582,21 +394,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA625A411F821E11009E200E /* db_tab_profile_female@2x.png in Resources */,
-				AA625A3E1F821E11009E200E /* db_tab_audiobook@2x.png in Resources */,
 				AA6259D41F80DBDA009E200E /* LaunchScreen.storyboard in Resources */,
 				AA6259D11F80DBDA009E200E /* Assets.xcassets in Resources */,
-				AA625A491F821E11009E200E /* db_tab_group_selected@2x.png in Resources */,
 				AA625A441F821E11009E200E /* db_tab_broadcast@2x.png in Resources */,
 				AA625A3F1F821E11009E200E /* db_tab_home@2x.png in Resources */,
 				AA625A471F821E11009E200E /* db_tab_home_selected@2x.png in Resources */,
-				AA625A461F821E11009E200E /* db_tab_audiobook_selected@2x.png in Resources */,
 				AA6259CF1F80DBDA009E200E /* Main.storyboard in Resources */,
-				AA625A401F821E11009E200E /* db_tab_profile_female_selected@2x.png in Resources */,
 				AA625A481F821E11009E200E /* db_tab_broadcast_selected@2x.png in Resources */,
-				AA625A451F821E11009E200E /* db_tab_profile@2x.png in Resources */,
-				AA625A421F821E11009E200E /* db_tab_profile_selected@2x.png in Resources */,
-				AA625A431F821E11009E200E /* db_tab_group@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -700,15 +504,11 @@
 				AA6AE09C1FE7659F00832F41 /* DBShareData.m in Sources */,
 				AA6259C91F80DBDA009E200E /* AppDelegate.m in Sources */,
 				AA625A001F821A64009E200E /* DBViewController.m in Sources */,
-				AA625A0F1F821AEF009E200E /* DBGroupViewController.m in Sources */,
 				AA6259FA1F82145E009E200E /* DBNavigationController.m in Sources */,
-				AA625A091F821AC4009E200E /* DBAudioBookViewController.m in Sources */,
 				AA6AE0AA1FE7917200832F41 /* DBHomeDetailViewController.m in Sources */,
 				AA6AE0951FE7642500832F41 /* DBRequestManager.m in Sources */,
 				AA6AE0981FE764F400832F41 /* DeviceInfo.m in Sources */,
-				AA625A121F821AFF009E200E /* DBProfileViewController.m in Sources */,
 				AAB1FEF81F84BB3E007AA4DB /* BroadcastViewModel.m in Sources */,
-				AA6AE0A31FE7721800832F41 /* DBSettingViewController.m in Sources */,
 				AA6AE0911FE7511B00832F41 /* XMLDictionary.m in Sources */,
 				AA625A061F821AB0009E200E /* DBHomeViewController.m in Sources */,
 				AAB1FEFB1F84BFE7007AA4DB /* BroadcastCommunityModel.m in Sources */,
