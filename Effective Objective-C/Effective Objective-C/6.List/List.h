@@ -49,6 +49,7 @@ bool GetNodeData(NodeList *list, int data, int *position, NodeList *node);
 
 /**
  * 打印链表数据
+ * 从头到尾、还是从尾到头？？是否允许改变链表的结构(链表反转)
  */
 void PrintList(NodeList *list);
 
@@ -58,5 +59,12 @@ void PrintList(NodeList *list);
  * return 返回销毁结果 true 成功 false 失败
  */
 bool DestoryList(NodeList **list);
+
+/**
+ * 反转链表
+ * @param list 链表地址
+ * return 反转后的链表头地址
+ */
+NodeList *InverseList(NodeList *list);
 
 @end

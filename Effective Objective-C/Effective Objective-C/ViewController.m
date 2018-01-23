@@ -85,16 +85,12 @@
     InsertNode(list, a6, 1);
     
     // 打印链表
-//    PrintList(list);
+    PrintList(list);
     
     // 查询数据
 //    GetNodeData(list, 25, &pos, NULL);
 //    printf("GetNode data position %d \n", pos);
-    
-    // 删除数据
-    DeleteNodeData(list, 30);
-    PrintList(list);
-    
+
     // 销毁链表
     DestoryList(&list);
 }

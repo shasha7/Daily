@@ -110,10 +110,17 @@ bool InsertNode(NodeList *list, int data, int position) {
 }
 
 void PrintList(NodeList *list) {
-    do {
-        list = list->pNext;
-        printf("NodeList data %d \n", list->data);
-    } while (list->pNext);
+//    do {
+//        list = list->pNext;
+//        printf("NodeList data %d \n", list->data);
+//    } while (list->pNext);
+    // 利用进栈出栈的方式实现
+    if (list->pNext == NULL) {
+        return;
+    }
+    list = list->pNext;
+    PrintList(list);
+    printf("NodeList data %d \n", list->data);
 }
 
 bool DestoryList(NodeList **list) {
@@ -127,6 +134,13 @@ bool DestoryList(NodeList **list) {
     free(tmpList);
     *list = NULL;
     return true;
+}
+
+NodeList *InverseList(NodeList *list) {
+    if (list == NULL) {
+        return NULL;
+    }
+    return NULL;
 }
 
 @end

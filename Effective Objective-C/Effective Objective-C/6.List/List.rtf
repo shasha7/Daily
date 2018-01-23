@@ -1,0 +1,401 @@
+{\rtf1\ansi\ansicpg936\cocoartf1561\cocoasubrtf200
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Menlo-Regular;\f2\fnil\fcharset134 PingFangSC-Regular;
+}
+{\colortbl;\red255\green255\blue255;\red255\green255\blue255;\red0\green0\blue255;\red0\green128\blue0;
+\red0\green0\blue0;\red43\green131\blue159;\red163\green21\blue21;}
+{\*\expandedcolortbl;;\csgenericrgb\c100000\c100000\c100000;\csgenericrgb\c0\c0\c100000;\csgenericrgb\c0\c50200\c0;
+\csgenericrgb\c0\c0\c0;\csgenericrgb\c16900\c51200\c62500;\csgenericrgb\c63900\c8200\c8200;}
+\paperw12240\paperh15840\margl1440\margr1440\vieww9000\viewh8400\viewkind0
+\deftab840
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab840\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \cb2 \
+\
+\pard\tx840\pardeftab840\pardirnatural\partightenfactor0
+
+\f1\fs34 \cf3 #define ksafeFree(p) safeFree((void **)&(p))
+\f0\fs24 \cf0 \
+\pard\tx840\pardeftab840\pardirnatural\partightenfactor0
+
+\f1\fs34 \cf4 \
+/**
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf4  *  
+\f2 \'b6\'a8\'d2\'e5
+\f1  Teacher
+\f2 \'bd\'e1\'b9\'b9\'cc\'e5\'ca\'fd\'be\'dd\'c0\'e0\'d0\'cd
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf4  *  
+\f2 \'b1\'be\'d6\'ca
+\f1  
+\f2 \'b9\'cc\'b6\'a8\'c4\'da\'b4\'e6\'bf\'e9\'b4\'f3\'d0\'a1\'b5\'c4\'b1\'f0\'c3\'fb
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf4  */
+\f0\fs24 \cf0 \
+\pard\tx840\pardeftab840\pardirnatural\partightenfactor0
+
+\f1\fs34 \cf3 typedef\cf5  \cf3 struct\cf5  Teacher\{
+\f0\fs24 \cf0 \
+\pard\tx840\pardeftab840\pardirnatural\partightenfactor0
+
+\f1\fs34 \cf5     \cf3 int\cf5    age;     \cf4 //8
+\f2 \'d7\'d6\'bd\'da
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5     \cf3 char\cf5   name[64];\cf4 //64
+\f2 \'d7\'d6\'bd\'da
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5     \cf3 float\cf5  weight;  \cf4 //8
+\f2 \'d7\'d6\'bd\'da
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5 \}Teacher;
+\f0\fs24 \cf0 \
+\
+\
+\pard\tx840\pardeftab840\pardirnatural\partightenfactor0
+
+\f1\fs34 \cf3 struct\cf5  Person\{
+\f0\fs24 \cf0 \
+\pard\tx840\pardeftab840\pardirnatural\partightenfactor0
+
+\f1\fs34 \cf5     \cf3 int\cf5    age;     \cf4 //8
+\f2 \'d7\'d6\'bd\'da
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5     \cf3 char\cf5   name[64];\cf4 //64
+\f2 \'d7\'d6\'bd\'da
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5     \cf3 float\cf5  weight;  \cf4 //8
+\f2 \'d7\'d6\'bd\'da
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5 \};
+\f0\fs24 \cf0 \
+\
+\pard\tx840\pardeftab840\pardirnatural\partightenfactor0
+
+\f1\fs34 \cf4 /**
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf4  *  
+\f2 \'b3\'f5\'ca\'bc\'bb\'af
+\f1 \cf6 Person
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf4  *  @param person Person
+\f2 \'d6\'b8\'d5\'eb\'b1\'e4\'c1\'bf\'b5\'d8\'d6\'b7
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf4  *  @return 
+\f2 \'b3\'f5\'ca\'bc\'bb\'af\'bd\'e1\'b9\'fb
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf4  */
+\f0\fs24 \cf0 \
+\pard\tx840\pardeftab840\pardirnatural\partightenfactor0
+
+\f1\fs34 \cf3 int\cf5  CreatPerson(\cf3 struct \cf6 Person\cf5  **person)\{
+\f0\fs24 \cf0 \
+\pard\tx840\pardeftab840\pardirnatural\partightenfactor0
+
+\f1\fs34 \cf5     \cf3 struct\cf5  \cf6 Person\cf5  *tmp = \cf3 NULL\cf5 ;
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5     tmp = (\cf3 struct \cf6 Person\cf5  *)\cf6 malloc\cf5 (\cf3 sizeof\cf5 (\cf3 struct \cf6 Person\cf5 ));\cf4 //72
+\f2 \'d7\'d6\'bd\'da
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5     \cf3 if\cf5  (tmp == \cf3 NULL\cf5 ) \{
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5         \cf3 return\cf5  -1;
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5     \}
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5     *person = tmp;
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5     \cf3 return\cf5  0;
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5 \}
+\f0\fs24 \cf0 \
+\
+\pard\tx840\pardeftab840\pardirnatural\partightenfactor0
+
+\f1\fs34 \cf4 /**
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf4  *  
+\f2 \'b3\'f5\'ca\'bc\'bb\'af
+\f1 Teacher
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf4  *  @param tea Teacher
+\f2 \'d6\'b8\'d5\'eb\'b1\'e4\'c1\'bf\'b5\'d8\'d6\'b7
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf4  *  @return 
+\f2 \'b3\'f5\'ca\'bc\'bb\'af\'bd\'e1\'b9\'fb
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf4  */
+\f0\fs24 \cf0 \
+\pard\tx840\pardeftab840\pardirnatural\partightenfactor0
+
+\f1\fs34 \cf3 int\cf5  CreatTeacher(\cf6 Teacher\cf5  **tea)\{
+\f0\fs24 \cf0 \
+\pard\tx840\pardeftab840\pardirnatural\partightenfactor0
+
+\f1\fs34 \cf5     \cf6 Teacher\cf5  *tmp = \cf3 NULL\cf5 ;
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5     \cf4 /*
+\f0\fs24 \cf0 \
+\pard\tx840\pardeftab840\pardirnatural\partightenfactor0
+
+\f1\fs34 \cf4      
+\f2 \'b6\'af\'cc\'ac\'c4\'da\'b4\'e6\'b7\'d6\'c5\'e4\'ba\'af\'ca\'fd
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf4      void *malloc(size_t);
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf4      1)
+\f2 \'bb\'e1\'d4\'da\'b6\'d1\'c9\'cf\'c3\'e6\'b7\'d6\'c5\'e4
+\f1 size_t
+\f2 \'b4\'f3\'d0\'a1\'c4\'da\'b4\'e6
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf4      2)
+\f2 \'c4\'da\'b4\'e6\'b2\'bb\'bb\'e1\'b1\'bb\'d0\'de\'b8\'c4\'bb\'f2\'d5\'df\'c7\'e5\'bf\'d5
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf4      3)
+\f2 \'b7\'b5\'bb\'d8\'ca\'d7\'d7\'d6\'bd\'da\'b5\'c4\'b5\'d8\'d6\'b7
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf4      */
+\f0\fs24 \cf0 \
+\pard\tx840\pardeftab840\pardirnatural\partightenfactor0
+
+\f1\fs34 \cf5     tmp = (\cf6 Teacher\cf5  *)\cf6 malloc\cf5 (\cf3 sizeof\cf5 (\cf6 Teacher\cf5 ));\cf4 //72
+\f2 \'d7\'d6\'bd\'da
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5     \cf3 if\cf5  (tmp == \cf3 NULL\cf5 ) \{
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5         \cf3 return\cf5  -1;
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5     \}
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5     *tea = tmp;
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5     \cf3 return\cf5  0;
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5 \}
+\f0\fs24 \cf0 \
+\pard\tx840\pardeftab840\pardirnatural\partightenfactor0
+
+\f1\fs34 \cf4 /**
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf4  *  
+\f2 \'ca\'cd\'b7\'c5
+\f1 Teacher
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf4  *  @param tea Teacher
+\f2 \'d6\'b8\'d5\'eb\'b1\'e4\'c1\'bf\'b5\'d8\'d6\'b7
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf4  *  @return 
+\f2 \'ca\'cd\'b7\'c5\'bd\'e1\'b9\'fb
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf4  */
+\f0\fs24 \cf0 \
+\pard\tx840\pardeftab840\pardirnatural\partightenfactor0
+
+\f1\fs34 \cf3 int\cf5  freeTeacher(\cf6 Teacher\cf5  **teaOne)\{
+\f0\fs24 \cf0 \
+\pard\tx840\pardeftab840\pardirnatural\partightenfactor0
+
+\f1\fs34 \cf5     \cf3 if\cf5  (teaOne != \cf3 NULL\cf5  && *teaOne != \cf3 NULL\cf5 ) \{
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5         \cf6 free\cf5 (*teaOne);
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5         \cf4 //
+\f2 \'d5\'e2\'c0\'ef\'d6\'b5\'b5\'c3\'d7\'a2\'d2\'e2\'b5\'c4\'ca\'c7
+\f1 ,
+\f2 \'ca\'cd\'b7\'c5\'c1\'cb\'c4\'da\'b4\'e6\'ba\'f3\'bb\'b9\'d2\'aa\'b6\'d4
+\f1 Teacher
+\f2 \'d6\'b8\'d5\'eb\'b1\'e4\'c1\'bf\'d6\'c3
+\f1 NULL,
+\f2 \'b7\'c0\'d6\'b9\'b3\'f6\'cf\'d6\'d2\'b0\'d6\'b8\'d5\'eb
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5         *teaOne = \cf3 NULL\cf5 ;
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5     \}
+\f0\fs24 \cf0 \
+\
+
+\f1\fs34 \cf5     \cf3 if\cf5  (*teaOne == \cf3 NULL\cf5 ) \{
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5         \cf3 return\cf5  0;
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5     \}\cf3 else\cf5  \{
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5         \cf3 return\cf5  -1;
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5     \}
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5 \}
+\f0\fs24 \cf0 \
+\
+\pard\tx840\pardeftab840\pardirnatural\partightenfactor0
+
+\f1\fs34 \cf3 void\cf5  safeFree(\cf3 void\cf5  **objPtr)\{
+\f0\fs24 \cf0 \
+\pard\tx840\pardeftab840\pardirnatural\partightenfactor0
+
+\f1\fs34 \cf5     \cf3 if\cf5  (objPtr != \cf3 NULL\cf5  && *objPtr != \cf3 NULL\cf5 ) \{
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5         \cf6 free\cf5 (*objPtr);
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5         *objPtr = \cf3 NULL\cf5 ;
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5     \}
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5 \}\
+\
+\pard\tx840\pardeftab840\pardirnatural\partightenfactor0
+\cf3 int\cf5  main(\cf3 int\cf5  argc, \cf3 const\cf5  \cf3 char\cf5  * argv[]) \{
+\f0\fs24 \cf0 \
+\pard\tx840\pardeftab840\pardirnatural\partightenfactor0
+
+\f1\fs34 \cf5     \ulth \ulc5 T\ulnone eacher *\ulth t\ulnone eaOne = \cf3 NULL\cf5 ;
+\f0\fs24 \cf0 \
+\pard\tx840\pardeftab840\pardirnatural\partightenfactor0
+
+\f1\fs34 \cf5     \cf3 int\cf5  result = \ulth c\ulnone reatTeacher(&\ulth t\ulnone eaOne);
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5     \cf3 if\cf5  (result == -1) \{
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5         \cf6 printf\cf5 (\cf7 "func creatTeacher error:%d\\n"\cf5 ,result);
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5         \cf3 return\cf5  result;
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5     \}\cf3 else\cf5  \{
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5         \cf3 char\cf5  tName[64] = \cf7 "wangweihu"\cf5 ;
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5         \ulth t\ulnone eaOne->age = 26;
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5         \ulth t\ulnone eaOne->weight = 75;
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5         \cf4 //
+\f2 \'b8\'f8\'d7\'d6\'b7\'fb\'b4\'ae\'ca\'fd\'d7\'e9\'b8\'b3\'d6\'b5\'b5\'c4\'c1\'bd\'d6\'d6\'b7\'bd\'b7\'a8
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5         \cf3 strcpy\cf5 (teaOne->name,tName);
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5         printf(\cf7 "
+\f2 \'c0\'cf\'ca\'a6\'b5\'c4\'c3\'fb\'d7\'d6\'a3\'ba
+\f1 %s, 
+\f2 \'cc\'e5\'d6\'d8\'a3\'ba
+\f1 %fkg, 
+\f2 \'c4\'ea\'c1\'e4\'a3\'ba
+\f1 %d
+\f2 \'cb\'ea
+\f1 \\n"\cf5 ,\ulth t\ulnone eaOne->name, teaOne->weight, teaOne->age);
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5         \cf3 for\cf5  (\cf3 int\cf5  i = 0; i<\cf3 sizeof\cf5 (tName); i++) \{
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5             teaOne->name[i] = tName[i];
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5         \}
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5         printf(\cf7 "
+\f2 \'c0\'cf\'ca\'a6\'b5\'c4\'c3\'fb\'d7\'d6\'a3\'ba
+\f1 %s, 
+\f2 \'cc\'e5\'d6\'d8\'a3\'ba
+\f1 %fkg, 
+\f2 \'c4\'ea\'c1\'e4\'a3\'ba
+\f1 %d
+\f2 \'cb\'ea
+\f1 \\n"\cf5 ,teaOne->name, teaOne->weight, teaOne->age);
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5         \cf3 int\cf5  freeResult = freeTeacher(&teaOne);
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5         \cf3 if\cf5  (freeResult == -1) \{
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5             \cf6 printf\cf5 (\cf7 "func freeTeacher error:%d\\n"\cf5 ,freeResult);
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5             \cf3 return\cf5  freeResult;
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5         \}\cf3 else\cf5  \{
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5             \cf3 return\cf5  freeResult;
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5         \}
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5         \cf3 return\cf5  result;
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5     \}
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5     \cf3 return\cf5  0;
+\f0\fs24 \cf0 \
+
+\f1\fs34 \cf5 \}
+\f0\fs24 \cf0 \
+}

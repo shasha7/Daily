@@ -26,6 +26,6 @@
 
 @property (nonatomic, copy) NSString *attribute4;
 
-- (void)method1;
+//- (void)method1;
 
 @end
