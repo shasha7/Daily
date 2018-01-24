@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>佳缘测试</title>
+</head>
+<script>
+    function getClientClientId(){
+        var clientId = JYJS.getClientId();
+        alert(clientId);
+    }
+    function getClientVersionId(){
+        var versionId = JYJS.getVersionId();
+        alert(versionId);
+    }
+    function getClientChannelId(){
+        var channelId = JYJS.getChannelId();
+        alert(channelId);
+    }
+</script>
+<body>
+    <div style="margin-top: 30px">
+        <h1> JS call Objective-C Methods</h1>
+    </div>
+    <div style="margin-top: 20px">
+        <button style="font-size: large" onclick="getClientClientId()">返回当前客户端类型</button></br>
+    </div>
+    <div style="margin-top: 20px">
+        <button style="font-size: large" onclick="getClientVersionId()">返回当前版本号</button></br>
+    </div>
+    <div style="margin-top: 20px">
+        <button style="font-size: large" onclick="getClientChannelId()">返回当前渠道号</button></br>
+    </div>
+</body>
+</html>

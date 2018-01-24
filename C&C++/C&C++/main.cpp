@@ -8,12 +8,37 @@
 
 #include <iostream>
 #include "Circle.h"
+#include "Reference.hpp"
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    
+/**************Day2**************/
+void ReferenceTest(void) {
+    Teacher t1;
+    t1.name = 20;
+    cout << "Teacher的名字：" << t1.name << endl;
+    cout << "Teacher的名字：" << t1.aliasName << endl;
+}
+// 以下两个函数重载了
+void SwapTwoNumber(int &a, int &b) {
+    int c = 0;
+    c = a;
+    a = b;
+    b = c;
+}
 
-    return 0;
+void SwapTwoNumber(int *a, int *b) {
+    int c = 0;
+    c = *a;
+    *a = *b;
+    *b = c;
+}
+
+void ReferenceTest2(void) {
+    int a = 30;
+    int b = 20;
+    SwapTwoNumber(&a, &b); //间接
+    // SwapTwoNumber(a, b); //引用
+    cout << "a：" << a << endl;
+    cout << "b：" << b << endl;
 }
 
 /**************Day1**************/
@@ -24,3 +49,11 @@ void CircleTest(void) {
     cout << "圆的面积：" << circleOne.getS() << endl;
     cout << "Hello, World!\n";
 }
+
+int main(int argc, const char * argv[]) {
+    // insert code here...
+
+    return 0;
+}
+
+

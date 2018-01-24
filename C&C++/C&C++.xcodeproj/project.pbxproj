@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		AA63C0B72017040400EEB482 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AA63C0B62017040400EEB482 /* main.cpp */; };
 		AA63C0BF2017046500EEB482 /* Circle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AA63C0BE2017046500EEB482 /* Circle.cpp */; };
+		AA82C74D2018558E005C9DB7 /* Reference.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AA82C74B2018558E005C9DB7 /* Reference.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +29,8 @@
 		AA63C0B62017040400EEB482 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		AA63C0BE2017046500EEB482 /* Circle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Circle.cpp; sourceTree = "<group>"; };
 		AA63C0C02017056500EEB482 /* Circle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Circle.h; sourceTree = "<group>"; };
+		AA82C74B2018558E005C9DB7 /* Reference.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Reference.cpp; sourceTree = "<group>"; };
+		AA82C74C2018558E005C9DB7 /* Reference.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Reference.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +63,7 @@
 		AA63C0B52017040400EEB482 /* C&C++ */ = {
 			isa = PBXGroup;
 			children = (
+				AA82C74A20185577005C9DB7 /* Day2 */,
 				AA63C0BD2017042100EEB482 /* Day1 */,
 				AA63C0B62017040400EEB482 /* main.cpp */,
 			);
@@ -73,6 +77,15 @@
 				AA63C0BE2017046500EEB482 /* Circle.cpp */,
 			);
 			path = Day1;
+			sourceTree = "<group>";
+		};
+		AA82C74A20185577005C9DB7 /* Day2 */ = {
+			isa = PBXGroup;
+			children = (
+				AA82C74C2018558E005C9DB7 /* Reference.hpp */,
+				AA82C74B2018558E005C9DB7 /* Reference.cpp */,
+			);
+			path = Day2;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -134,6 +147,7 @@
 			files = (
 				AA63C0B72017040400EEB482 /* main.cpp in Sources */,
 				AA63C0BF2017046500EEB482 /* Circle.cpp in Sources */,
+				AA82C74D2018558E005C9DB7 /* Reference.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
