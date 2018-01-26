@@ -10,6 +10,7 @@
 		AA63C0B72017040400EEB482 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AA63C0B62017040400EEB482 /* main.cpp */; };
 		AA63C0BF2017046500EEB482 /* Circle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AA63C0BE2017046500EEB482 /* Circle.cpp */; };
 		AA82C74D2018558E005C9DB7 /* Reference.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AA82C74B2018558E005C9DB7 /* Reference.cpp */; };
+		AA94E677201B03650018EDBA /* Name.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AA94E675201B03650018EDBA /* Name.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +32,8 @@
 		AA63C0C02017056500EEB482 /* Circle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Circle.h; sourceTree = "<group>"; };
 		AA82C74B2018558E005C9DB7 /* Reference.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Reference.cpp; sourceTree = "<group>"; };
 		AA82C74C2018558E005C9DB7 /* Reference.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Reference.hpp; sourceTree = "<group>"; };
+		AA94E675201B03650018EDBA /* Name.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Name.cpp; sourceTree = "<group>"; };
+		AA94E676201B03650018EDBA /* Name.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Name.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +78,8 @@
 			children = (
 				AA63C0C02017056500EEB482 /* Circle.h */,
 				AA63C0BE2017046500EEB482 /* Circle.cpp */,
+				AA94E676201B03650018EDBA /* Name.hpp */,
+				AA94E675201B03650018EDBA /* Name.cpp */,
 			);
 			path = Day1;
 			sourceTree = "<group>";
@@ -147,6 +152,7 @@
 			files = (
 				AA63C0B72017040400EEB482 /* main.cpp in Sources */,
 				AA63C0BF2017046500EEB482 /* Circle.cpp in Sources */,
+				AA94E677201B03650018EDBA /* Name.cpp in Sources */,
 				AA82C74D2018558E005C9DB7 /* Reference.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
