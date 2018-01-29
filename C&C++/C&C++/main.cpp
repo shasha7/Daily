@@ -14,6 +14,42 @@
 #include "Triangle.hpp"
 #include "Square.hpp"
 
+/**************Day4**************/
+class Parent {
+public:
+    virtual void print(){
+
+    }
+private:
+};
+
+class Child: public Parent {
+public:
+    int c;
+    int d;
+    int e;
+};
+
+void VirtualTest() {
+    // 字节对齐
+    // vptr指针 8字节
+    cout << "Parent大小：" << sizeof(Parent) << endl;
+    cout << "Child大小：" << sizeof(Child) << endl;
+    
+    // 步长问题
+    Child child0;
+    Child child1;
+    Child child2;
+    Child child3;
+    Child child[] = {child0, child1, child2, child3};
+    Parent *parent = child;
+    Child *childPtr = child;
+    for (int i = 0; i < 4; i++) {
+        childPtr  ++; printf("childPtr地址：%p \n", childPtr  ++);
+        parent    ++; printf("parent地址：%p \n", parent  ++);
+    }
+}
+
 /**************Day3**************/
 void PlayObjc1(Area *base) {
     cout << "面积：" << base->calculateArea() << endl;
@@ -113,7 +149,7 @@ void playObj() {
 
 int main(int argc, const char * argv[]) {
     // insert code here...
-
+    VirtualTest();
     return 0;
 }
 
