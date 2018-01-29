@@ -10,14 +10,12 @@
 #define Circle_h
 
 #include <ostream>
+#include "Area.hpp"
 
-using namespace std;
-
-class Circle {
-private:
-    double c_s;//面积
-    double c_r;//半径
+class Circle: public Area {
 public:
+    virtual double calculateArea();
+    
     // 构造函数,定义了构造函数就一定要使用，否则编译错误，提示初始化不正确
     // No matching constructor for initialization of 'Circle'
     Circle(double c_r = 0.0f);
@@ -33,6 +31,9 @@ public:
     double getS();
     double getR();
     void setR(double r);
+private:
+    double c_s;//面积
+    double c_r;//半径
 };
 
 #endif /* Circle_h */

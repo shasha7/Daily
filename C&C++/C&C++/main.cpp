@@ -7,9 +7,26 @@
 //
 
 #include <iostream>
-#include "Circle.h"
+#include "Circle.hpp"
 #include "Reference.hpp"
 #include "Name.hpp"
+#include "Area.hpp"
+#include "Triangle.hpp"
+#include "Square.hpp"
+
+/**************Day3**************/
+void PlayObjc1(Area *base) {
+    cout << "面积：" << base->calculateArea() << endl;
+}
+
+void CalculateAreaTest(void) {
+    Triangle *t = new Triangle(12.6, 3.4);
+    Square *s = new Square(12.0, 3.0);
+    Circle *c = new Circle(12);
+    PlayObjc1((Area *)t);
+    PlayObjc1((Area *)s);
+    PlayObjc1((Area *)c);
+}
 
 /**************Day2**************/
 void ReferenceTest(void) {
@@ -96,7 +113,7 @@ void playObj() {
 
 int main(int argc, const char * argv[]) {
     // insert code here...
-    playObj();
+
     return 0;
 }
 

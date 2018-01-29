@@ -10,51 +10,25 @@
 #define Name_hpp
 
 #include <stdio.h>
-#include <string>
-#include <ostream>
 
 using namespace std;
 
 class Name
 {
 public:
-    Name(const char *pname)
-    {
-        size_t size = 0;
-        size = strlen(pname);
-        pName = (char *)malloc(size + 1);
-        strcpy(pName, pname);
-    }
-    Name(const Name &obj)
-    {
-        //用obj来初始化自己
-        pName = (char *)malloc(obj.size + 1);
-        strcpy(pName, obj.pName);
-        size = obj.size;
-    }
-    ~Name()
-    {
-        if (pName!=NULL)
-        {
-            free(pName);
-            pName = NULL;
-            size = 0;
-        }
-    }
+    // 有参构造函数
+    Name(const char *pname);
     
-//    void operator=(Name &obj3) {
-//        if (pName != NULL)
-//        {
-//            free(pName);
-//            pName = NULL;
-//            size = 0;
-//        }
-//        //用obj3来=自己
-//        pName = (char *)malloc(obj3.size + 1);
-//        strcpy(pName, obj3.pName);
-//        size = obj3.size;
-//    }
+    // copy构造函数
+    Name(const Name &obj);
+    
+    // 重载等号操作符
+    void operator=(Name &obj);
+    
+    // 析构函数
+    ~Name();
 private:
+    // 私有成员变量
     char *pName;
     int size;
 };

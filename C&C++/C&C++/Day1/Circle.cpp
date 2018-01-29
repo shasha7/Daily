@@ -7,7 +7,12 @@
 //
 
 #include <stdio.h>
-#include "Circle.h"
+#include "Circle.hpp"
+
+double Circle::calculateArea() {
+    this ->c_s = 3.1415926 *c_r*c_r;
+    return 3.1415926 *c_r*c_r;
+}
 
 Circle::Circle(const Circle &circle) {
     this->c_r = circle.c_r;
@@ -18,7 +23,7 @@ Circle::Circle(double c_r) {
 }
 
 double Circle::getS() {
-    this -> c_s = 3.1415926 *c_r*c_r;
+    this ->c_s = 3.1415926 *c_r*c_r;
     return 3.1415926 *c_r*c_r;
 };
 
