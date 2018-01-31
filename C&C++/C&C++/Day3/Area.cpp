@@ -8,6 +8,3 @@
 
 #include "Area.hpp"
 
-double Area::calculateArea() {
-    return 0;
-}

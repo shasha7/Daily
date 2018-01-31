@@ -14,23 +14,81 @@
 #include "Triangle.hpp"
 #include "Square.hpp"
 
-/**************Day4**************/
+/**************Day5**************/
+//多重继承接口不会带来二义性和复杂性等问题
+class InterfaceA {
+public:
+    virtual void print() = 0;
+    virtual int add(int a, int b) = 0;
+};
+
+class InterfaceB {
+public:
+    virtual void print() = 0;
+    virtual int add(int a, int b) = 0;
+    virtual int minus(int a, int b) = 0;
+};
+
 class Parent {
 public:
-    virtual void print(){
-
-    }
-private:
+    int a;
 };
 
-class Child: public Parent {
+class Child : public Parent, public InterfaceA, public InterfaceB {
 public:
-    int c;
-    int d;
-    int e;
+    void print() {
+        cout<<"Child::print"<<endl;
+    }
+    
+    int add(int a, int b) {
+        return a + b;
+    }
+    
+    int minus(int a, int b) {
+        return a - b;
+    }
 };
+
+void InterfaceTest() {
+    Child c;
+    c.print();
+    
+    cout<<c.add(3, 5)<<endl;
+    cout<<c.minus(4, 6)<<endl;
+    
+    InterfaceA* i1 = &c;
+    InterfaceB* i2 = &c;
+    
+    cout<<i1->add(7, 8)<<endl;
+    cout<<i2->add(7, 8)<<endl;
+    
+    cout << "Hello, World!\n";
+}
+
+
+/**************Day4**************/
+//class Parent {
+//public:
+//    static int num;//声明静态变量
+//public:
+//    virtual void print(){
+//
+//    }
+//private:
+//};
+
+//int Parent::num = 10;
+//
+//class Child: public Parent {
+//public:
+//    int c;
+//    int d;
+//    int e;
+//};
 
 void VirtualTest() {
+//    cout << "静态变量：" << Parent::num << endl;
+    
     // 字节对齐
     // vptr指针 8字节
     cout << "Parent大小：" << sizeof(Parent) << endl;
@@ -149,7 +207,7 @@ void playObj() {
 
 int main(int argc, const char * argv[]) {
     // insert code here...
-    VirtualTest();
+
     return 0;
 }
 
