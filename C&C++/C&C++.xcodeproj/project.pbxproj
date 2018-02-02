@@ -14,6 +14,9 @@
 		AA63C0BF2017046500EEB482 /* Circle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AA63C0BE2017046500EEB482 /* Circle.cpp */; };
 		AA82C74D2018558E005C9DB7 /* Reference.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AA82C74B2018558E005C9DB7 /* Reference.cpp */; };
 		AA94E677201B03650018EDBA /* Name.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AA94E675201B03650018EDBA /* Name.cpp */; };
+		AAAAC3462022D8D300E55952 /* HWSocketFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AAAAC3442022D8D300E55952 /* HWSocketFactory.cpp */; };
+		AAAAC3492022D99000E55952 /* JYSocketManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AAAAC3472022D99000E55952 /* JYSocketManager.cpp */; };
+		AAAAC34C2022E07C00E55952 /* HWEncDecFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AAAAC34A2022E07C00E55952 /* HWEncDecFactory.cpp */; };
 		AAF893532020522000D01112 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = AAF893522020522000D01112 /* main.c */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +56,14 @@
 		AA82C74C2018558E005C9DB7 /* Reference.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Reference.hpp; sourceTree = "<group>"; };
 		AA94E675201B03650018EDBA /* Name.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Name.cpp; sourceTree = "<group>"; };
 		AA94E676201B03650018EDBA /* Name.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Name.hpp; sourceTree = "<group>"; };
+		AAAAC3422022D6FA00E55952 /* JYSocketProtocal.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = JYSocketProtocal.hpp; sourceTree = "<group>"; };
+		AAAAC3442022D8D300E55952 /* HWSocketFactory.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HWSocketFactory.cpp; sourceTree = "<group>"; };
+		AAAAC3452022D8D300E55952 /* HWSocketFactory.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HWSocketFactory.hpp; sourceTree = "<group>"; };
+		AAAAC3472022D99000E55952 /* JYSocketManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = JYSocketManager.cpp; sourceTree = "<group>"; };
+		AAAAC3482022D99000E55952 /* JYSocketManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = JYSocketManager.hpp; sourceTree = "<group>"; };
+		AAAAC34A2022E07C00E55952 /* HWEncDecFactory.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HWEncDecFactory.cpp; sourceTree = "<group>"; };
+		AAAAC34B2022E07C00E55952 /* HWEncDecFactory.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HWEncDecFactory.hpp; sourceTree = "<group>"; };
+		AAAAC34E2022E0BB00E55952 /* JYEncDecProtocal.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = JYEncDecProtocal.hpp; sourceTree = "<group>"; };
 		AAF893502020522000D01112 /* C基础 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "C基础"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAF893522020522000D01112 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -109,6 +120,7 @@
 		AA63C0B52017040400EEB482 /* C&C++ */ = {
 			isa = PBXGroup;
 			children = (
+				AAAAC3402022D6D300E55952 /* Day4 */,
 				AA1D33DE201EC84B0019BD6B /* Day3 */,
 				AA82C74A20185577005C9DB7 /* Day2 */,
 				AA63C0BD2017042100EEB482 /* Day1 */,
@@ -135,6 +147,21 @@
 				AA82C74B2018558E005C9DB7 /* Reference.cpp */,
 			);
 			path = Day2;
+			sourceTree = "<group>";
+		};
+		AAAAC3402022D6D300E55952 /* Day4 */ = {
+			isa = PBXGroup;
+			children = (
+				AAAAC3422022D6FA00E55952 /* JYSocketProtocal.hpp */,
+				AAAAC34E2022E0BB00E55952 /* JYEncDecProtocal.hpp */,
+				AAAAC3482022D99000E55952 /* JYSocketManager.hpp */,
+				AAAAC3472022D99000E55952 /* JYSocketManager.cpp */,
+				AAAAC3452022D8D300E55952 /* HWSocketFactory.hpp */,
+				AAAAC3442022D8D300E55952 /* HWSocketFactory.cpp */,
+				AAAAC34B2022E07C00E55952 /* HWEncDecFactory.hpp */,
+				AAAAC34A2022E07C00E55952 /* HWEncDecFactory.cpp */,
+			);
+			path = Day4;
 			sourceTree = "<group>";
 		};
 		AAF893512020522000D01112 /* C基础 */ = {
@@ -230,7 +257,10 @@
 				AA94E677201B03650018EDBA /* Name.cpp in Sources */,
 				AA1D33E7201EC9C50019BD6B /* Square.cpp in Sources */,
 				AA82C74D2018558E005C9DB7 /* Reference.cpp in Sources */,
+				AAAAC3462022D8D300E55952 /* HWSocketFactory.cpp in Sources */,
 				AA1D33E1201EC8DC0019BD6B /* Area.cpp in Sources */,
+				AAAAC3492022D99000E55952 /* JYSocketManager.cpp in Sources */,
+				AAAAC34C2022E07C00E55952 /* HWEncDecFactory.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,6 +13,7 @@
 #include "Area.hpp"
 #include "Triangle.hpp"
 #include "Square.hpp"
+#include "JYSocketManager.hpp"
 
 /**************Day5**************/
 //多重继承接口不会带来二义性和复杂性等问题
@@ -205,9 +206,19 @@ void playObj() {
     obj2 = obj3; //=号操作
 }
 
+void onSocketTest() {
+    char indata[4096];
+    char myData[] = "wangweihu love wushanshan";
+    strcpy(indata, myData);
+    HWSocketFactory hwSocket;
+    HWEncDecFactory hwEncDec;
+    JYSocketManager manager(&hwSocket, &hwEncDec);
+    manager.didReceiveSocketData(indata, strlen(indata));
+}
+
 int main(int argc, const char * argv[]) {
     // insert code here...
-
+    onSocketTest();
     return 0;
 }
 
