@@ -329,7 +329,8 @@ weak_entry_for_referent(weak_table_t *weak_table, objc_object *referent)
     return &weak_table->weak_entries[index];
 }
 
-/** 
+/**              key      value
+ * Removes an (object, weak pointer) pair from the weak table.
  * Unregister an already-registered weak reference.
  * This is used when referrer's storage is about to go away, but referent
  * isn't dead yet. (Otherwise, zeroing referrer later would be a
@@ -391,7 +392,7 @@ id
 weak_register_no_lock(weak_table_t *weak_table, id referent_id, 
                       id *referrer_id, bool crashIfDeallocating)
 {
-    // 在入口方法中，传入了weak_table弱引用表
+    // 在入口方法中，传入了weak_table_t全局弱引用表
     objc_object *referent = (objc_object *)referent_id;//__weak修饰的变量所指向的对象
     objc_object **referrer = (objc_object **)referrer_id;//__weak修饰的变量
 
@@ -425,6 +426,7 @@ weak_register_no_lock(weak_table_t *weak_table, id referent_id,
         }
     }
 
+    // 记录并存储对应引用表weak_entry
     // now remember it and where it is being stored
     weak_entry_t *entry;
     if ((entry = weak_entry_for_referent(weak_table, referent))) {

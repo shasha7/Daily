@@ -9,9 +9,11 @@
 #import <Foundation/Foundation.h>
 
 int main(int argc, const char * argv[]) {
-
     @autoreleasepool {
         // insert code here...
+        NSObject *objc = [NSObject new];
+        __weak id weakObjc = objc;
+        NSLog(@"weak = %@", weakObjc);
     }
     return 0;
 }

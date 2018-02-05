@@ -213,7 +213,8 @@ void SideTable::unlockTwo<DontHaveOld, DoHaveNew>
 // libc calls us before our C++ initializers run. We also don't want a global 
 // pointer to this struct because of the extra indirection.
 // Do it the hard way.
-alignas(StripedMap<SideTable>) static uint8_t 
+// uint8_t == unsigned char
+alignas(StripedMap<SideTable>) static uint8_t
     SideTableBuf[sizeof(StripedMap<SideTable>)];
 
 static void SideTableInit() {
@@ -221,6 +222,17 @@ static void SideTableInit() {
 }
 
 static StripedMap<SideTable>& SideTables() {
+    // C语言的强制转换
+    // C++转换
+    // static_cast int->char；C语言中，所有隐式转换的地方均可以使用静态装换
+    // 静态转换时，编译器会进行类型检查
+    // reinterpret_cast重新解释转换
+    /*
+     char *p = "wangweihu";
+     int *myi = reinterpret_cast<int *>(p);
+     */
+    // dynamic_cast 子类父类之间的多态类型转换
+    // const_cast  去const属性
     return *reinterpret_cast<StripedMap<SideTable>*>(SideTableBuf);
 }
 
@@ -298,8 +310,7 @@ objc_storeStrong(id *location, id obj)
 enum CrashIfDeallocating {
     DontCrashIfDeallocating = false, DoCrashIfDeallocating = true
 };
-template <HaveOld haveOld, HaveNew haveNew,
-          CrashIfDeallocating crashIfDeallocating>
+template <HaveOld haveOld, HaveNew haveNew, CrashIfDeallocating crashIfDeallocating>
 static id 
 storeWeak(id *location, objc_object *newObj)
 {
@@ -316,7 +327,35 @@ storeWeak(id *location, objc_object *newObj)
     // Retry if the old value changes underneath us.
  retry:
     if (haveOld) {
-        oldObj = *location;
+        /*
+         unsigned long == uintptr_t
+         
+         enum { CacheLineSize = 64 };
+         
+         #if TARGET_OS_EMBEDDED
+         enum { StripeCount = 8 };
+         #else
+         enum { StripeCount = 64 };
+         #endif
+         
+         struct PaddedT {
+            SideTable value alignas(CacheLineSize);
+         };
+         
+         PaddedT array[StripeCount];
+         
+         static unsigned int indexForPointer(const void *p) {
+            uintptr_t addr = reinterpret_cast<uintptr_t>(p);
+            return ((addr >> 4) ^ (addr >> 9)) % StripeCount;
+         }
+         
+         T& operator[] (const void *p) {
+            return array[indexForPointer(p)].value;
+         }
+         */
+        // 1.SideTables() 返回的是类模板引用 StripedMap<SideTable>
+        // 2.StripedMap 重载了[]操作符
+        // 3.SideTable的应用作为右值
         oldTable = &SideTables()[oldObj];
     } else {
         oldTable = nil;
