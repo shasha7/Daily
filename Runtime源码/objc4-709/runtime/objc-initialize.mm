@@ -370,6 +370,7 @@ void callInitialize(Class cls)
 /***********************************************************************
 * class_initialize.  Send the '+initialize' message on demand to any
 * uninitialized class. Force initialization of superclasses first.
+ 根据需要将“初始化”消息发送给任何未初始化的类。 首先强制超类的初始化
 **********************************************************************/
 void _class_initialize(Class cls)
 {
@@ -408,6 +409,7 @@ void _class_initialize(Class cls)
                          cls->nameForLogging());
         }
 
+        // 引发异常的初始化调用被认为是一个完整且成功的初始化
         // Exceptions: A +initialize call that throws an exception 
         // is deemed to be a complete and successful +initialize.
         @try {

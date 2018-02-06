@@ -170,12 +170,14 @@ namespace objc_references_support {
     typedef hash_map<disguised_ptr_t, ObjectAssociationMap *> AssociationsHashMap;
 #else
     typedef ObjcAllocator<std::pair<void * const, ObjcAssociation> > ObjectAssociationMapAllocator;
+    // 地址值从小到大
     class ObjectAssociationMap : public std::map<void *, ObjcAssociation, ObjectPointerLess, ObjectAssociationMapAllocator> {
     public:
         void *operator new(size_t n) { return ::malloc(n); }
         void operator delete(void *ptr) { ::free(ptr); }
     };
     typedef ObjcAllocator<std::pair<const disguised_ptr_t, ObjectAssociationMap*> > AssociationsHashMapAllocator;
+    // key唯一
     class AssociationsHashMap : public unordered_map<disguised_ptr_t, ObjectAssociationMap *, DisguisedPointerHash, DisguisedPointerEqual, AssociationsHashMapAllocator> {
     public:
         void *operator new(size_t n) { return ::malloc(n); }
@@ -266,9 +268,11 @@ struct ReleaseValue {
     }
 };
 
+// 给某个object绑定关联对象
 void _object_set_associative_reference(id object, void *key, id value, uintptr_t policy) {
     // retain the new value (if any) outside the lock.
     ObjcAssociation old_association(0, nil);
+    // value对象时简单的技术加一还是copy
     id new_value = value ? acquireValue(value, policy) : nil;
     {
         AssociationsManager manager;
@@ -279,9 +283,18 @@ void _object_set_associative_reference(id object, void *key, id value, uintptr_t
             AssociationsHashMap::iterator i = associations.find(disguised_object);
             if (i != associations.end()) {
                 // secondary table exists
+                /*
+                 i->first; key   disguised_object
+                 i->second;value ObjectAssociationMap
+                 */
                 ObjectAssociationMap *refs = i->second;
+                
                 ObjectAssociationMap::iterator j = refs->find(key);
                 if (j != refs->end()) {
+                    /*
+                     i->first; key   就是绑定关联对象时用到的key作为键值
+                     i->second;value 就是ObjcAssociation(policy, new_value)
+                     */
                     old_association = j->second;
                     j->second = ObjcAssociation(policy, new_value);
                 } else {
@@ -289,9 +302,20 @@ void _object_set_associative_reference(id object, void *key, id value, uintptr_t
                 }
             } else {
                 // create the new association (first time).
+                // AssociationsManager 管理着全局AssociationsHashMap，以及加锁、解锁！
+                /*
+                 ObjectAssociationMap  map子类
+                 绑定关联对象时用到的key作为键值，ObjcAssociation(policy, new_value)作为value,这样一对键值对存储在ObjectAssociationMap中
+                
+                 AssociationsHashMap 全局unordered_map子类
+                 以对象按位取反补码作为键值，以上述一对键值对作为value，存储在AssociationsHashMap中
+                 */
+                
                 ObjectAssociationMap *refs = new ObjectAssociationMap;
                 associations[disguised_object] = refs;
                 (*refs)[key] = ObjcAssociation(policy, new_value);
+                
+                // 设置当前对象已经绑定了关联对象
                 object->setHasAssociatedObjects();
             }
         } else {
@@ -311,13 +335,40 @@ void _object_set_associative_reference(id object, void *key, id value, uintptr_t
     if (old_association.hasValue()) ReleaseValue()(old_association);
 }
 
+// 删除object对象绑定的关联对象
 void _object_remove_assocations(id object) {
     vector< ObjcAssociation,ObjcAllocator<ObjcAssociation> > elements;
+    
+    // 搭建舞台，生命周期完整
     {
+        // AssociationsManager无参构造函数以及析构函数分别实现了加锁、解锁操作，避免了资源竞争
+        // AssociationsManager内部有一个共享的AssociationsHashMap
         AssociationsManager manager;
-        AssociationsHashMap &associations(manager.associations());
+        
+        // AssociationsHashMap集成unordered_map 无序map
+        // unordered_map(const unordered_map& __u);
+        // manager.associations()返回值AssociationsHashMap引用
+        AssociationsHashMap tmp = manager.associations();
+        AssociationsHashMap &associations(tmp);
+        
         if (associations.size() == 0) return;
+        
+        /*
+         http://blog.csdn.net/coder__cs/article/details/79186677
+         阐述了计算机能够识别的二进制串是一种补码，我们理解的源码、反码只是我们自己定义的。
+         二进制按位取反 x的按位取反结果为-(x+1)
+         inline
+         disguised_ptr_t DISGUISE(id value) {
+            return ~uintptr_t(value);
+         }
+         
+         unsigned long DISGUISE(id value) {
+            return ~(unsigned long)(value);
+         }
+         */
         disguised_ptr_t disguised_object = DISGUISE(object);
+        
+        // 迭代器
         AssociationsHashMap::iterator i = associations.find(disguised_object);
         if (i != associations.end()) {
             // copy all of the associations that need to be removed.
@@ -330,6 +381,14 @@ void _object_remove_assocations(id object) {
             associations.erase(i);
         }
     }
+    
     // the calls to releaseValue() happen outside of the lock.
+    /*
+     struct ReleaseValue {
+        void operator() (ObjcAssociation &association) {
+            releaseValue(association.value(), association.policy());
+        }
+     }
+     */
     for_each(elements.begin(), elements.end(), ReleaseValue());
 }
