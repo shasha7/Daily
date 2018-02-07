@@ -34,10 +34,12 @@
  * After initialization: CLS_INITIALIZING clear and CLS_INITIALIZED set.
  * CLS_INITIALIZING and CLS_INITIALIZED are never set at the same time.
  * CLS_INITIALIZED is never cleared once set.
+ * 一旦设置，CLS_INITIALIZED永远不会被清除
  *
  * Only one thread is allowed to actually initialize a class and send 
  * +initialize. Enforced by allowing only one thread to set CLS_INITIALIZING.
  *
+ * 在类的初始化期间，该类的方法缓存保持为空
  * Additionally, threads trying to send messages to a class must wait for 
  * +initialize to finish. During initialization of a class, that class's 
  * method cache is kept empty. objc_msgSend will revert to 
