@@ -42,7 +42,7 @@ static void __main_block_func_0(struct __main_block_impl_0 *__cself) {
     printf("Hello, World!\n");
 }
 
-int main(int argc, const char * argv[]) {
+int main0(int argc, const char * argv[]) {
     // insert code here...
     __main_block_impl_0 *block = new __main_block_impl_0((void *)__main_block_func_0, &__main_block_desc_0_DATA);
     ((void (*)(__block_impl *))((__block_impl *)block)->FuncPtr)((__block_impl *)block);    return 0;

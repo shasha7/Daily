@@ -19,6 +19,7 @@
 		AAAAC34C2022E07C00E55952 /* HWEncDecFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AAAAC34A2022E07C00E55952 /* HWEncDecFactory.cpp */; };
 		AAC233002027FBAC0050F60A /* main2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AAC232FF2027FBAC0050F60A /* main2.cpp */; };
 		AAF80860202A9F030005F48D /* main0.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AAF8085F202A9F030005F48D /* main0.cpp */; };
+		AAF80862202ADD450005F48D /* main3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AAF80861202ADD450005F48D /* main3.cpp */; };
 		AAF893532020522000D01112 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = AAF893522020522000D01112 /* main.c */; };
 /* End PBXBuildFile section */
 
@@ -68,6 +69,7 @@
 		AAAAC34E2022E0BB00E55952 /* JYEncDecProtocal.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = JYEncDecProtocal.hpp; sourceTree = "<group>"; };
 		AAC232FF2027FBAC0050F60A /* main2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main2.cpp; sourceTree = "<group>"; };
 		AAF8085F202A9F030005F48D /* main0.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main0.cpp; sourceTree = "<group>"; };
+		AAF80861202ADD450005F48D /* main3.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main3.cpp; sourceTree = "<group>"; };
 		AAF893502020522000D01112 /* C基础 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "C基础"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAF893522020522000D01112 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -132,6 +134,7 @@
 				AAF8085F202A9F030005F48D /* main0.cpp */,
 				AA63C0B62017040400EEB482 /* main1.cpp */,
 				AAC232FF2027FBAC0050F60A /* main2.cpp */,
+				AAF80861202ADD450005F48D /* main3.cpp */,
 			);
 			path = "C&C++";
 			sourceTree = "<group>";
@@ -271,6 +274,7 @@
 				AAF80860202A9F030005F48D /* main0.cpp in Sources */,
 				AA63C0BF2017046500EEB482 /* Circle.cpp in Sources */,
 				AA94E677201B03650018EDBA /* Name.cpp in Sources */,
+				AAF80862202ADD450005F48D /* main3.cpp in Sources */,
 				AA1D33E7201EC9C50019BD6B /* Square.cpp in Sources */,
 				AA82C74D2018558E005C9DB7 /* Reference.cpp in Sources */,
 				AAAAC3462022D8D300E55952 /* HWSocketFactory.cpp in Sources */,
