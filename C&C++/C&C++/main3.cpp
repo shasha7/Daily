@@ -103,7 +103,7 @@ void speech_contest_print(int index, vector<int> &winV, map<int, Speaker> &speak
 }
 
 
-int main(int argc, const char * argv[]) {
+int main3(int argc, const char * argv[]) {
     // insert code here...
     map<int, Speaker> speakerMap;
     
@@ -140,4 +140,6 @@ int main(int argc, const char * argv[]) {
     cout << "🏆" << "编号：" << v4[0] << " " << "姓名：" << speakerMap[v4[0]].name << " " << "成绩：" << speakerMap[v4[0]].s_score[index] << endl;
     cout << "🥈" << "编号：" << v4[1] << " " << "姓名：" << speakerMap[v4[1]].name << " " << "成绩：" << speakerMap[v4[1]].s_score[index] << endl;
     cout << "🥉" << "编号：" << v4[2] << " " << "姓名：" << speakerMap[v4[2]].name << " " << "成绩：" << speakerMap[v4[2]].s_score[index] << endl;
+    
+    return 0;
 }
