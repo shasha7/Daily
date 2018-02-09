@@ -39,7 +39,7 @@ void objc_associatedObjectTest() {
 }
 
 void TaggedPointerTest() {
-    
+    // http://blog.sunnyxx.com/2014/10/15/behind-autorelease/
     // https://www.cnblogs.com/xiaosong666/p/5045494.html
     // http://www.360doc.com/content/16/0824/17/12278201_585635115.shtml
     // http://www.infoq.com/cn/articles/deep-understanding-of-tagged-pointer
