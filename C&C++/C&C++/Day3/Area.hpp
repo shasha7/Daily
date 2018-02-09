@@ -43,6 +43,9 @@ public:
     // 只有函数原型定义，没有任何数据的定义
     // 函数重载、重写、重定义的区别
     virtual double calculateArea() = 0;
+    
+    // 虚析构函数，带多态性质的基类应该声明一个虚析构函数，如果class带有任何virtual函数，它就应该有一个虚析构函数
+    virtual ~Area();
 };
 
 #endif /* Area_hpp */

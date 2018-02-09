@@ -9,6 +9,9 @@
 #include <stdio.h>
 #include "Circle.hpp"
 
+const int Circle::number = 10;
+const int Circle::refNumber;
+
 double Circle::calculateArea() {
     this ->c_s = 3.1415926 *c_r*c_r;
     return 3.1415926 *c_r*c_r;

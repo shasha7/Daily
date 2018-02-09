@@ -85,7 +85,15 @@ void speech_contest(int index, vector<int> &v, map<int, Speaker> &speakerMap, ve
             }
             
             while (scoreGroup.size() > 3) {
-                multimap<int, int, greater<int>>::iterator it = scoreGroup.begin();
+                multimap<int, int, greater<int>>::const_iterator it = scoreGroup.begin();
+                // *it = pair<10, 20>; 相当于 const char *name ×
+                // it++;√
+                
+                // const multimap<int, int, greater<int>>::iterator it = scoreGroup.begin();
+                // 相当于 char *const name √
+                // *it = pair<10, 20>;
+                // it++;×
+                
                 winV.push_back(it->second);
                 scoreGroup.erase(it);
             }

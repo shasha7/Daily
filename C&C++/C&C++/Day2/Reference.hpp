@@ -14,6 +14,7 @@
 struct Teacher {
     // 引用可以看作一个已定义变量的别名
     // 引用的语法：Type& name = var;
+    // 任何函数返回值是一个引用，指向局部变量都将是错误的。
     int name = 20;
     int &aliasName = name;//相当于 int *const aliasName = &name;
 };
