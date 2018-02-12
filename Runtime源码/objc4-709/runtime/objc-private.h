@@ -73,6 +73,15 @@ union isa_t
     Class cls;
     uintptr_t bits;
 
+    /*
+     // Define SUPPORT_PACKED_ISA=1 on platforms that store the class in the isa
+     // field as a maskable pointer with other data around it.
+     #if (!__LP64__  ||  TARGET_OS_WIN32  ||  TARGET_OS_SIMULATOR)
+     #   define SUPPORT_PACKED_ISA 0
+     #else
+     #   define SUPPORT_PACKED_ISA 1
+     #endif
+     */
 #if SUPPORT_PACKED_ISA
 
     // extra_rc must be the MSB-most field (so it matches carry/overflow flags)

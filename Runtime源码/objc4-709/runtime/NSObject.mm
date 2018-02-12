@@ -213,6 +213,7 @@ void SideTable::unlockTwo<DontHaveOld, DoHaveNew>
 // libc calls us before our C++ initializers run. We also don't want a global 
 // pointer to this struct because of the extra indirection.
 // Do it the hard way.
+// 我们不能使用C++静态初始程序初始化SideTables, 因为在我们的C++初始化程序运行之前，libc会调用我们，我们也不希望由于额外的间接寻址而将全局指针指向此结构。
 // uint8_t == unsigned char
 alignas(StripedMap<SideTable>) static uint8_t
     SideTableBuf[sizeof(StripedMap<SideTable>)];
@@ -713,6 +714,7 @@ class AutoreleasePoolPage
     // pushed and it has never contained any objects. This saves memory 
     // when the top level (i.e. libdispatch) pushes and pops pools but 
     // never uses them.
+    // EMPTY_POOL_PLACEHOLDER是一个确切的释放池被推到内存中,并且它从不去包含任何对象，存储在TLS中，这可以在顶层（即libdispatch）压入和弹出释放池但不使用它们时节省内存。
 #   define EMPTY_POOL_PLACEHOLDER ((id*)1)
 
 #   define POOL_BOUNDARY nil
@@ -821,7 +823,9 @@ class AutoreleasePoolPage
 #endif
     }
 
-
+    // 如果我们的一个AutoreleasePoolPage被初始化在内存的0x100816000~0x100817000中,
+    // 其中有56字节用于存储AutoreleasePoolPage的成员变量,剩下的0x100816038~0x100817000都是用来存储加入到自动释放池中的对象。
+    // begin()和end()这两个类的实例方法帮助我们快速获取0x100816038~0x100817000这一范围的边界地址。
     id * begin() {
         return (id *) ((uint8_t *)this+sizeof(*this));
     }
@@ -830,14 +834,17 @@ class AutoreleasePoolPage
         return (id *) ((uint8_t *)this+SIZE);
     }
 
+    // 判断自动释放池是否为空
     bool empty() {
         return next == begin();
     }
 
+    // 判断自动释放池是否已满
     bool full() { 
         return next == end();
     }
 
+    // 是否已过半
     bool lessThanHalfFull() {
         return (next - begin() < (end() - begin()) / 2);
     }
@@ -1097,6 +1104,7 @@ public:
     static inline void *push() 
     {
         id *dest;
+        // DebugPoolAllocation 这个是啥？？
         if (DebugPoolAllocation) {
             // Each autorelease pool starts on a new pool page.
             dest = autoreleaseNewPage(POOL_BOUNDARY);

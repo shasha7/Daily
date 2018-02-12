@@ -1727,7 +1727,7 @@ static Class realizeClass(Class cls)
 
     // fixme verify class is not in an un-dlopened part of the shared cache?
 
-    ro = (const class_ro_t *)cls->data();
+    ro = (const class_ro_t *)cls->data();//(class_rw_t *)(bits & FAST_DATA_MASK);
     if (ro->flags & RO_FUTURE) {
         // This was a future class. rw data is already allocated.
         rw = cls->data();

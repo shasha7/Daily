@@ -45,8 +45,7 @@ void TaggedPointerTest() {
     // http://www.infoq.com/cn/articles/deep-understanding-of-tagged-pointer
     // https://www.cnblogs.com/bbqzsl/p/5118905.html
     // http://blog.csdn.net/Xiejunyi12/article/details/61195716
-    // (2^31-1) 0xxxx27
-    // 2^31~2^60-1  0xxxx37
+    // (2^60-1)
     NSNumber *number1 = @11;
     NSNumber *number2 = @22;
     NSNumber *number3 = @33;
@@ -69,6 +68,7 @@ void TaggedPointerTest() {
 }
 
 int main(int argc, const char * argv[]) {
+    // void *objc_autoreleasePoolPush(void){return AutoreleasePoolPage::push();}
     @autoreleasepool {
         // insert code here...
         TaggedPointerTest();

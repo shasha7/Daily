@@ -333,12 +333,19 @@ objc_object::hasAssociatedObjects()
 inline void
 objc_object::setHasAssociatedObjects()
 {
+    // 如果是优化的isa指针则直接返回
     if (isTaggedPointer()) return;
 
  retry:
-    isa_t oldisa = LoadExclusive(&isa.bits);
+    isa_t oldisa = LoadExclusive(&isa.bits);// 取地址再解引 有啥用进制转换？？unsigned long转16进制？？
     isa_t newisa = oldisa;
     if (!newisa.nonpointer  ||  newisa.has_assoc) {
+        /*
+         void ClearExclusive(uintptr_t *dst) {
+            // pretend it writes to *dst for instruction ordering purposes
+            asm("clrex" : "=m" (*dst));
+         }
+         */
         ClearExclusive(&isa.bits);
         return;
     }
