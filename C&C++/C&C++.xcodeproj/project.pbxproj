@@ -20,6 +20,7 @@
 		AAAAC3492022D99000E55952 /* JYSocketManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AAAAC3472022D99000E55952 /* JYSocketManager.cpp */; };
 		AAAAC34C2022E07C00E55952 /* HWEncDecFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AAAAC34A2022E07C00E55952 /* HWEncDecFactory.cpp */; };
 		AAC233002027FBAC0050F60A /* main2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AAC232FF2027FBAC0050F60A /* main2.cpp */; };
+		AAC7C0242031316E00216F18 /* main5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AAC7C0232031316E00216F18 /* main5.cpp */; };
 		AAF80860202A9F030005F48D /* main0.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AAF8085F202A9F030005F48D /* main0.cpp */; };
 		AAF80862202ADD450005F48D /* main3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AAF80861202ADD450005F48D /* main3.cpp */; };
 		AAF893532020522000D01112 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = AAF893522020522000D01112 /* main.c */; };
@@ -73,6 +74,7 @@
 		AAAAC34B2022E07C00E55952 /* HWEncDecFactory.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HWEncDecFactory.hpp; sourceTree = "<group>"; };
 		AAAAC34E2022E0BB00E55952 /* JYEncDecProtocal.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = JYEncDecProtocal.hpp; sourceTree = "<group>"; };
 		AAC232FF2027FBAC0050F60A /* main2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main2.cpp; sourceTree = "<group>"; };
+		AAC7C0232031316E00216F18 /* main5.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main5.cpp; sourceTree = "<group>"; };
 		AAF8085F202A9F030005F48D /* main0.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main0.cpp; sourceTree = "<group>"; };
 		AAF80861202ADD450005F48D /* main3.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main3.cpp; sourceTree = "<group>"; };
 		AAF893502020522000D01112 /* C基础 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "C基础"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,6 +143,7 @@
 				AAC232FF2027FBAC0050F60A /* main2.cpp */,
 				AAF80861202ADD450005F48D /* main3.cpp */,
 				AA91C2B0202C0257000184F1 /* main4.cpp */,
+				AAC7C0232031316E00216F18 /* main5.cpp */,
 			);
 			path = "C&C++";
 			sourceTree = "<group>";
@@ -280,6 +283,7 @@
 				AA1D33E4201EC9B90019BD6B /* Triangle.cpp in Sources */,
 				AA91C2AF202BF92E000184F1 /* WWHList.cpp in Sources */,
 				AA91C2B1202C0257000184F1 /* main4.cpp in Sources */,
+				AAC7C0242031316E00216F18 /* main5.cpp in Sources */,
 				AAC233002027FBAC0050F60A /* main2.cpp in Sources */,
 				AAF80860202A9F030005F48D /* main0.cpp in Sources */,
 				AA63C0BF2017046500EEB482 /* Circle.cpp in Sources */,

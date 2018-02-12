@@ -59,10 +59,36 @@
     return mutaString;
 }
 
++ (void)load {
+    NSArray *array = [NSArray array];
+    NSLog(@"array = %@", array);
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self listTest];
+    [self taggedPointerTest];
+}
+
+- (void)taggedPointerTest {
+    
+    NSNumber *number1 = @1;
+    NSNumber *number2 = @2;
+    NSNumber *number3 = @3;
+    
+    NSLog(@"number1 pointer is %p", number1);
+    NSLog(@"number2 pointer is %p", number2);
+    NSLog(@"number3 pointer is %p", number3);
+    
+    // number1 pointer is 0xb000000000000012
+    // number2 pointer is 0xb000000000000022
+    // number3 pointer is 0xb000000000000032
+    
+    /*
+     64位与Tagged Pointer
+     参考：http://blog.xcodev.com/posts/tagged-pointer-and-64-bit/
+     可以看出number1、number2和number3的值前4位都是0xb，后4位都是0x2（指针的Tag），中间就是实际的取值，因此，这些NSNumber已经不需要再分配内存（指堆中内存）了，直接可以把实际的值保存到指针中，而无需再去访问堆中的数据。这无疑提高的内存访问速度和整体运算速度。
+     */
 }
 
 - (void)listTest {
