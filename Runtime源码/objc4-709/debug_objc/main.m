@@ -71,7 +71,10 @@ int main(int argc, const char * argv[]) {
     // void *objc_autoreleasePoolPush(void){return AutoreleasePoolPage::push();}
     @autoreleasepool {
         // insert code here...
-        TaggedPointerTest();
+        NSNumber *number1 = @11;
+        @synchronized (number1) {
+            NSLog(@"");
+        }
     }
     return 0;
 }

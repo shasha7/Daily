@@ -24,7 +24,7 @@
 #include "objc-private.h"
 #include "objc-sync.h"
 
-//
+// 只在需要时分配一个锁。由于在任何时候都需要很少的锁，所以将它们保存在一个单例链表中
 // Allocate a lock only when needed.  Since few locks are needed at any point
 // in time, keep them on a single list.
 //

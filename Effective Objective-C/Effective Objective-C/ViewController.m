@@ -614,5 +614,8 @@ void TestMetaClass(id self, SEL _cmd) {
 //    self.transitionA = transitionA;
 //
 //    [layer addAnimation:groupA forKey:nil];
+- (void)foo {
+    NSLog(@"self.view.safeAreaInsets.bottom = %f", self.view.safeAreaInsets.bottom);
+}
 
 @end
