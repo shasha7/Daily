@@ -64,10 +64,182 @@
     NSLog(@"array = %@", array);
 }
 
+__weak NSString *string_weak_ = nil;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self taggedPointerTest];
+    NSObject *ns = [NSObject new];
+
+    NSMutableArray *array = [NSMutableArray array];
+    [array addObject:ns];
+    
+    CFIndex index = CFGetRetainCount((__bridge CFTypeRef)(ns));
+    NSLog(@"count = %ld", index);
+}
+
+- (void)autoreleaseTest {
+    
+    // 场景 1
+    //    NSString *string = [NSString stringWithFormat:@"leichunfeng"];
+    //    string_weak_ = string;
+    
+    // 场景 2
+    //        @autoreleasepool {
+    //            NSString *string = [NSString stringWithFormat:@"leichunfeng"];
+    //            string_weak_ = string;
+    //        }
+    
+    // 场景 3
+    NSString *string = nil;
+    @autoreleasepool {
+        string = [NSString stringWithFormat:@"leichunfeng"];
+        string_weak_ = string;
+    }
+    
+    NSLog(@"string: %@", string_weak_);
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    NSLog(@"string: %@", string_weak_);
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    NSLog(@"string: %@", string_weak_);
+}
+
+- (void)runloopTest {
+    /**
+     *  Observer
+     */
+    [self createRunLoopObserverWithObserverType:kCFRunLoopEntry];
+    [self createRunLoopObserverWithObserverType:kCFRunLoopBeforeTimers];
+    [self createRunLoopObserverWithObserverType:kCFRunLoopBeforeSources];
+    [self createRunLoopObserverWithObserverType:kCFRunLoopBeforeWaiting];
+    [self createRunLoopObserverWithObserverType:kCFRunLoopAfterWaiting];
+    
+    
+    /**
+     *  Runloop block
+     *
+     */
+    CFRunLoopRef mainRunloop = CFRunLoopGetMain();
+    CFRunLoopPerformBlock(mainRunloop, kCFRunLoopCommonModes, ^{
+        
+        NSLog(@"__CFRUNLOOP_IS_CALLING_OUT_TO_A_BLOCK__  CFRunLoopPerformBlock");
+        
+    });
+    
+    /**
+     *  Source 0 event
+     *
+     */
+    [self performSelector:@selector(source0Event) onThread:[NSThread mainThread] withObject:nil waitUntilDone:NO];
+    
+    
+    /**
+     *  Source 1 event
+     */
+    [self addButtonToMainView];
+    
+    
+    
+    //Exec order : FIFO
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSLog(@"__CFRUNLOOP_IS_SERVICING_THE_MAIN_DISPATCH_QUEUE__  GCD dispatch_after");
+    });
+    
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"__CFRUNLOOP_IS_SERVICING_THE_MAIN_DISPATCH_QUEUE__  GCD dispatch_async");
+    });
+    
+    
+    /**
+     *  Timer
+     */
+    [NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(timerAction) userInfo:nil repeats:NO];
+    
+    
+    /**
+     *  Dispatch_once will be executed before the runloop run
+     */
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSLog(@"dispatch_once");
+    });
+    // Do any additional setup after loading the view, typically from a nib.
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)source0Event
+{
+    NSLog(@"__CFRUNLOOP_IS_CALLING_OUT_TO_A_SOURCE0_PERFORM_FUNCTION__  Source0");
+}
+
+- (void)timerAction
+{
+    NSLog(@"__CFRUNLOOP_IS_CALLING_OUT_TO_A_TIMER_CALLBACK_FUNCTION__  NSTimer");
+}
+
+- (void)addButtonToMainView
+{
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 50)];
+    [button addTarget:self action:@selector(source1Event) forControlEvents:UIControlEventTouchUpInside];
+    button.backgroundColor = [UIColor lightGrayColor];
+    
+    [self.view addSubview:button];
+    
+}
+
+- (void)source1Event
+{
+    NSLog(@"__CFRUNLOOP_IS_CALLING_OUT_TO_A_SOURCE1_PERFORM_FUNCTION__  Source1");
+}
+
+
+- (void)createRunLoopObserverWithObserverType:(CFOptionFlags)flag
+{
+    CFRunLoopRef runLoop = CFRunLoopGetCurrent();
+    CFStringRef runLoopMode = kCFRunLoopDefaultMode;
+    CFRunLoopObserverRef observer = CFRunLoopObserverCreateWithHandler
+    (kCFAllocatorDefault, flag, true, 0, ^(CFRunLoopObserverRef observer, CFRunLoopActivity _activity) {
+        
+        switch (_activity) {
+            case kCFRunLoopEntry:
+            {
+                NSLog(@"即将进入Loop");
+            }
+                break;
+            case kCFRunLoopBeforeTimers:
+            {
+                NSLog(@"即将处理 Timer");
+                break;
+            }
+            case kCFRunLoopBeforeSources:
+                NSLog(@"即将处理 Source");
+                break;
+            case kCFRunLoopBeforeWaiting:
+                NSLog(@"即将进入休眠");
+                ;
+                break;
+            case kCFRunLoopAfterWaiting:
+                NSLog(@"刚从休眠中唤醒");
+                break;
+            case kCFRunLoopExit:
+                NSLog(@"即将退出Loop");
+                break;
+            default:
+                break;
+        }
+    });
+    CFRunLoopAddObserver(runLoop, observer, runLoopMode);
 }
 
 - (void)taggedPointerTest {
@@ -282,7 +454,7 @@
     free(methods);
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+- (void)touchesBegan11111:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     
     // 获取成员变量 @property声明的属性 生成的成员变量带下划线_  即  _xxxxx
     unsigned int ivarCount = 0;
@@ -421,11 +593,6 @@ void TestClass() {
      */
     Class metaClass = object_getClass(dog);
     NSLog(@"metaClass=%@", metaClass);
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 // 在对象内部直接访问实例变量的好处就是不经过方法派发，直接到变量指向的内存块读取值
