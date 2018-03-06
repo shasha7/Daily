@@ -19,6 +19,7 @@
 #import <objc/runtime.h>
 #import "HomeHeaderView.h"
 #import "List.h"
+#import "venture_internal.h"
 
 @interface ViewController ()
 /*
@@ -76,6 +77,8 @@ __weak NSString *string_weak_ = nil;
     
     CFIndex index = CFGetRetainCount((__bridge CFTypeRef)(ns));
     NSLog(@"count = %ld", index);
+    
+    dispatch_queue_attr_make_with_qos_class
 }
 
 - (void)autoreleaseTest {
