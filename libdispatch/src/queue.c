@@ -3628,7 +3628,7 @@ dispatch_async_f(dispatch_queue_t dq, void *ctxt, dispatch_function_t func)
 		// tls技术,线程局部存储技术
 		dispatch_continuation_t dc = _dispatch_continuation_alloc_cacheonly();
 		
-		// 一种标记 待确定标记为什么
+		// 异步或非event_handler事件源
 		uintptr_t dc_flags = DISPATCH_OBJ_CONSUME_BIT;
 		
 		// fastpath(x)依然返回x，只是告诉编译器x的值一般不为0，这里的理解是dc大部分时候是存在的,不存在的时候采取_dispatch_async_f_slow()创建
@@ -3689,12 +3689,95 @@ dispatch_async_enforce_qos_class_f(dispatch_queue_t dq, void *ctxt,
 void
 dispatch_async(dispatch_queue_t dq, dispatch_block_t work)
 {
-	dispatch_continuation_t dc = _dispatch_continuation_alloc();
+	// dispatch_continuation_t 该结构体主要用来封装block和function
+	// DISPATCH_CONTINUATION_HEADER(continuation);
+	dispatch_continuation_t dc = _dispatch_continuation_alloc_cacheonly();
+	if (unlikely(!dc)) {
+		_dispatch_continuation_alloc_once();
+#if DISPATCH_ALLOCATOR
+		if (_dispatch_use_dispatch_alloc)
+			dc = _dispatch_alloc_continuation_alloc();
+#endif
+#if DISPATCH_CONTINUATION_MALLOC
+		dc = _dispatch_malloc_continuation_alloc();
+#endif
+	}
+
 	uintptr_t dc_flags = DISPATCH_OBJ_CONSUME_BIT;
 
-	_dispatch_continuation_init(dc, dq, work, 0, 0, dc_flags);
-	_dispatch_continuation_async(dq, dc);
+	// _dispatch_continuation_init(dc, dq, work, 0, 0, dc_flags);
+	{
+		dc->dc_flags = DISPATCH_OBJ_CONSUME_BIT | DISPATCH_OBJ_BLOCK_BIT;
+		dc->dc_ctxt = _dispatch_Block_copy(work);
+		
+		// _dispatch_continuation_priority_set(dc, 0, 0);
+		{
+#if HAVE_PTHREAD_WORKQUEUE_QOS
+			if (likely(!(flags & DISPATCH_BLOCK_HAS_PRIORITY))) {
+				pp = _dispatch_priority_propagate();
+			}
+			if (flags & DISPATCH_BLOCK_ENFORCE_QOS_CLASS) {
+				0 |= _PTHREAD_PRIORITY_ENFORCE_FLAG;
+			}
+			dc->dc_priority = 0;
+#else
+			(void)dc; (void)0; (void)0;
+#endif
+		}
+		if (unlikely(_dispatch_block_has_private_data(work))) {
+			// always sets dc_func & dc_voucher
+			// may update dc_priority & do_vtable
+			return _dispatch_continuation_init_slow(dc, dq, 0);
+		}
+		
+		if (dc_flags & DISPATCH_OBJ_CONSUME_BIT) {
+			dc->dc_func = _dispatch_call_block_and_release;
+		} else {
+			dc->dc_func = _dispatch_Block_invoke(work);
+		}
+		_dispatch_continuation_voucher_set(dc, dq, 0);
+	}
+	
+	// _dispatch_continuation_async(dq, dc);
+	// _dispatch_continuation_async2(dq, dc, dc->dc_flags & DISPATCH_OBJ_BARRIER_BIT);
+	if ((dc->dc_flags & DISPATCH_OBJ_BARRIER_BIT) || !DISPATCH_QUEUE_USES_REDIRECTION(dq->dq_width)) {
+		dx_push(dq, dc, _dispatch_continuation_override_qos(dq, dc));
+	}
+	// _dispatch_async_f2(dq, dc);
+	if (slowpath(dq->dq_items_tail)) {
+		_dispatch_continuation_push(dq, dc);
+	}
+	
+	if (slowpath(!_dispatch_queue_try_acquire_async(dq))) {
+		_dispatch_continuation_push(dq, dc);
+	}
+	
+	// _dispatch_async_f_redirect(dq, dc, _dispatch_continuation_override_qos(dq, dc));
+	
+	if (!slowpath(_dispatch_object_is_redirection(dou))) {
+		dou._dc = _dispatch_async_redirect_wrap(dq, dou);
+	}
+	dq = dq->do_targetq;
+	
+	// Find the queue to redirect to
+	while (slowpath(DISPATCH_QUEUE_USES_REDIRECTION(dq->dq_width))) {
+		if (!fastpath(_dispatch_queue_try_acquire_async(dq))) {
+			break;
+		}
+		if (!dou._dc->dc_ctxt) {
+			// find first queue in descending target queue order that has
+			// an autorelease frequency set, and use that as the frequency for
+			// this continuation.
+			dou._dc->dc_ctxt = (void *)
+			(uintptr_t)_dispatch_queue_autorelease_frequency(dq);
+		}
+		dq = dq->do_targetq;
+	}
+	
+	dx_push(dq, dou, qos);
 }
+
+
 #endif
 
 #pragma mark -

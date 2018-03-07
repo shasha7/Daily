@@ -489,10 +489,15 @@ _dispatch_alloc_continuation_alloc(void)
 {
 	dispatch_continuation_t cont;
 
+	// _dispatch_main_heap是链表中的第一个内存块，搜索的开始位置
 	if (fastpath(_dispatch_main_heap)) {
 		// Start looking in the same page where we found a continuation
 		// last time.
-		bitmap_t *last = last_found_page();
+		// bitmap_t *last = last_found_page();
+		dispatch_assert(_dispatch_main_heap);
+		unsigned int cpu = _dispatch_cpu_number();
+		bitmap_t *last = _dispatch_main_heap[cpu].header.last_found_page;
+		
 		if (fastpath(last)) {
 			unsigned int i;
 			for (i = 0; i < BITMAPS_PER_PAGE; i++) {

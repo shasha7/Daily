@@ -32,6 +32,7 @@ __BEGIN_DECLS
  * @typedef dispatch_once_t
  *
  * @abstract
+ * predicate需要先初始化为0，static和global变量创建出来即有默认值0
  * A predicate for use with dispatch_once(). It must be initialized to zero.
  * Note: static and global variables default to zero.
  */
@@ -84,11 +85,14 @@ void
 _dispatch_once_f(dispatch_once_t *predicate, void *context,
 		dispatch_function_t function)
 {
+	// __builtin_expect((x), (v))
 	if (DISPATCH_EXPECT(*predicate, ~0l) != ~0l) {
 		dispatch_once_f(predicate, context, function);
 	}
 }
 #undef dispatch_once_f
+
+// 这里需要认真查看
 #define dispatch_once_f _dispatch_once_f
 
 __END_DECLS

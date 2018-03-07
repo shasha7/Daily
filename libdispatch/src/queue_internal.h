@@ -821,6 +821,7 @@ dispatch_queue_attr_t _dispatch_get_default_queue_attr(void);
 // continuation acts as a barrier
 #define DISPATCH_OBJ_BARRIER_BIT			0x002ul
 // continuation resources are freed on run
+// 这是设置在异步或非event_handler源处理程序
 // this is set on async or for non event_handler source handlers
 #define DISPATCH_OBJ_CONSUME_BIT			0x004ul
 // continuation has a group in dc_data
