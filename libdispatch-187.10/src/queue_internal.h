@@ -35,6 +35,8 @@
 // If dc_vtable is less than 127, then the object is a continuation.
 // Otherwise, the object has a private layout and memory management rules. The
 // first two words must align with normal objects.
+// 如果dc_vtable < 127 才表示这个object是一个continuation；否则表示是一个私有的布局，这个私有的布局表示它可能是一个队列或者其他的结构，这种私有的布局的结构要求前面2个字，也就是前32位必须与普通object是对齐的；
+// 以后在队列和任务的调度过程中，会发现这个do_vtable用来判定调度的对象是任务和队列；
 #define DISPATCH_CONTINUATION_HEADER(x) \
 	const void *do_vtable; \
 	struct x *volatile do_next; \
@@ -45,6 +47,7 @@
 #define DISPATCH_OBJ_BARRIER_BIT	0x2
 #define DISPATCH_OBJ_GROUP_BIT		0x4
 #define DISPATCH_OBJ_SYNC_SLOW_BIT	0x8
+
 // vtables are pointers far away from the low page in memory
 #define DISPATCH_OBJ_IS_VTABLE(x) ((unsigned long)(x)->do_vtable > 127ul)
 
@@ -119,20 +122,31 @@ void _dispatch_queue_push_list_slow(dispatch_queue_t dq,
 
 DISPATCH_ALWAYS_INLINE
 static inline void
-_dispatch_queue_push_list(dispatch_queue_t dq, dispatch_object_t _head,
-		dispatch_object_t _tail)
+_dispatch_queue_push_list(dispatch_queue_t dq, dispatch_object_t _head, dispatch_object_t _tail)
 {
+	/*
+	 进入到_dispatch_queue_push_list，_head/_tail都是dc；
+	 1.将tail->do_next设置为NULL；
+	 2.然后将prev = fastpath(dispatch_atomic_xchg(&dq->dq_items_tail, tail));这条语句干了这么两件事：
+	 	(a). 将dc插入到dq->dq_items_tail上；也就是tail和dq->dq_items_tail互换；
+	 	(b). 返回dq->dq_items_tail的值；
+	 3.若发现prev != NULL，表示dq中存在任务，prev->do_next = head；表示将Head插入到prev的后面??,然后返回；
+	 4.否则，进入到_dispatch_queue_push_list_slow(dq, head)；
+	 */
 	struct dispatch_object_s *prev, *head = _head._do, *tail = _tail._do;
-
+	//#1
 	tail->do_next = NULL;
-	dispatch_atomic_store_barrier();
-	prev = fastpath(dispatch_atomic_xchg2o(dq, dq_items_tail, tail));
+	//#2
+	// prev = fastpath(dispatch_atomic_xchg2o(dq, dq_items_tail, tail));
+	dispatch_object_s *tmp = dq->dq_items_tail;
+	dq->dq_items_tail = tail;
+	tail = tmp;
+	prev = dq->dq_items_tail;
+	//#3
 	if (prev) {
-		// if we crash here with a value less than 0x1000, then we are at a
-		// known bug in client code for example, see _dispatch_queue_dispose
-		// or _dispatch_atfork_child
 		prev->do_next = head;
 	} else {
+		//#4
 		_dispatch_queue_push_list_slow(dq, head);
 	}
 }

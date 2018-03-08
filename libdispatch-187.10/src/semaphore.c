@@ -337,7 +337,6 @@ static long _dispatch_group_wake(dispatch_semaphore_t dsema)
 
 	head = dispatch_atomic_xchg2o(dsema, dsema_notify_head, NULL);
 	if (head) {
-		// snapshot before anything is notified/woken <rdar://problem/8554546>
 		tail = dispatch_atomic_xchg2o(dsema, dsema_notify_tail, NULL);
 	}
 	rval = dispatch_atomic_xchg2o(dsema, dsema_group_waiters, 0);
