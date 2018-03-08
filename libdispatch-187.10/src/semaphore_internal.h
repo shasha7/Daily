@@ -3,25 +3,10 @@
  *
  * @APPLE_APACHE_LICENSE_HEADER_START@
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * @APPLE_APACHE_LICENSE_HEADER_END@
  */
 
 /*
- * IMPORTANT: This header file describes INTERNAL interfaces to libdispatch
- * which are subject to change in future releases of Mac OS X. Any applications
- * relying on these interfaces WILL break.
+ * IMPORTANT: 该头文件描述了libdispatch的INTERNAL接口，这些接口可能在未来的Mac OS X版本中发生变化。任何依赖这些接口的应用程序都将中断.
  */
 
 #ifndef __DISPATCH_SEMAPHORE_INTERNAL__
@@ -40,14 +25,14 @@ struct dispatch_semaphore_s {
 	long dsema_orig;
 	size_t dsema_sent_ksignals;
 #if USE_MACH_SEM && USE_POSIX_SEM
-#error "Too many supported semaphore types"
+	#error "Too many supported semaphore types"
 #elif USE_MACH_SEM
 	semaphore_t dsema_port;
 	semaphore_t dsema_waiter_port;
 #elif USE_POSIX_SEM
 	sem_t dsema_sem;
 #else
-#error "No supported semaphore type"
+	#error "No supported semaphore type"
 #endif
 	size_t dsema_group_waiters;
 	struct dispatch_sema_notify_s *dsema_notify_head;

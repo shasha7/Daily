@@ -94,6 +94,7 @@ enum {
 // the bottom nibble must not be zero, the rest of the bits should be random
 // we sign extend the 64-bit version so that a better instruction encoding is
 // generated on Intel
+// 底部的nibble不应该是零，剩下的部分应该是随机的，我们签署扩展64位版本，这样就可以在Intel上生成更好的指令编码
 #define DISPATCH_OBJECT_LISTLESS ((void *)0xffffffff89abcdef)
 #else
 #define DISPATCH_OBJECT_LISTLESS ((void *)0x89abcdef)

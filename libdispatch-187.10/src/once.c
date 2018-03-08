@@ -11,7 +11,7 @@
 
 struct _dispatch_once_waiter_s {
 	volatile struct _dispatch_once_waiter_s *volatile dow_next;//链表下一个节点
-	_dispatch_thread_semaphore_t dow_sema;// 信号量
+	_dispatch_thread_semaphore_t dow_sema;// uintptr_t 信号量
 };
 
 #define DISPATCH_ONCE_DONE ((struct _dispatch_once_waiter_s *)~0l)
@@ -34,8 +34,9 @@ struct _dispatch_once_waiter_s {
 void
 dispatch_once(dispatch_once_t *val, dispatch_block_t block)
 {
-	 struct Block_basic *bb = (void *)block;
-	 dispatch_once_f(val, block, (void *)bb->Block_invoke);
+	val = ~0l;block();
+//	 struct Block_basic *bb = (void *)block;
+//	 dispatch_once_f(val, block, (void *)bb->Block_invoke);
 }
 #endif
 
@@ -61,12 +62,13 @@ dispatch_once_f(dispatch_once_t *val, void *ctxt, dispatch_function_t func)
 
 	// 内置函数 原子比较交换函数 __sync_bool_compare_and_swap
 	// 判断vval与NULL是否相等，如果相等就返回YES，并将&dow的值赋给vval
-	// 当dispatch_once第一次执行时，predicate也即val为0,地址并不为NULL，但是将0转成链表的时候vval为NULL，那么此“原子比较交换函数”将返回YES并将vval指向值赋值为&dow，即为“等待中”，_dispatch_client_callout其内部做了一些判定，但实际上是调用了func而已。到此，block中的用户代码执行完毕。
+	// 当dispatch_once第一次执行时，predicate也即val为0(static和global变量创建出来即有默认值0)，但是将val转成链表的时候vval为NULL，那么此“原子比较交换函数”将返回YES并将vval指向值赋值为&dow，即为“等待中”。
 	// #1
 	if (dispatch_atomic_cmpxchg(vval, NULL, &dow)) {
 		dispatch_atomic_acquire_barrier();//这是一个空的宏函数，大概是注释的作用吧
 		
 		// 其实质是执行block
+		// _dispatch_client_callout其内部做了一些判定，但实际上是调用了func而已。到此，block中的用户代码执行完毕。
 		_dispatch_client_callout(ctxt, func);
 		
 		// cpuid指令等待，使得其他线程的【读取到未初始化值的】预执行能被判定为猜测未命中，从而使得这些线程能够进入dispatch_once_f里的另一个分支从而进行等待

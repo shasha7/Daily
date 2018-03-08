@@ -166,6 +166,8 @@ dispatch_set_finalizer_f(dispatch_object_t object,
  * @function dispatch_suspend
  *
  * @abstract
+ * 一个要注意的地方是，dispatch queue的挂起是block粒度的。换句话说，挂起一个queue并不会将当前正在执行的block挂起。它会允许当前执行的block执行完毕，然后后续的block不再会被执行，直至queue被恢复。
+ * 还有一个注意点：如果你挂起了一个queue或者source，那么销毁它之前，必须先对其进行恢复。
  * Suspends the invocation of blocks on a dispatch object.
  *
  * @discussion
@@ -173,8 +175,7 @@ dispatch_set_finalizer_f(dispatch_object_t object,
  * suspension of an object will occur after any running block associated with
  * the object completes.
  *
- * Calls to dispatch_suspend() must be balanced with calls
- * to dispatch_resume().
+ * Calls to dispatch_suspend() must be balanced with calls to dispatch_resume().
  *
  * @param object
  * The object to be suspended.

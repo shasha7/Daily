@@ -101,7 +101,7 @@ struct dispatch_queue_s {
 	void *do_ctxt;//上下文，关于线程池相关的；
 	void *do_finalizer;
 	uint32_t volatile dq_running;
-	uint32_t dq_width;
+	uint32_t dq_width;//判定可以并行运行的任务数
 	struct dispatch_object_s *volatile dq_items_tail;
 	struct dispatch_object_s *volatile dq_items_head;
 	unsigned long dq_serialnum;

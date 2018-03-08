@@ -3,19 +3,6 @@
  *
  * @APPLE_APACHE_LICENSE_HEADER_START@
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * @APPLE_APACHE_LICENSE_HEADER_END@
  */
 
 #ifndef __DISPATCH_SEMAPHORE__
@@ -36,24 +23,30 @@ DISPATCH_DECL(dispatch_semaphore);
 
 __BEGIN_DECLS
 
+/*
+ 您可以使用调度信号来调节允许同时访问有限资源的任务数量。
+ 例如，每个应用程序都有一定数量的文件描述符可供使用。
+ 如果您有一个处理大量文件的任务，那么您不想同时打开太多的文件而耗尽文件描述符。
+ 相反，您可以使用信号量来限制文件处理代码在任何时候都使用的文件描述符的数量
+ 
+ Dispatch semaphore和传统信号量工作原理类似。但是在资源可用的情况下，使用GCD semaphore将会消耗较少的时间，因为在这种情况下GCD不会调用内核，只有在资源不可用的时候才会调用内核，并且系统需要停在你的线程里，直到信号发出可用信号
+ */
+
 /*!
  * @function dispatch_semaphore_create
  *
  * @abstract
- * Creates new counting semaphore with an initial value.
+ * 用初始值创建新的计数信号量。
  *
  * @discussion
- * Passing zero for the value is useful for when two threads need to reconcile
- * the completion of a particular event. Passing a value greather than zero is
- * useful for managing a finite pool of resources, where the pool size is equal
- * to the value.
+ * 当两个线程需要协调特定事件的完成时，将值传递给零值非常有用。
+ * 传递大于零的值对于管理池大小等于该值的有限资源池非常有用
  *
  * @param value
- * The starting value for the semaphore. Passing a value less than zero will
- * cause NULL to be returned.
+ * 信号量的初始值.传递一个小于零的值将导致返回NULL
  *
  * @result
- * The newly created semaphore, or NULL on failure.
+ * 创建成功返回创建的信号量，创建失败返回NULL.
  */
 __OSX_AVAILABLE_STARTING(__MAC_10_6,__IPHONE_4_0)
 DISPATCH_EXPORT DISPATCH_MALLOC DISPATCH_WARN_RESULT DISPATCH_NOTHROW
@@ -64,21 +57,19 @@ dispatch_semaphore_create(long value);
  * @function dispatch_semaphore_wait
  *
  * @abstract
- * Wait (decrement) for a semaphore.
+ * 等待（递减）信号量。
  *
  * @discussion
- * Decrement the counting semaphore. If the resulting value is less than zero,
- * this function waits in FIFO order for a signal to occur before returning.
+ * 信号量减一，如果结果值小于零，则此函数在返回之前以FIFO顺序等待。
  *
  * @param dsema
- * The semaphore. The result of passing NULL in this parameter is undefined.
+ * 信号量
  *
  * @param timeout
- * When to timeout (see dispatch_time). As a convenience, there are the
- * DISPATCH_TIME_NOW and DISPATCH_TIME_FOREVER constants.
+ * 何时超时（请参阅dispatch_time）。 为了方便起见，有DISPATCH_TIME_NOW = 0和DISPATCH_TIME_FOREVER = ~0ull两个常量。
  *
  * @result
- * Returns zero on success, or non-zero if the timeout occurred.
+ * 成功时返回零，如果发生超时则返回非零值
  */
 __OSX_AVAILABLE_STARTING(__MAC_10_6,__IPHONE_4_0)
 DISPATCH_EXPORT DISPATCH_NONNULL_ALL DISPATCH_NOTHROW
@@ -89,18 +80,16 @@ dispatch_semaphore_wait(dispatch_semaphore_t dsema, dispatch_time_t timeout);
  * @function dispatch_semaphore_signal
  *
  * @abstract
- * Signal (increment) a semaphore.
+ * 信号（增加）一个信号量
  *
  * @discussion
- * Increment the counting semaphore. If the previous value was less than zero,
- * this function wakes a waiting thread before returning.
+ * 信号量加1。如果前一个值小于零，则此函数在返回之前唤醒等待的线程
  *
- * @param dsema The counting semaphore.
- * The result of passing NULL in this parameter is undefined.
+ * @param dsema
+ * 在这个参数中传递NULL的结果是未定义的.
  *
  * @result
- * This function returns non-zero if a thread is woken. Otherwise, zero is
- * returned.
+ * 如果线程被唤醒，该函数返回非零值。否则，返回零.
  */
 __OSX_AVAILABLE_STARTING(__MAC_10_6,__IPHONE_4_0)
 DISPATCH_EXPORT DISPATCH_NONNULL_ALL DISPATCH_NOTHROW

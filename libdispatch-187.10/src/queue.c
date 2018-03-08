@@ -331,6 +331,23 @@ dispatch_get_global_queue(long priority, unsigned long flags)
 	if (flags & ~DISPATCH_QUEUE_OVERCOMMIT) {
 		return NULL;
 	}
+	/*
+	 DISPATCH_QUEUE_PRIORITY_DEFAULT优先级的全局队列：
+	 {
+		 .do_vtable = &_dispatch_queue_root_vtable,
+		 .do_ref_cnt = DISPATCH_OBJECT_GLOBAL_REFCNT,
+		 .do_xref_cnt = DISPATCH_OBJECT_GLOBAL_REFCNT,
+		 .do_suspend_cnt = DISPATCH_OBJECT_SUSPEND_LOCK,
+	 	 .do_vtable = &_dispatch_semaphore_vtable,
+	 	 .do_ref_cnt = DISPATCH_OBJECT_GLOBAL_REFCNT,
+	 	 .do_xref_cnt = DISPATCH_OBJECT_GLOBAL_REFCNT,
+	 	 .dgq_thread_pool_size = MAX_THREAD_COUNT,
+		 .dq_label = "com.apple.root.default-overcommit-priority",
+		 .dq_running = 2,
+		 .dq_width = UINT32_MAX,
+		 .dq_serialnum = 7,
+	 }
+	 */
 	return _dispatch_get_root_queue(priority,
 			flags & DISPATCH_QUEUE_OVERCOMMIT);
 }
@@ -1047,6 +1064,9 @@ _dispatch_continuation_redirect(dispatch_queue_t dq, dispatch_object_t dou)
 	}
 }
 
+/*
+ 这个函数首先检测传进来的内容是不是队列，如果是队列，就进入 _dispatch_queue_invoke 处理队列，如果不是，那这个形参就是任务封装的 dispatch_continuation_t 结构体，直接执行任务。
+ */
 DISPATCH_ALWAYS_INLINE_NDEBUG
 static inline void
 _dispatch_continuation_pop(dispatch_object_t dou)
@@ -1055,6 +1075,7 @@ _dispatch_continuation_pop(dispatch_object_t dou)
 	dispatch_group_t dg;
 
 	_dispatch_trace_continuation_pop(_dispatch_queue_get_current(), dou);
+	//((unsigned long)(dou._do)->do_vtable > 127ul)
 	if (DISPATCH_OBJ_IS_VTABLE(dou._do)) {
 		return _dispatch_queue_invoke(dou._dq);
 	}
@@ -1073,6 +1094,7 @@ _dispatch_continuation_pop(dispatch_object_t dou)
 	} else {
 		dg = NULL;
 	}
+	// 执行任务
 	_dispatch_client_callout(dc->dc_ctxt, dc->dc_func);
 	if (dg) {
 		dispatch_group_leave(dg);
@@ -1258,32 +1280,59 @@ DISPATCH_NOINLINE
 void
 dispatch_async_f(dispatch_queue_t dq, void *ctxt, dispatch_function_t func)
 {
-	dispatch_continuation_t dc;
-
-	// No fastpath/slowpath hint because we simply don't know
-	if (dq->dq_width == 1) {
-		return dispatch_barrier_async_f(dq, ctxt, func);
-	}
-
-	dc = fastpath(_dispatch_continuation_alloc_cacheonly());
-	if (!dc) {
-		return _dispatch_async_f_slow(dq, ctxt, func);
-	}
-
-	dc->do_vtable = (void *)DISPATCH_OBJ_ASYNC_BIT;
-	dc->dc_func = func;
-	dc->dc_ctxt = ctxt;
-
-	// No fastpath/slowpath hint because we simply don't know
-	// 如果有do_targetq则进行转发，否则调用_dispatch_queue_push入队列。
-	if (dq->do_targetq) {
-		return _dispatch_async_f2(dq, dc);
-	}
-
-//	_dispatch_queue_push(dq, dc);
-//	_dispatch_queue_push_list((dq), (dc), (dc));
-//	_dispatch_trace_queue_push_list
+	/*
+	 伪逻辑:
+	 if (dq是串行) {
+	 	return dispatch_barrier_async_f(dq, ctxt, func);
+	 }else {
+	 	dispatch_continuation_t dc;
+	 	return _dispatch_queue_push(dq, dc);
+	 }
+	 1.dq是串行队列的话，就走dispatch_barrier_async_f，
+	 2.否则的话就需要创建一个dispatch_continuation对象来存放function，然后塞到队列后面。其实这两个路径都是干了一件事情，
+	 就是创建dc对象，然后塞到队列后面，唯一的区别是
+	 // barrier
+	 dc->do_vtable = (void *)(DISPATCH_OBJ_ASYNC_BIT | DISPATCH_OBJ_BARRIER_BIT);
+	 
+	 // not barrier
+	 dc->do_vtable = (void *)DISPATCH_OBJ_ASYNC_BIT;
+	 */
 	
+	dispatch_continuation_t dc;
+	if (dq->dq_width == 1) {
+		dc = fastpath(_dispatch_continuation_alloc_cacheonly());
+		if (!dc) {
+			return _dispatch_barrier_async_f_slow(dq, ctxt, func);
+		}
+		dc->do_vtable = (void *)(DISPATCH_OBJ_ASYNC_BIT | DISPATCH_OBJ_BARRIER_BIT);//0x11
+		dc->dc_func = func;
+		dc->dc_ctxt = ctxt;
+		_dispatch_queue_push(dq, dc);
+	}else {
+		dc = fastpath(_dispatch_continuation_alloc_cacheonly());
+		if (!dc) {
+			return _dispatch_async_f_slow(dq, ctxt, func);
+		}
+		dc->do_vtable = (void *)DISPATCH_OBJ_ASYNC_BIT;
+		dc->dc_func = func;
+		dc->dc_ctxt = ctxt;
+		// 如果有do_targetq则进行转发，否则调用_dispatch_queue_push入队列。
+		if (dq->do_targetq) {
+			return _dispatch_async_f2(dq, dc);
+		}
+		// _dispatch_queue_push(dq, dc);
+		//	_dispatch_queue_push_list((dq), (dc), (dc));
+		// _dispatch_trace_queue_push_list(dq, dc, dc);
+		dispatch_object_t _head = dc;
+		dispatch_object_t _tail = dc;
+		if (slowpath(DISPATCH_QUEUE_PUSH_ENABLED())) {
+			struct dispatch_object_s *dou = _head._do;
+			do {
+				_dispatch_trace_continuation(dq, dou, DISPATCH_QUEUE_PUSH);
+			} while (dou != _tail._do && (dou = dou->do_next));
+		}
+		_dispatch_queue_push_list(dq, _head, _tail);
+	}
 }
 
 struct dispatch_object_s {
@@ -1308,14 +1357,12 @@ _dispatch_trace_queue_push_list(dispatch_queue_t dq, dispatch_object_t _head, di
 	_dispatch_queue_push_list(dq, _head, _tail);
 }
 
-
-
 #ifdef __BLOCKS__
 void
 dispatch_async(dispatch_queue_t dq, void (^work)(void))
 {
 	// dispatch_async的函数很简单，它将block复制了一份???，然后调用另一个函数dispatch_async_f:
-	dispatch_async_f(dq, _dispatch_Block_copy(work), _dispatch_call_block_and_release);
+	dispatch_async_f(dq,_dispatch_Block_copy(work),_dispatch_call_block_and_release);
 }
 #endif
 
@@ -1352,11 +1399,9 @@ dispatch_group_async_f(dispatch_group_t dg, dispatch_queue_t dq, void *ctxt,
 
 #ifdef __BLOCKS__
 void
-dispatch_group_async(dispatch_group_t dg, dispatch_queue_t dq,
-		dispatch_block_t db)
+dispatch_group_async(dispatch_group_t dg, dispatch_queue_t dq, dispatch_block_t db)
 {
-	dispatch_group_async_f(dg, dq, _dispatch_Block_copy(db),
-			_dispatch_call_block_and_release);
+	dispatch_group_async_f(dg, dq, _dispatch_Block_copy(db), _dispatch_call_block_and_release);
 }
 #endif
 
@@ -1528,14 +1573,14 @@ DISPATCH_NOINLINE
 static void
 _dispatch_barrier_sync_f_invoke(dispatch_queue_t dq, void *ctxt, dispatch_function_t func)
 {
-	dispatch_atomic_acquire_barrier(); // 注释作用吧
+	dispatch_atomic_acquire_barrier(); // 注释作用
 	_dispatch_function_invoke(dq, ctxt, func);
-	dispatch_atomic_release_barrier();
+	dispatch_atomic_release_barrier();// 注释作用
 	if (slowpath(dq->dq_items_tail)) {
 		return _dispatch_barrier_sync_f2(dq);
 	}
-	// dispatch_atomic_dec2o是一个宏，会调用GCC内置的函数 __sync_sub_and_fetch，实现减法的原子性操作
-	if (slowpath(dispatch_atomic_dec2o(dq, dq_running) == 0)) {
+	// dispatch_atomic_dec2o是一个宏，会调用GCC内置的函数 __sync_sub_and_fetch，实现减法的原子性操作返回减后的值
+	if (slowpath(dq->dq_running - 1 == 0)) {
 		_dispatch_wakeup(dq);
 	}
 }
@@ -1561,12 +1606,13 @@ void
 dispatch_barrier_sync_f(dispatch_queue_t dq, void *ctxt,
 		dispatch_function_t func)
 {
-	// 1) ensure that this thread hasn't enqueued anything ahead of this call 确保此线程在此调用之前没有入队
-	// 2) the queue is not suspended 队列不会暂停
+	// 1) 队列中没有任务
+	// 2) 是延时任务
 	if (slowpath(dq->dq_items_tail) || slowpath(DISPATCH_OBJECT_SUSPENDED(dq))){
 		return _dispatch_barrier_sync_f_slow(dq, ctxt, func);
 	}
 	// global queues and main queue bound to main thread always falls into the slow case
+	// 绑定了主线程的全局队列、主队列往往会调这个函数
 	if (slowpath(!dispatch_atomic_cmpxchg2o(dq, dq_running, 0, 1))) {
 		return _dispatch_barrier_sync_f_slow(dq, ctxt, func);
 	}
@@ -1651,12 +1697,26 @@ _dispatch_sync_f_slow2(dispatch_queue_t dq, void *ctxt,
 
 DISPATCH_NOINLINE
 static void
-_dispatch_sync_f_invoke(dispatch_queue_t dq, void *ctxt,
-		dispatch_function_t func)
+_dispatch_sync_f_invoke(dispatch_queue_t dq, void *ctxt, dispatch_function_t func)
 {
-	_dispatch_function_invoke(dq, ctxt, func);
-	if (slowpath(dispatch_atomic_sub2o(dq, dq_running, 2) == 0)) {
-		_dispatch_wakeup(dq);
+//	_dispatch_function_invoke(dq, ctxt, func);相当于下面代码
+	/*
+	 1.通过dispatch_queue_key获取线程中的私有数据，然后将dq保存到线程私有变量上去，说明目前用的queue就是dq;
+	 2.运行func(ctxt)执行了函数方法，任务在此执行；
+	 3.运行dispatch_atomic_sub(&dq->dq_running, 2)，若dq_running == 0，则唤醒dq；
+	 4.在全局队列中，这个dq_running在执行同步的时候，是不会存在dq_running - 2 = 0的情况；
+	 5.同步任务执行就结束了。
+	 */
+	dispatch_queue_t old_dq = _dispatch_thread_getspecific(dispatch_queue_key);
+	_dispatch_thread_setspecific(dispatch_queue_key, dq);
+	
+	// 执行block
+	_dispatch_client_callout(ctxt, func);
+
+	_dispatch_thread_setspecific(dispatch_queue_key, old_dq);
+	
+	if (slowpath(dq->dq_running - 2 == 0)) {
+		_dispatch_wakeup(dq);// 唤醒
 	}
 }
 
@@ -1695,12 +1755,32 @@ dispatch_sync_f(dispatch_queue_t dq, void *ctxt, dispatch_function_t func)
 {
 	// 如果dq_width==1的话，也就是dq是串行队列，必须要等待前面的任务执行完成之后才能执行该任务
 	// 因此会调用dispatch_barrier_sync_f barrier的实现是依靠信号量机制来保证的。
-	if (fastpath(dq->dq_width == 1)) {
+	if (fastpath(dq->dq_width == 1)) {// 判定可以并行运行的任务数
 		return dispatch_barrier_sync_f(dq, ctxt, func);
 	}
-	if (slowpath(!dq->do_targetq)) {
+	// 全局同步执行任务
+	/*
+	 {
+	 	.do_type = DISPATCH_QUEUE_GLOBAL_TYPE,
+	 	.do_kind = "global-queue",
+	 	.do_debug = dispatch_queue_debug,
+	 	.do_probe = _dispatch_queue_wakeup_global,
+	 	.do_vtable = &_dispatch_queue_root_vtable,
+	 	.do_ref_cnt = DISPATCH_OBJECT_GLOBAL_REFCNT,
+	 	.do_xref_cnt = DISPATCH_OBJECT_GLOBAL_REFCNT,
+	 	.do_suspend_cnt = DISPATCH_OBJECT_SUSPEND_LOCK,
+	 	.do_ctxt = &_dispatch_root_queue_contexts[2],
+	 	.dq_label = "com.apple.root.default-priority",
+	 	.dq_running = 2,
+	 	.dq_width = UINT32_MAX,//# define UINT32_MAX  (4294967295U)
+	 	.dq_serialnum = 6,
+	 }
+	 */
+	if (dq->do_targetq == NULL) {
 		// the global root queues do not need strict ordering
-		(void)dispatch_atomic_add2o(dq, dq_running, 2);
+		// (void)dispatch_atomic_add2o(dq, dq_running, 2);
+		// dq->dq_running = dq->dq_running - 2;
+		dq->dq_running = 0;
 		return _dispatch_sync_f_invoke(dq, ctxt, func);
 	}
 	_dispatch_sync_f2(dq, ctxt, func);
@@ -1845,20 +1925,42 @@ _dispatch_queue_push_list_slow(dispatch_queue_t dq,
 dispatch_queue_t
 _dispatch_wakeup(dispatch_object_t dou)
 {
+	/*
+	1.传入主队列，会进入到 _dispatch_queue_wakeup_main() 函数中，这里不加以分析。
+	2.传入全局队列，会进入到全局队列的dx_probe函数中，也就是我上文说的 _dispatch_queue_wakeup_global 函数，等下会重点分析这个函数。
+	3.传入用户自定义的队列，首先用户自定义的任务是没有 dx_probe 函数的，所以会继续往下走，在这里可以看到，它会被压进它的目标队列，也就是全局队列中。然后进入我刚才说的 2 的传入全局队列模式中且这个队列接到了全局队列中。
+	*/
 	dispatch_queue_t tq;
 
-	if (slowpath(DISPATCH_OBJECT_SUSPENDED(dou._do))) {
+	// 是否暂停了
+	//	if (slowpath(DISPATCH_OBJECT_SUSPENDED(dou._do))) {
+	//		return NULL;
+	//	}
+	if (dou._do->do_suspend_cnt >= DISPATCH_OBJECT_SUSPEND_INTERVAL) {
 		return NULL;
 	}
-	if (!dx_probe(dou._do) && !dou._dq->dq_items_tail) {
+	/*
+	 全局队列_dispatch_queue_root_vtable结构
+	static const struct dispatch_queue_vtable_s _dispatch_queue_root_vtable = {
+		.do_type = DISPATCH_QUEUE_GLOBAL_TYPE,
+		.do_kind = "global-queue",
+		.do_debug = dispatch_queue_debug,
+		.do_probe = _dispatch_queue_wakeup_global,
+	};
+	 */
+	// 这里会判断 (dou._do)->do_vtable->do_probe 指针函数有没有，有的话传参dou._do执行函数体_dispatch_queue_wakeup_global，没有的话，短路直接返回NULL
+	if (!(dou._do)->do_vtable->do_probe(dou._do) && !dou._dq->dq_items_tail) {
 		return NULL;
+		_dispatch_queue_wakeup_global
 	}
 
 	// _dispatch_source_invoke() relies on this testing the whole suspend count
 	// word, not just the lock bit. In other words, no point taking the lock
 	// if the source is suspended or canceled.
-	if (!dispatch_atomic_cmpxchg2o(dou._do, do_suspend_cnt, 0,
-			DISPATCH_OBJECT_SUSPEND_LOCK)) {
+	// dispatch_atomic_cmpxchg2o原型:__sync_bool_compare_and_swap 内置函数原子比较交换函数
+	// 判断dou._do->do_suspend_cnt与0是否相等，如果相等就返回YES，并将DISPATCH_OBJECT_SUSPEND_LOCK的值赋给dou._do->do_suspend_cnt
+	/*
+	if (!dispatch_atomic_cmpxchg2o(dou._do, do_suspend_cnt, 0, DISPATCH_OBJECT_SUSPEND_LOCK)) {
 #if DISPATCH_COCOA_COMPAT
 		if (dou._dq == &_dispatch_main_q) {
 			_dispatch_queue_wakeup_main();
@@ -1866,6 +1968,36 @@ _dispatch_wakeup(dispatch_object_t dou)
 #endif
 		return NULL;
 	}
+	 */
+	// ====>等效于下面
+	// 是不是被锁了
+	if (dou._do->do_suspend_cnt != 0) {
+#if DISPATCH_COCOA_COMPAT
+		if (dou._dq == &_dispatch_main_q) {
+			/*
+			 struct dispatch_queue_s _dispatch_main_q = {
+				 #if !DISPATCH_USE_RESOLVERS
+				 .do_vtable = &_dispatch_queue_vtable,
+				 .do_targetq = &_dispatch_root_queues[
+				 DISPATCH_ROOT_QUEUE_IDX_DEFAULT_OVERCOMMIT_PRIORITY],
+				 #endif
+				 .do_ref_cnt = DISPATCH_OBJECT_GLOBAL_REFCNT,
+				 .do_xref_cnt = DISPATCH_OBJECT_GLOBAL_REFCNT,
+				 .do_suspend_cnt = DISPATCH_OBJECT_SUSPEND_LOCK,==>1u
+				 .dq_label = "com.apple.main-thread",
+				 .dq_running = 1,
+				 .dq_width = 1,
+				 .dq_serialnum = 1,
+			 };
+			 */
+			_dispatch_queue_wakeup_main();
+		}
+#endif
+		return NULL;
+	}else {
+		dou._do->do_suspend_cnt = DISPATCH_OBJECT_SUSPEND_LOCK;
+	}
+
 	_dispatch_retain(dou._do);
 	tq = dou._do->do_targetq;
 	_dispatch_queue_push(tq, dou._do);
@@ -1880,15 +2012,15 @@ _dispatch_queue_wakeup_main(void)
 {
 	kern_return_t kr;
 
-	dispatch_once_f(&_dispatch_main_q_port_pred, NULL,
-			_dispatch_main_q_port_init);
+	// 只执行一次_dispatch_main_q_port_init
+	dispatch_once_f(&_dispatch_main_q_port_pred, NULL, _dispatch_main_q_port_init);
 
-	kr = _dispatch_send_wakeup_main_thread(main_q_port, 0);
+	kr = _dispatch_send_wakeup_main_thread(main_q_port, 0);//唤醒主线程
 
 	switch (kr) {
-	case MACH_SEND_TIMEOUT:
-	case MACH_SEND_TIMED_OUT:
-	case MACH_SEND_INVALID_DEST:
+		case MACH_SEND_TIMEOUT://0x00000010
+		case MACH_SEND_TIMED_OUT://0x10000004
+		case MACH_SEND_INVALID_DEST://0x10000003
 		break;
 	default:
 		(void)dispatch_assume_zero(kr);
@@ -1969,15 +2101,21 @@ out:
 #pragma mark -
 #pragma mark dispatch_queue_drain
 
+/*
+ 简单的说明一下它的逻辑，_dispatch_queue_invoke函数首先会检测出这个队列是不是串行队列，如果是串行队列，就一个一个取出任务执行，如果是并发队列，就取出一个任务执行，然后将这个并发队列的其余部分压进 rootqueue里面，这样就使并发队列的任务并发执行了。
+ */
 // 6618342 Contact the team that owns the Instrument DTrace probe before
 //         renaming this symbol
 DISPATCH_NOINLINE
 void
 _dispatch_queue_invoke(dispatch_queue_t dq)
 {
+	// !(dq->do_suspend_cnt >= DISPATCH_OBJECT_SUSPEND_INTERVAL)
+	// dq->dq_running == 0 =>YES  dq->dq_running = 1;
+	//
 	if (!slowpath(DISPATCH_OBJECT_SUSPENDED(dq)) &&
 			fastpath(dispatch_atomic_cmpxchg2o(dq, dq_running, 0, 1))) {
-		dispatch_atomic_acquire_barrier();
+		dispatch_atomic_acquire_barrier();//注释
 		dispatch_queue_t otq = dq->do_targetq, tq = NULL;
 		_dispatch_queue_drain(dq);
 		if (dq->do_vtable->do_invoke) {
@@ -1989,7 +2127,7 @@ _dispatch_queue_invoke(dispatch_queue_t dq)
 		}
 		// We do not need to check the result.
 		// When the suspend-count lock is dropped, then the check will happen.
-		dispatch_atomic_release_barrier();
+		dispatch_atomic_release_barrier();//注释
 		(void)dispatch_atomic_dec2o(dq, dq_running);
 		if (tq) {
 			return _dispatch_queue_push(tq, dq);
@@ -2183,6 +2321,12 @@ _dispatch_queue_drain_one_barrier_sync(dispatch_queue_t dq)
 	return dbss2p->dbss2_sema;
 }
 
+/*
+这个函数首先检测形参队列是不是空的，如果空的，就返回NULL。如果这个队列(其实是全局队列的一个)有内容，就分成两种情况：
+1.这个队列只有一个内容，就返回这个内容；
+2.这个队列不止只有一个内容，就调用 _dispatch_queue_wakeup_global 函数(其实就是创建一个新的线程，继续调度这个队列里面的内容)；
+这样，就可以从 _dispatch_queue_concurrent_drain_one 函数中获得了队列的一个内容，然后 _dispatch_continuation_pop 这个函数进行处理这个内容：
+ */
 static struct dispatch_object_s *
 _dispatch_queue_concurrent_drain_one(dispatch_queue_t dq)
 {
@@ -2244,6 +2388,7 @@ out:
 
 // 6618342 Contact the team that owns the Instrument DTrace probe before
 //         renaming this symbol
+// 这个函数里面进行任务的调度，主要是两个函数，一个是 _dispatch_queue_concurrent_drain_one ，用来取出队列的一个内容，另一个是 _dispatch_continuation_pop 函数，用来对取出的内容进行处理(如果是任务，则执行任务)。首先来看一下 _dispatch_queue_concurrent_drain_one 函数：
 static void
 _dispatch_worker_thread2(void *context)
 {
