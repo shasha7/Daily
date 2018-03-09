@@ -1779,6 +1779,10 @@ dispatch_sync_f(dispatch_queue_t dq, void *ctxt, dispatch_function_t func)
 	/**
 	 总结一下就是，dispatch_sync先判断队列是串行还是并行
 	 	1.串行->dispatch_barrier_sync_f
+	 		①延时任务，或者队列中有任务调用_dispatch_barrier_sync_f_slow
+	 		②主线程
+	 		③多重目标队列 _dispatch_barrier_sync_f_recurse递归调用
+	 		④_dispatch_barrier_sync_f_invoke最后调用执行函数
 	 	2.全局并行->_dispatch_sync_f_invoke直接执行任务
 	 	3.自定义全局并行队列->_dispatch_sync_f2
 	 */
