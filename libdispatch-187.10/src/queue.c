@@ -1559,8 +1559,7 @@ _dispatch_barrier_sync_f_slow(dispatch_queue_t dq, void *ctxt, dispatch_function
 			return;
 		}
 	}
-	(void)dispatch_atomic_sub2o(dq, do_suspend_cnt,
-			DISPATCH_OBJECT_SUSPEND_INTERVAL);
+	(void)dispatch_atomic_sub2o(dq, do_suspend_cnt, DISPATCH_OBJECT_SUSPEND_INTERVAL);
 	if (slowpath(dispatch_atomic_sub2o(dq, dq_running, 2) == 0)) {
 		_dispatch_wakeup(dq);
 	}
@@ -1779,9 +1778,9 @@ dispatch_sync_f(dispatch_queue_t dq, void *ctxt, dispatch_function_t func)
 {
 	/**
 	 总结一下就是，dispatch_sync先判断队列是串行还是并行
-	 串行->dispatch_barrier_sync_f
-	 全局并行->_dispatch_sync_f_invoke直接执行任务
-	 自定义全局并行队列->_dispatch_sync_f2
+	 	1.串行->dispatch_barrier_sync_f
+	 	2.全局并行->_dispatch_sync_f_invoke直接执行任务
+	 	3.自定义全局并行队列->_dispatch_sync_f2
 	 */
 	
 	// 如果dq_width==1的话，也就是dq是串行队列，必须要等待前面的任务执行完成之后才能执行该任务
@@ -1945,7 +1944,7 @@ _dispatch_queue_push_list_slow(dispatch_queue_t dq, struct dispatch_object_s *ob
 	// 否则，如果在分配给dq_items_head和_dispatch_wakeup之间先占先，则提交给队列的块可能在由_dispatch_queue_drain调用时释放队列的最后一个引用。
 	_dispatch_retain(dq);
 	dq->dq_items_head = obj;//插入节点,插入到头部？？
-	_dispatch_wakeup(dq);// 唤醒队列
+	_dispatch_wakeup(dq);// 唤醒队列，意义是什么？？？
 	_dispatch_release(dq);
 }
 
@@ -1953,8 +1952,8 @@ _dispatch_queue_push_list_slow(dispatch_queue_t dq, struct dispatch_object_s *ob
 dispatch_queue_t _dispatch_wakeup(dispatch_object_t dou)
 {
 	/*
-	1.传入主队列，会进入到_dispatch_queue_wakeup_main()函数中，这里不加以分析。
-	2.传入全局队列，会进入到全局队列的dx_probe函数中，也就是我上文说的 _dispatch_queue_wakeup_global函数，等下会重点分析这个函数。
+	1.传入主队列，会进入到_dispatch_queue_wakeup_main()函数中，在主线程上进行任务处理。
+	2.传入全局队列，会进入到全局队列的dx_probe函数中，也就是我上文说的_dispatch_queue_wakeup_global函数，等下会重点分析这个函数。
 	3.传入用户自定义的队列，首先用户自定义的任务是没有dx_probe函数的，所以会继续往下走，在这里可以看到，它会被压进它的目标队列，也就是全局队列中。然后进入我刚才说的2的传入全局队列模式中且这个队列接到了全局队列中。
 	*/
 	/*
