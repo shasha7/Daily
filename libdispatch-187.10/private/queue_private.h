@@ -2,26 +2,6 @@
  * Copyright (c) 2008-2010 Apple Inc. All rights reserved.
  *
  * @APPLE_APACHE_LICENSE_HEADER_START@
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * @APPLE_APACHE_LICENSE_HEADER_END@
- */
-
-/*
- * IMPORTANT: This header file describes INTERNAL interfaces to libdispatch
- * which are subject to change in future releases of Mac OS X. Any applications
- * relying on these interfaces WILL break.
  */
 
 #ifndef __DISPATCH_QUEUE_PRIVATE__
@@ -87,15 +67,11 @@ dispatch_queue_set_width(dispatch_queue_t dq, long width); // DEPRECATED
  * @function dispatch_set_current_target_queue
  *
  * @abstract
+ * 同步设置当前串行队列的目标队列
  * Synchronously sets the target queue of the current serial queue.
  *
  * @discussion
- * This SPI is provided for a limited purpose case when calling
- * dispatch_set_target_queue() is not sufficient. It works similarly to
- * dispatch_set_target_queue() except the target queue of the current queue
- * is immediately changed so that pending blocks on the queue will run on the
- * new target queue. Calling this from outside of a block executing on a serial
- * queue is undefined.
+ * This SPI is provided for a limited purpose case when calling dispatch_set_target_queue() is not sufficient. It works similarly to dispatch_set_target_queue() except the target queue of the current queue is immediately changed so that pending blocks on the queue will run on the new target queue. Calling this from outside of a block executing on a serial queue is undefined.
  *
  * @param queue
  * The new target queue for the object. The queue is retained, and the

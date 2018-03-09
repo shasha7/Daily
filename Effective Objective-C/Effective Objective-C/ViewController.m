@@ -19,7 +19,6 @@
 #import <objc/runtime.h>
 #import "HomeHeaderView.h"
 #import "List.h"
-#import "venture_internal.h"
 
 @interface ViewController ()
 /*
@@ -70,6 +69,12 @@ __weak NSString *string_weak_ = nil;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC));
+    
+    dispatch_after(delay, dispatch_get_main_queue(), ^{
+        
+    });
+    
     NSObject *ns = [NSObject new];
 
     NSMutableArray *array = [NSMutableArray array];
@@ -77,8 +82,6 @@ __weak NSString *string_weak_ = nil;
     
     CFIndex index = CFGetRetainCount((__bridge CFTypeRef)(ns));
     NSLog(@"count = %ld", index);
-    
-    dispatch_queue_attr_make_with_qos_class
 }
 
 - (void)autoreleaseTest {

@@ -54,9 +54,7 @@ struct timespec;
  * @typedef dispatch_time_t
  *
  * @abstract
- * A somewhat abstract representation of time; where zero means "now" and
- * DISPATCH_TIME_FOREVER means "infinity" and every value in between is an
- * opaque encoding.
+ * 零意味着“现在”，而DISPATCH_TIME_FOREVER意味着“无限”
  */
 typedef uint64_t dispatch_time_t;
 
@@ -92,7 +90,7 @@ dispatch_time(dispatch_time_t when, int64_t delta);
  * @function dispatch_walltime
  *
  * @abstract
- * Create a dispatch_time_t using the wall clock.
+ * 使用挂钟创建dispatch_time_t.
  *
  * @discussion
  * On Mac OS X the wall clock is based on gettimeofday(3).

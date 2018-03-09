@@ -103,8 +103,7 @@ DISPATCH_CACHELINE_ALIGN
 struct dispatch_queue_s _dispatch_main_q = {
 #if !DISPATCH_USE_RESOLVERS
 	.do_vtable = &_dispatch_queue_vtable,
-	.do_targetq = &_dispatch_root_queues[
-			DISPATCH_ROOT_QUEUE_IDX_DEFAULT_OVERCOMMIT_PRIORITY],
+	.do_targetq = &_dispatch_root_queues[DISPATCH_ROOT_QUEUE_IDX_DEFAULT_OVERCOMMIT_PRIORITY],
 #endif
 	.do_ref_cnt = DISPATCH_OBJECT_GLOBAL_REFCNT,
 	.do_xref_cnt = DISPATCH_OBJECT_GLOBAL_REFCNT,

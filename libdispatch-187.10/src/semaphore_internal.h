@@ -19,6 +19,11 @@ struct dispatch_sema_notify_s {
 	void (*dsn_func)(void *);
 };
 
+/*
+ dsema_value 当前信号值，当这个值小于0时无法访问加锁资源
+ dsema_orig  初始化信号值，限制了同时访问资源的线程数量
+ dsema_sent_ksignals 由于mach信号可能会被意外唤醒，通过原子操作来避免虚假信号
+ */
 struct dispatch_semaphore_s {
 	DISPATCH_STRUCT_HEADER(dispatch_semaphore_s, dispatch_semaphore_vtable_s);
 	long dsema_value;

@@ -597,9 +597,7 @@ dispatch_main(void);
 __OSX_AVAILABLE_STARTING(__MAC_10_6,__IPHONE_4_0)
 DISPATCH_EXPORT DISPATCH_NONNULL2 DISPATCH_NONNULL3 DISPATCH_NOTHROW
 void
-dispatch_after(dispatch_time_t when,
-	dispatch_queue_t queue,
-	dispatch_block_t block);
+dispatch_after(dispatch_time_t when, dispatch_queue_t queue, dispatch_block_t block);
 #endif
 
 /*!

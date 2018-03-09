@@ -2,40 +2,30 @@
  * Copyright (c) 2008-2010 Apple Inc. All rights reserved.
  *
  * @APPLE_APACHE_LICENSE_HEADER_START@
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * @APPLE_APACHE_LICENSE_HEADER_END@
  */
 
 #include "internal.h"
 
-uint64_t
-_dispatch_get_nanoseconds(void)
+// 获取纳秒
+uint64_t _dispatch_get_nanoseconds(void)
 {
 	struct timeval now;
 	int r = gettimeofday(&now, NULL);
+	
+	// A lot of API return zero upon success and not-zero on fail. Let's capture and log the non-zero value
 	dispatch_assert_zero(r);
 	dispatch_assert(sizeof(NSEC_PER_SEC) == 8);
 	dispatch_assert(sizeof(NSEC_PER_USEC) == 8);
+	// 1秒(s)=1000000000纳秒(ns)
+	// 1
+	// 秒*1000000000 + 毫妙*1000
 	return now.tv_sec * NSEC_PER_SEC + now.tv_usec * NSEC_PER_USEC;
 }
 
 #if !(defined(__i386__) || defined(__x86_64__) || !HAVE_MACH_ABSOLUTE_TIME)
 DISPATCH_CACHELINE_ALIGN _dispatch_host_time_data_s _dispatch_host_time_data;
 
-void
-_dispatch_get_host_time_init(void *context DISPATCH_UNUSED)
+void _dispatch_get_host_time_init(void *context DISPATCH_UNUSED)
 {
 	mach_timebase_info_data_t tbi;
 	(void)dispatch_assume_zero(mach_timebase_info(&tbi));
@@ -45,8 +35,8 @@ _dispatch_get_host_time_init(void *context DISPATCH_UNUSED)
 }
 #endif
 
-dispatch_time_t
-dispatch_time(dispatch_time_t inval, int64_t delta)
+// 创建延时任务时间，相对于当前时间延后多长时间执行
+dispatch_time_t dispatch_time(dispatch_time_t inval, int64_t delta)
 {
 	if (inval == DISPATCH_TIME_FOREVER) {
 		return DISPATCH_TIME_FOREVER;
@@ -82,8 +72,7 @@ dispatch_time(dispatch_time_t inval, int64_t delta)
 	return inval;
 }
 
-dispatch_time_t
-dispatch_walltime(const struct timespec *inval, int64_t delta)
+dispatch_time_t dispatch_walltime(const struct timespec *inval, int64_t delta)
 {
 	int64_t nsec;
 
@@ -102,8 +91,8 @@ dispatch_walltime(const struct timespec *inval, int64_t delta)
 	return -nsec;
 }
 
-uint64_t
-_dispatch_timeout(dispatch_time_t when)
+// 获取延时任务，延时时间
+uint64_t _dispatch_timeout(dispatch_time_t when)
 {
 	uint64_t now;
 

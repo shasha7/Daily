@@ -100,8 +100,8 @@ struct dispatch_queue_s {
 	unsigned int do_ref_cnt;
 	unsigned int do_xref_cnt;
 	unsigned int do_suspend_cnt;//通常用于指示延时处理的任务，当计数大于等于2表示为延时任务；
-	struct dispatch_queue_s *do_targetq;//目标队列，通常非global queue，如mgr_queue，需要压入到glablalQueue中来处理，因此需要指明target_queue
-	void *do_ctxt;//上下文，关于线程池相关的；
+	struct dispatch_queue_s *do_targetq;//目标队列，通常如果不是全局队列、主队列，如mgr_queue，需要压入到glablalQueue、主队列中来处理，因此需要指明target_queue，所有新建的的队列会把默认优先级的全局并发队列当做其目标队列，把一个串行队列设置为一个并发队列的目标队列并没有实际的应用的意义
+	void *do_ctxt;//上下文，关于线程池相关的，用来存储线程池相关数据，比如用于线程挂起和唤醒的信号量、线程池大小等；
 	void *do_finalizer;
 	uint32_t volatile dq_running;
 	uint32_t dq_width;//判定可以并行运行的任务数
@@ -231,7 +231,22 @@ _dispatch_queue_init(dispatch_queue_t dq)
 	dq->do_ref_cnt = 1;
 	dq->do_xref_cnt = 1;
 	// Default target queue is overcommit!
-	dq->do_targetq = _dispatch_get_root_queue(0, true);
+	// 这里也印证了我们自己创建的队列都会赋值一个默认优先级的全局队列用作目标队列，且这个目标队列可用于并行执行的线程数目是超过当前设备的核数的。
+	/*
+	 do_targetq:
+	 {
+	 .do_vtable = &_dispatch_queue_root_vtable,
+	 .do_ref_cnt = DISPATCH_OBJECT_GLOBAL_REFCNT,
+	 .do_xref_cnt = DISPATCH_OBJECT_GLOBAL_REFCNT,
+	 .do_suspend_cnt = DISPATCH_OBJECT_SUSPEND_LOCK,
+	 .do_ctxt = &_dispatch_root_queue_contexts[DISPATCH_ROOT_QUEUE_IDX_DEFAULT_OVERCOMMIT_PRIORITY],
+	 .dq_label = "com.apple.root.default-overcommit-priority",
+	 .dq_running = 2,
+	 .dq_width = UINT32_MAX,
+	 .dq_serialnum = 7,
+	 }
+	 */
+	dq->do_targetq = _dispatch_get_root_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, true);
 	dq->dq_running = 0;
 	dq->dq_width = 1;
 	dq->dq_serialnum = dispatch_atomic_inc(&_dispatch_queue_serial_numbers) - 1;
