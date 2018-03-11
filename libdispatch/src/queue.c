@@ -4521,39 +4521,8 @@ dispatch_barrier_sync(dispatch_queue_t dq, dispatch_block_t work)
 void
 dispatch_sync(dispatch_queue_t dq, dispatch_block_t work)
 {
-//	if (unlikely(_dispatch_block_has_private_data(work))) {
-//		return _dispatch_sync_block_with_private_data(dq, work, 0);
-//	}
-	extern void (*_dispatch_block_special_invoke)(void *);
-	if ((((dispatch_function_t)((dispatch_block_t)work)->invoke)  == _dispatch_block_special_invoke)) {
-		// _dispatch_sync_block_with_private_data(dispatch_queue_t dq, dispatch_block_t work, dispatch_block_flags_t flags)
+	if (unlikely(_dispatch_block_has_private_data(work))) {
 		return _dispatch_sync_block_with_private_data(dq, work, 0);
-		{
-			dispatch_block_private_data_t dbpd = _dispatch_block_get_data(work);
-			pthread_priority_t op = 0, p = 0;
-			
-			flags |= dbpd->dbpd_flags;
-			op = _dispatch_block_invoke_should_set_priority(flags, dbpd->dbpd_priority);
-			if (op) {
-				p = dbpd->dbpd_priority;
-			}
-			voucher_t ov, v = DISPATCH_NO_VOUCHER;
-			if (flags & DISPATCH_BLOCK_HAS_VOUCHER) {
-				v = dbpd->dbpd_voucher;
-			}
-			ov = _dispatch_set_priority_and_voucher(p, v, 0);
-			
-			// balanced in d_block_sync_invoke or d_block_wait
-			if (os_atomic_cmpxchg2o(dbpd, dbpd_queue, NULL, dq->_as_oq, relaxed)) {
-				_dispatch_retain_2(dq);
-			}
-			if (flags & DISPATCH_BLOCK_BARRIER) {
-				dispatch_barrier_sync_f(dq, work, _dispatch_block_sync_invoke);
-			} else {
-				dispatch_sync_f(dq, work, _dispatch_block_sync_invoke);
-			}
-			_dispatch_reset_priority_and_voucher(op, ov);
-		}
 	}
 	dispatch_sync_f(dq, work, _dispatch_Block_invoke(work));
 }

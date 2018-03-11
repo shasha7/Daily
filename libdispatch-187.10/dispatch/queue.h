@@ -2,20 +2,6 @@
  * Copyright (c) 2008-2011 Apple Inc. All rights reserved.
  *
  * @APPLE_APACHE_LICENSE_HEADER_START@
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * @APPLE_APACHE_LICENSE_HEADER_END@
  */
 
 #ifndef __DISPATCH_QUEUE__
@@ -416,8 +402,7 @@ typedef long dispatch_queue_priority_t;
 __OSX_AVAILABLE_STARTING(__MAC_10_6,__IPHONE_4_0)
 DISPATCH_EXPORT DISPATCH_CONST DISPATCH_WARN_RESULT DISPATCH_NOTHROW
 dispatch_queue_t
-dispatch_get_global_queue(dispatch_queue_priority_t priority,
-		unsigned long flags);
+dispatch_get_global_queue(dispatch_queue_priority_t priority, unsigned long flags);
 
 /*!
  * @const DISPATCH_QUEUE_SERIAL

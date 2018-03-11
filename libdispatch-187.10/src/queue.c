@@ -1622,8 +1622,7 @@ _dispatch_barrier_sync_f_recurse(dispatch_queue_t dq, void *ctxt,
 
 DISPATCH_NOINLINE
 void
-dispatch_barrier_sync_f(dispatch_queue_t dq, void *ctxt,
-		dispatch_function_t func)
+dispatch_barrier_sync_f(dispatch_queue_t dq, void *ctxt, dispatch_function_t func)
 {
 	// 1) 队列中有任务
 	// 2) 是延时任务
@@ -1634,7 +1633,7 @@ dispatch_barrier_sync_f(dispatch_queue_t dq, void *ctxt,
 	}
 	// global queues and main queue bound to main thread always falls into the slow case
 	// 绑定了主线程的全局队列、主队列往往会调这个函数
-	// 检测任务队列的dq_running，如果有运行（主队列，因为主对列dq_running才不会是0),进入_dispatch_barrier_sync_f_slow，向串行任务压入信号量，等待激活
+	// 检测任务队列的dq_running，如果有运行（主队列，因为主对列dq_running不是0),进入_dispatch_barrier_sync_f_slow，向串行任务压入信号量，等待激活
 	if (slowpath(!dispatch_atomic_cmpxchg2o(dq, dq_running, 0, 1))) {
 		return _dispatch_barrier_sync_f_slow(dq, ctxt, func);
 	}
@@ -1773,8 +1772,7 @@ _dispatch_sync_f2(dispatch_queue_t dq, void *ctxt, dispatch_function_t func)
 }
 
 DISPATCH_NOINLINE
-void
-dispatch_sync_f(dispatch_queue_t dq, void *ctxt, dispatch_function_t func)
+void dispatch_sync_f(dispatch_queue_t dq, void *ctxt, dispatch_function_t func)
 {
 	/**
 	 总结一下就是，dispatch_sync先判断队列是串行还是并行

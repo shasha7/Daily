@@ -69,19 +69,56 @@ __weak NSString *string_weak_ = nil;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC));
+//    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+////        for (NSInteger i = 0; i < 1000; i++) {
+////            NSLog(@"===========");
+////        }
+////        NSLog(@"thread = %@", [NSThread currentThread]);
+//
+//        dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//            NSLog(@"同步全局队列执行任务");
+//        });
+//    });
     
-    dispatch_after(delay, dispatch_get_main_queue(), ^{
-        
+//    dispatch_queue_t queue = dispatch_queue_create("djkzshfjkzf", DISPATCH_QUEUE_SERIAL);
+//    dispatch_sync(queue, ^{
+//        for (NSInteger i = 0; i < 1000; i++) {
+//            NSLog(@"===========");
+//        }
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//            for (NSInteger i = 0; i < 1000; i++) {
+//                NSLog(@"dwadawdaw");
+//            }
+//        });
+//    });
+    
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        for (NSInteger i = 0; i < 1000; i++) {
+//            NSLog(@"dwadawdaw");
+//        }
+//    });
+    
+    
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        [self performSelector:@selector(_dispatch_get_thread_semaphore)];
+        for (NSInteger i = 0; i < 1000; i++) {
+            NSLog(@"===========");
+        }
     });
     
-    NSObject *ns = [NSObject new];
-
-    NSMutableArray *array = [NSMutableArray array];
-    [array addObject:ns];
-    
-    CFIndex index = CFGetRetainCount((__bridge CFTypeRef)(ns));
-    NSLog(@"count = %ld", index);
+//    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC));
+//    
+//    dispatch_after(delay, dispatch_get_main_queue(), ^{
+//        
+//    });
+//    
+//    NSObject *ns = [NSObject new];
+//
+//    NSMutableArray *array = [NSMutableArray array];
+//    [array addObject:ns];
+//    
+//    CFIndex index = CFGetRetainCount((__bridge CFTypeRef)(ns));
+//    NSLog(@"count = %ld", index);
 }
 
 - (void)autoreleaseTest {
