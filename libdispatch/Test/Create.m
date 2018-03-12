@@ -28,15 +28,22 @@
  * 创建dispatch_queue_t队列
  * dispatch_queue_attr_t队列属性结构体，预定义的属性，例如DISPATCH_QUEUE_SERIAL，DISPATCH_QUEUE_CONCURRENT或调用dispatch_queue_attr_make_with_*函数的结果。
  * 通过dispatch_queue_create()函数来创建一个用于提交任务队列的时候，第二个参数传DISPATCH_QUEUE_SERIAL或NULL的时候都会创建一个串行队列，
+ DISPATCH_TARGET_QUEUE_DEFAULT == NULL
  */
 dispatch_queue_t
 dispatch_queue_create(const char *label, dispatch_queue_attr_t attr) {
-	return _dispatch_queue_create_with_target(label, attr, DISPATCH_TARGET_QUEUE_DEFAULT, true);
+	return _dispatch_queue_create_with_target(label, attr, NULL, true);
 }
 
+/**
+ * label   队列的名称
+ * dqa     队列属性  DISPATCH_QUEUE_SERIAL、DISPATCH_QUEUE_CONCURRENT
+ * tq      目标队列  默认NULL
+ * legacy  暂时不知道什么意思
+ */
 static dispatch_queue_t
 _dispatch_queue_create_with_target(const char *label, dispatch_queue_attr_t dqa, dispatch_queue_t tq, bool legacy) {
-	if (!dqa) {// 传的是串行队列的话 无论是NULL或者DISPATCH_QUEUE_SERIAL代表的都是NULL
+	if (dqa == NULL) {// 传的是串行队列的话 无论是NULL或者DISPATCH_QUEUE_SERIAL代表的都是NULL
 		dqa = (dispatch_queue_attr_t)&_dispatch_queue_attrs
 				[DISPATCH_QOS_UNSPECIFIED]
 				[0]
@@ -45,7 +52,6 @@ _dispatch_queue_create_with_target(const char *label, dispatch_queue_attr_t dqa,
 				[DQA_INDEX_SERIAL]
 				[DQA_INDEX_ACTIVE];
 		}
-	
 	// 当传入其他队列类型的时候走这个分支
 	// 但是DISPATCH_QUEUE_CONCURRENT跳过这个分支
 	} else if (dqa->do_vtable != DISPATCH_VTABLE(queue_attr)) {

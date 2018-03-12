@@ -47,6 +47,7 @@
 @property (nonatomic, copy) NSString *lastName;
 @property (nonatomic, assign, getter=isOn) BOOL on;
 //- (NSString *)fullName;
+@property (nonatomic, strong) dispatch_semaphore_t dsma;
 
 @end
 
@@ -68,8 +69,15 @@ __weak NSString *string_weak_ = nil;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+//    dispatch_semaphore_t dsma = dispatch_semaphore_create(0);
+//    self.dsma = dsma;
+//    NSLog(@"=====");
+//
+//    dispatch_semaphore_wait(dsma, DISPATCH_TIME_FOREVER);
+//    NSLog(@"haha");
     
-//    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    
+    //    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 ////        for (NSInteger i = 0; i < 1000; i++) {
 ////            NSLog(@"===========");
 ////        }
@@ -100,10 +108,7 @@ __weak NSString *string_weak_ = nil;
     
     
     dispatch_sync(dispatch_get_main_queue(), ^{
-        [self performSelector:@selector(_dispatch_get_thread_semaphore)];
-        for (NSInteger i = 0; i < 1000; i++) {
-            NSLog(@"===========");
-        }
+       
     });
     
 //    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC));

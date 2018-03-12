@@ -4281,7 +4281,11 @@ _dispatch_sync_wait(dispatch_queue_t top_dq, void *ctxt,
 		dispatch_queue_t dq, uintptr_t dc_flags)
 {
 	pthread_priority_t pp = _dispatch_get_priority();
+	
+	// ((dispatch_tid)_dispatch_thread_port())
+	// pthread_mach_thread_np(_dispatch_thread_self())
 	dispatch_tid tid = _dispatch_tid_self();
+	
 	dispatch_qos_t qos;
 	uint64_t dq_state;
 
@@ -4518,14 +4522,14 @@ dispatch_barrier_sync(dispatch_queue_t dq, dispatch_block_t work)
 /**
  * 同步执行任务
  */
-void
-dispatch_sync(dispatch_queue_t dq, dispatch_block_t work)
+void dispatch_sync(dispatch_queue_t dq, dispatch_block_t work)
 {
 	if (unlikely(_dispatch_block_has_private_data(work))) {
 		return _dispatch_sync_block_with_private_data(dq, work, 0);
 	}
 	dispatch_sync_f(dq, work, _dispatch_Block_invoke(work));
 }
+
 #endif // __BLOCKS__
 
 #pragma mark -

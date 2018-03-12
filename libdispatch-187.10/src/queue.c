@@ -1784,34 +1784,17 @@ void dispatch_sync_f(dispatch_queue_t dq, void *ctxt, dispatch_function_t func)
 	 	2.全局并行->_dispatch_sync_f_invoke直接执行任务
 	 	3.自定义全局并行队列->_dispatch_sync_f2
 	 */
-	
-	// 如果dq_width==1的话，也就是dq是串行队列，必须要等待前面的任务执行完成之后才能执行该任务
-	// 因此会调用dispatch_barrier_sync_f barrier的实现是依靠信号量机制来保证的。
-	if (fastpath(dq->dq_width == 1)) {// 判定可以并行运行的任务数
+	/*
+	 如果dq_width==1的话，也就是dq是串行队列，必须要等待前面的任务执行完成之后才能执行该任务
+	 因此会调用dispatch_barrier_sync_f barrier的实现是依靠信号量机制来保证的。
+	 do_targetq:目标队列,GCD允许我们将某个任务队列指派到另外的任务队列中执行,通常如果不是全局队列、主队列，比如mgr_queue(dq_serialnum=2),需要压入到glablalQueue、主队列中来处理,因此需要指明target_queue,所有新建的的队列会把默认优先级的全局并发队列当做其目标队列,把一个串行队列设置为一个并发队列的目标队列并没有实际的应用的意义。
+	 */
+	// #1
+	if (fastpath(dq->dq_width == 1)) {
 		return dispatch_barrier_sync_f(dq, ctxt, func);
 	}
-	/*
-	 do_targetq:目标队列,GCD允许我们将某个任务队列指派到另外的任务队列中执行,通常如果不是全局队列、主队列，比如mgr_queue(dq_serialnum=2),需要压入到glablalQueue、主队列中来处理,因此需要指明target_queue,所有新建的的队列会把默认优先级的全局并发队列当做其目标队列,把一个串行队列设置为一个并发队列的目标队列并没有实际的应用的意义。
-	 默认优先级的全局队列:
-	 {
-		 .do_vtable = &_dispatch_queue_root_vtable,
-		 .do_ref_cnt = DISPATCH_OBJECT_GLOBAL_REFCNT,
-		 .do_xref_cnt = DISPATCH_OBJECT_GLOBAL_REFCNT,
-		 .do_suspend_cnt = DISPATCH_OBJECT_SUSPEND_LOCK,
-		 .do_ctxt = &_dispatch_root_queue_contexts[2],
-		 .dq_label = "com.apple.root.default-priority",
-		 .dq_running = 2,
-		 .dq_width = UINT32_MAX,//4294967295U
-		 .dq_serialnum = 6,
-	 }
-	 _dispatch_queue_root_vtable:
-	 {
-		 .do_type = DISPATCH_QUEUE_GLOBAL_TYPE,
-		 .do_kind = "global-queue",
-		 .do_debug = dispatch_queue_debug,
-		 .do_probe = _dispatch_queue_wakeup_global,
-	 }
-	 */
+	
+	// #2
 	if (dq->do_targetq == NULL) {
 		// the global root queues do not need strict ordering
 		// (void)dispatch_atomic_add2o(dq, dq_running, 2);
@@ -1819,6 +1802,7 @@ void dispatch_sync_f(dispatch_queue_t dq, void *ctxt, dispatch_function_t func)
 		(void)dispatch_atomic_add2o(dq, dq_running, 2);
 		return _dispatch_sync_f_invoke(dq, ctxt, func);
 	}
+	//#3
 	_dispatch_sync_f2(dq, ctxt, func);
 }
 
