@@ -14,6 +14,9 @@
 		AA17A34B201076A1007B8535 /* HomeHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA17A349201076A0007B8535 /* HomeHeaderView.m */; };
 		AA17A34D20107805007B8535 /* ViewController.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AA17A34C20107805007B8535 /* ViewController.rtf */; };
 		AA17A34F20109447007B8535 /* HomeHeaderView.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AA17A34E20109447007B8535 /* HomeHeaderView.rtf */; };
+		AA36140B20566CFB0007B11F /* WWHViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA36140A20566CFB0007B11F /* WWHViewController.m */; };
+		AA36140E205678050007B11F /* EOCWeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AA36140D205678050007B11F /* EOCWeakProxy.m */; };
+		AA361411205679120007B11F /* NSTimer+BlocksSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = AA361410205679120007B11F /* NSTimer+BlocksSupport.m */; };
 		AA779CB920086F670034994A /* WWHCache.m in Sources */ = {isa = PBXBuildFile; fileRef = AA779CB820086F660034994A /* WWHCache.m */; };
 		AA779CBB20086F7B0034994A /* WWHCache.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AA779CBA20086F7B0034994A /* WWHCache.rtf */; };
 		AA9A059E2011D87400AB4EE5 /* SingleList.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9A059D2011D87400AB4EE5 /* SingleList.m */; };
@@ -59,6 +62,12 @@
 		AA17A34A201076A1007B8535 /* HomeHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeHeaderView.h; sourceTree = "<group>"; };
 		AA17A34C20107805007B8535 /* ViewController.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = ViewController.rtf; sourceTree = "<group>"; };
 		AA17A34E20109447007B8535 /* HomeHeaderView.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = HomeHeaderView.rtf; sourceTree = "<group>"; };
+		AA36140920566CFB0007B11F /* WWHViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WWHViewController.h; sourceTree = "<group>"; };
+		AA36140A20566CFB0007B11F /* WWHViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WWHViewController.m; sourceTree = "<group>"; };
+		AA36140C205678050007B11F /* EOCWeakProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EOCWeakProxy.h; sourceTree = "<group>"; };
+		AA36140D205678050007B11F /* EOCWeakProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EOCWeakProxy.m; sourceTree = "<group>"; };
+		AA36140F205679120007B11F /* NSTimer+BlocksSupport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSTimer+BlocksSupport.h"; sourceTree = "<group>"; };
+		AA361410205679120007B11F /* NSTimer+BlocksSupport.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+BlocksSupport.m"; sourceTree = "<group>"; };
 		AA779CB720086F660034994A /* WWHCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WWHCache.h; sourceTree = "<group>"; };
 		AA779CB820086F660034994A /* WWHCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WWHCache.m; sourceTree = "<group>"; };
 		AA779CBA20086F7B0034994A /* WWHCache.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = WWHCache.rtf; sourceTree = "<group>"; };
@@ -284,6 +293,12 @@
 				AADF60D72006FE5B00B6F705 /* ViewController.h */,
 				AADF60D82006FE5B00B6F705 /* ViewController.m */,
 				AA17A34C20107805007B8535 /* ViewController.rtf */,
+				AA36140920566CFB0007B11F /* WWHViewController.h */,
+				AA36140A20566CFB0007B11F /* WWHViewController.m */,
+				AA36140C205678050007B11F /* EOCWeakProxy.h */,
+				AA36140D205678050007B11F /* EOCWeakProxy.m */,
+				AA36140F205679120007B11F /* NSTimer+BlocksSupport.h */,
+				AA361410205679120007B11F /* NSTimer+BlocksSupport.m */,
 				AADF60EA2006FE8300B6F705 /* Supporting Files */,
 			);
 			path = "Effective Objective-C";
@@ -423,6 +438,7 @@
 				AA17A344201071F5007B8535 /* Person.m in Sources */,
 				AA17A34B201076A1007B8535 /* HomeHeaderView.m in Sources */,
 				AADF60E42006FE5B00B6F705 /* main.m in Sources */,
+				AA36140B20566CFB0007B11F /* WWHViewController.m in Sources */,
 				AA779CB920086F670034994A /* WWHCache.m in Sources */,
 				AA9A05D22011E3AE00AB4EE5 /* GTMBase64.m in Sources */,
 				AA9A05A32011E0CF00AB4EE5 /* UIColor+Enumerating.m in Sources */,
@@ -431,9 +447,11 @@
 				AA9A05D02011E3AE00AB4EE5 /* MD5Util.m in Sources */,
 				AA9A05D52011E3AE00AB4EE5 /* RegularHelp.m in Sources */,
 				AADF60F22006FF7700B6F705 /* CategoryDemo+attribute1.m in Sources */,
+				AA36140E205678050007B11F /* EOCWeakProxy.m in Sources */,
 				AADF60F42006FF7700B6F705 /* CategoryDemo+attribute.m in Sources */,
 				AA9A05DA2011E3AE00AB4EE5 /* EncryptUtils.m in Sources */,
 				AA9A05E02011E3AE00AB4EE5 /* NSData+Base64.m in Sources */,
+				AA361411205679120007B11F /* NSTimer+BlocksSupport.m in Sources */,
 				AA9A059E2011D87400AB4EE5 /* SingleList.m in Sources */,
 				AA9A05D32011E3AE00AB4EE5 /* DES3Util.m in Sources */,
 				AA17A345201071F5007B8535 /* Animal.m in Sources */,

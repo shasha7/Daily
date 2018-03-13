@@ -19,6 +19,7 @@
 #import <objc/runtime.h>
 #import "HomeHeaderView.h"
 #import "List.h"
+#import "WWHViewController.h"
 
 @interface ViewController ()
 /*
@@ -49,6 +50,8 @@
 //- (NSString *)fullName;
 @property (nonatomic, strong) dispatch_semaphore_t dsma;
 
+
+
 @end
 
 @implementation ViewController
@@ -67,8 +70,15 @@
 
 __weak NSString *string_weak_ = nil;
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    WWHViewController *vc = [[WWHViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    
 //    dispatch_semaphore_t dsma = dispatch_semaphore_create(0);
 //    self.dsma = dsma;
 //    NSLog(@"=====");
@@ -107,9 +117,9 @@ __weak NSString *string_weak_ = nil;
 //    });
     
     
-    dispatch_sync(dispatch_get_main_queue(), ^{
-       
-    });
+//    dispatch_sync(dispatch_get_main_queue(), ^{
+//
+//    });
     
 //    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC));
 //    
