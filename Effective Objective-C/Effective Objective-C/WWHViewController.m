@@ -10,11 +10,13 @@
 #import "EOCWeakProxy.h"
 #import "NSTimer+BlocksSupport.h"
 #import <pthread/pthread.h>
+#import "WWHCache.h"
 
-@interface WWHViewController ()
+@interface WWHViewController ()<NSCacheDelegate>
 
 @property (nonatomic, weak) NSTimer *timer;
 @property (nonatomic, strong) dispatch_source_t dtimer;
+@property (nonatomic, strong) WWHCache *cache;
 
 @end
 
@@ -25,11 +27,26 @@
     [_timer invalidate];
 }
 
+/**
+ * 当NSCache中有对象删除的时候就会调用这个回调方法
+ * cache这个是不被允许修改的，obj是删除的对象
+ */
+- (void)cache:(NSCache *)cache willEvictObject:(id)obj {
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"定时器";
+    
+    WWHCache *cache = [[WWHCache alloc] init];
+    [cache setCountLimit:10];
+    for (NSInteger i = 0; i < 20; i++) {
+        NSObject *o = [[NSObject alloc] init];
+        [cache setValue:o forKey:[NSString stringWithFormat:@"第%@个对象", @(i)]];
+    }
     
     /*
      self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f repeats:NO block:^(NSTimer * _Nonnull timer) {
