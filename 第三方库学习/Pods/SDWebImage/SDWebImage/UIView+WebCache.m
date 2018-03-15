@@ -48,15 +48,21 @@ static char TAG_ACTIVITY_SHOW;
                          completed:(nullable SDExternalCompletionBlock)completedBlock
                            context:(nullable NSDictionary *)context {
     NSString *validOperationKey = operationKey ?: NSStringFromClass([self class]);
+    // 使当前UIView中的所有操作都被cancel.不会影响之后进行的下载操作.
     [self sd_cancelImageLoadOperationWithKey:validOperationKey];
+    
+    // 当前UIView绑定下载图片链接NSURL地址
     objc_setAssociatedObject(self, &imageURLKey, url, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
+    // 如果图片展示没有延迟展示占位图片，在主线程上调用
     if (!(options & SDWebImageDelayPlaceholder)) {
         dispatch_main_async_safe(^{
             [self sd_setImage:placeholder imageData:nil basedOnClassOrViaCustomSetImageBlock:setImageBlock];
         });
     }
     
+    // 判断url是否为空，如果非空那么一个全局的SDWebImageManager就会调用以下的方法获取图片:
+    // loadImageWithURL:options:progress:completed:
     if (url) {
         // check if activityView is enabled or not
         if ([self sd_showActivityIndicatorView]) {
@@ -66,6 +72,7 @@ static char TAG_ACTIVITY_SHOW;
         __weak __typeof(self)wself = self;
         id <SDWebImageOperation> operation = [SDWebImageManager.sharedManager loadImageWithURL:url options:options progress:progressBlock completed:^(UIImage *image, NSData *data, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
             __strong __typeof (wself) sself = wself;
+            // 有ActivityIndicator就删除调
             [sself sd_removeActivityIndicator];
             if (!sself) { return; }
             BOOL shouldCallCompletedBlock = finished || (options & SDWebImageAvoidAutoSetImage);

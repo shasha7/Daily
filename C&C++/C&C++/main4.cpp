@@ -16,7 +16,7 @@ public:
     char *name;
 };
 
-int main(int argc, const char * argv[]) {
+int main4(int argc, const char * argv[]) {
     WWHList *list = nullptr;
     WWHErrorCode code = CreateList(&list);
     if (code == WWHErrorCodeSuccess) {

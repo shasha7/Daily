@@ -664,19 +664,19 @@ dispatch_set_target_queue(dispatch_object_t dou, dispatch_queue_t dq)
 	}
 	// TODO: put into the vtable
 	switch(type) {
-	case _DISPATCH_QUEUE_TYPE:
-	case _DISPATCH_SOURCE_TYPE:
-		_dispatch_retain(dq);
-		return dispatch_barrier_async_f(dou._dq, dq,
-				_dispatch_set_target_queue2);
-	case _DISPATCH_IO_TYPE:
-		return _dispatch_io_set_target_queue(dou._dchannel, dq);
-	default:
-		_dispatch_retain(dq);
-		dispatch_atomic_store_barrier();
-		prev_dq = dispatch_atomic_xchg2o(dou._do, do_targetq, dq);
-		if (prev_dq) _dispatch_release(prev_dq);
-		return;
+		case _DISPATCH_QUEUE_TYPE:
+		case _DISPATCH_SOURCE_TYPE:
+			_dispatch_retain(dq);
+			return dispatch_barrier_async_f(dou._dq, dq,
+											_dispatch_set_target_queue2);
+		case _DISPATCH_IO_TYPE:
+			return _dispatch_io_set_target_queue(dou._dchannel, dq);
+		default:
+			_dispatch_retain(dq);
+			dispatch_atomic_store_barrier();
+			prev_dq = dispatch_atomic_xchg2o(dou._do, do_targetq, dq);
+			if (prev_dq) _dispatch_release(prev_dq);
+			return;
 	}
 }
 
@@ -1114,6 +1114,7 @@ void
 dispatch_barrier_async_f(dispatch_queue_t dq, void *ctxt,
 		dispatch_function_t func)
 {
+	// 这里将相关参数信息以及接下来要调用的方法名封装作为一个dispatch_continuation_t结构体，可以理解为一个队列任务块，然后push到队列中——这里的队列是_dispatch_mgr_q。
 	dispatch_continuation_t dc;
 
 	dc = fastpath(_dispatch_continuation_alloc_cacheonly());

@@ -67,6 +67,47 @@ dispatch_source_create(dispatch_source_type_t type,
 	unsigned long mask,
 	dispatch_queue_t q)
 {
+	/*
+	 type以DISPATCH_SOURCE_TYPE_TIMER为值进行分析
+	 #define DISPATCH_SOURCE_TYPE_TIMER (&_dispatch_source_type_timer)
+	 const struct dispatch_source_type_s _dispatch_source_type_timer = {
+		 .ke = {
+		 	.filter = DISPATCH_EVFILT_TIMER,
+		 },
+		 .mask = DISPATCH_TIMER_WALL_CLOCK,
+		 .init = dispatch_source_type_timer_init,
+	 }
+	 */
+	/*
+	struct dispatch_source_s {
+		DISPATCH_STRUCT_HEADER(dispatch_source_s, dispatch_source_vtable_s);
+		DISPATCH_QUEUE_HEADER;
+		// Instruments always copies DISPATCH_QUEUE_MIN_LABEL_SIZE, which is 64,
+		// so the remainder of the structure must be big enough
+		union {
+			char _ds_pad[DISPATCH_QUEUE_MIN_LABEL_SIZE];
+			struct {
+				char dq_label[8];
+				dispatch_kevent_t ds_dkev;
+				dispatch_source_refs_t ds_refs;
+				unsigned int ds_atomic_flags;
+				unsigned int
+			ds_is_level:1,
+			ds_is_adder:1,
+			ds_is_installed:1,
+			ds_needs_rearm:1,
+			ds_is_timer:1,
+			ds_cancel_is_block:1,
+			ds_handler_is_block:1,
+			ds_registration_is_block:1;
+				unsigned long ds_data;
+				unsigned long ds_pending_data;
+				unsigned long ds_pending_data_mask;
+				unsigned long ds_ident_hack;
+			};
+		};
+	}
+	*/
 	const struct kevent *proto_kev = &type->ke;
 	dispatch_source_t ds = NULL;
 	dispatch_kevent_t dk = NULL;
@@ -77,24 +118,24 @@ dispatch_source_create(dispatch_source_type_t type,
 	}
 
 	switch (type->ke.filter) {
-	case EVFILT_SIGNAL:
-		if (handle >= NSIG) {
-			goto out_bad;
-		}
-		break;
-	case EVFILT_FS:
+		case EVFILT_SIGNAL:
+			if (handle >= NSIG) {
+				goto out_bad;
+			}
+			break;
+		case EVFILT_FS:
 #if DISPATCH_USE_VM_PRESSURE
-	case EVFILT_VM:
+		case EVFILT_VM:
 #endif
-	case DISPATCH_EVFILT_CUSTOM_ADD:
-	case DISPATCH_EVFILT_CUSTOM_OR:
-	case DISPATCH_EVFILT_TIMER:
-		if (handle) {
-			goto out_bad;
-		}
-		break;
-	default:
-		break;
+		case DISPATCH_EVFILT_CUSTOM_ADD:
+		case DISPATCH_EVFILT_CUSTOM_OR:
+		case DISPATCH_EVFILT_TIMER:
+			if (handle) {
+				goto out_bad;
+			}
+			break;
+		default:
+			break;
 	}
 
 	ds = calloc(1ul, sizeof(struct dispatch_source_s));
@@ -1268,6 +1309,8 @@ dispatch_source_set_timer(dispatch_source_t ds,
 	// Suspend the source so that it doesn't fire with pending changes
 	// The use of suspend/resume requires the external retain/release
 	dispatch_retain(ds);
+	
+	// 在这个方法中，会将定时器的相关信息封装在一个dispatch_set_timer_params结构体中作为上下文参数params，交由_dispatch_mgr_q来异步调用_dispatch_source_set_timer2方法：
 	dispatch_barrier_async_f((dispatch_queue_t)ds, params,
 			_dispatch_source_set_timer2);
 }

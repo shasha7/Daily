@@ -79,7 +79,7 @@ objc_object::getIsa()
     if (!isTaggedPointer()) return ISA();
 
     uintptr_t ptr = (uintptr_t)this;
-    if (isExtTaggedPointer()) {
+    if (isExtTaggedPointer()) {// 第四位全部是1
         uintptr_t slot = 
             (ptr >> _OBJC_TAG_EXT_SLOT_SHIFT) & _OBJC_TAG_EXT_SLOT_MASK;
         return objc_tag_ext_classes[slot];

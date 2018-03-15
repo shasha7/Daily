@@ -9,6 +9,7 @@
 #import "WWHViewController.h"
 #import "EOCWeakProxy.h"
 #import "NSTimer+BlocksSupport.h"
+#import <pthread/pthread.h>
 
 @interface WWHViewController ()
 
@@ -63,6 +64,7 @@
     }];
      */
     
+    /*
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, NULL);
     self.dtimer = timer;
@@ -71,6 +73,10 @@
         NSLog(@"--------");
     });
     dispatch_resume(timer);
+     */
+
+    NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(pthreadGetSpecific) object:nil];
+    [thread start];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -80,6 +86,22 @@
 
 - (void)timerAction {// 这个默认参数就是self _cmd  所以会强引用self
     NSLog(@"%@", self);
+}
+
+void (*worker1)(void *arg);
+void (*worker2)(void *arg);
+
+- (void)pthreadGetSpecific {
+
+    pthread_key_t key;
+    pthread_key_create(&key, worker1);
+    
+    NSString *str = @"wangweihu";
+    pthread_setspecific(key, CFBridgingRetain([NSString stringWithFormat:@"%@_wwh", str]));
+    
+    NSLog(@"str = %@", pthread_getspecific(key));
+    
+    NSLog(@"str_org = %@", str);
 }
 
 @end

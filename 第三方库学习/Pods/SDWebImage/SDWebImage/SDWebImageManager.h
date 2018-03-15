@@ -4,6 +4,8 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ * 用于处理异步下载和图片缓存的类。
+ * 这个类的主要作用就是为UIView+WebCache和SDWebImageDownloader,SDImageCache之间构建一个桥梁,使它们能够更好的协同工作。
  */
 
 #import "SDWebImageCompat.h"
@@ -181,6 +183,9 @@ SDWebImageManager *manager = [SDWebImageManager sharedManager];
  */
 @property (nonatomic, copy, nullable) SDWebImageCacheKeyFilterBlock cacheKeyFilter;
 
+#pragma mark -
+#pragma mark - INITIALIZER
+
 /**
  * Returns global SDWebImageManager instance.
  *
@@ -193,6 +198,9 @@ SDWebImageManager *manager = [SDWebImageManager sharedManager];
  * @return new instance of `SDWebImageManager` with specified cache and downloader.
  */
 - (nonnull instancetype)initWithCache:(nonnull SDImageCache *)cache downloader:(nonnull SDWebImageDownloader *)downloader NS_DESIGNATED_INITIALIZER;
+
+#pragma mark -
+#pragma mark - loadImage
 
 /**
  * Downloads the image at the given URL if not present in cache or return the cached version otherwise.
@@ -225,16 +233,6 @@ SDWebImageManager *manager = [SDWebImageManager sharedManager];
                                             completed:(nullable SDInternalCompletionBlock)completedBlock;
 
 /**
- * Saves image to cache for given URL
- *
- * @param image The image to cache
- * @param url   The URL to the image
- *
- */
-
-- (void)saveImageToCache:(nullable UIImage *)image forURL:(nullable NSURL *)url;
-
-/**
  * Cancel all current operations
  */
 - (void)cancelAll;
@@ -243,6 +241,19 @@ SDWebImageManager *manager = [SDWebImageManager sharedManager];
  * Check one or more operations running
  */
 - (BOOL)isRunning;
+
+#pragma mark -
+#pragma mark - Cache
+
+/**
+ * Saves image to cache for given URL
+ *
+ * @param image The image to cache
+ * @param url   The URL to the image
+ *
+ */
+
+- (void)saveImageToCache:(nullable UIImage *)image forURL:(nullable NSURL *)url;
 
 /**
  *  Async check if image has already been cached

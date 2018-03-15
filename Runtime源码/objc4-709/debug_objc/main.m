@@ -67,13 +67,102 @@ void TaggedPointerTest() {
     NSLog(@"numberLager pointer is %p", numberLager);
 }
 
+NSString *binaryithInteger(NSUInteger decInt) {
+    NSString *string = @"";
+    NSUInteger dec = decInt;
+    while (dec > 0) {
+        string = [[NSString stringWithFormat:@"%lu", dec&1] stringByAppendingString:string];
+        dec = dec >> 1;
+    }
+    return string;
+}
+
+void binaryithIntegertest() {
+    struct objc_object *test = (__bridge struct objc_object *)([Teacher new]);
+    NSLog(@"%@", binaryithInteger(test->isa));
+    NSLog(@"%@", binaryithInteger((uintptr_t)[Teacher class]));
+}
+
+struct ISA {
+    uintptr_t nonpointer        : 1;
+    uintptr_t has_assoc         : 1;
+    uintptr_t has_cxx_dtor      : 1;
+    uintptr_t shiftcls          : 33;
+    uintptr_t magic             : 6;
+    uintptr_t weakly_referenced : 1;
+    uintptr_t deallocating      : 1;
+    uintptr_t has_sidetable_rc  : 1;
+    uintptr_t extra_rc          : 19;
+};
+
+union hold {
+    Class cls;
+    long bits;
+    struct ISA isa;
+};
+
+void unionTest() {
+    union hold hold;
+    hold.isa.nonpointer = 1;
+    hold.isa.has_assoc = 1;
+    hold.cls = [Teacher class];
+    NSLog(@"%lu", (uintptr_t)hold.cls>>3);
+    hold.bits = 0x00007ffffffffff8ULL;
+}
+
+struct B {
+    uint32_t flags;
+    uint32_t instanceStart;
+    uint32_t instanceSize;
+
+    uint32_t reserved;
+    const uint8_t * ivarLayout;
+    const char * name;
+};
+
+struct A {
+    uint32_t flags;
+    uint32_t version;
+    
+    const struct B *ro;
+    
+    Class firstSubclass;
+    Class nextSiblingClass;
+    
+    char *demangledName;
+    
+    uint32_t index;
+};
+
+void structChange() {
+    struct A a = {1, 2, NULL, [Teacher class], [Teacher class], NULL, 32};
+    struct B *b = (struct B*)&a;
+}
+
+// XXObject.h 文件
+@interface XXObject : NSObject
+
+- (void)hello;
+
+@end
+
+// XXObject.m 文件
+@implementation XXObject
+
+- (void)hello {
+    NSLog(@"Hello");
+}
+
+@end
+
 int main(int argc, const char * argv[]) {
     // void *objc_autoreleasePoolPush(void){return AutoreleasePoolPage::push();}
     @autoreleasepool {
         // insert code here...
-        NSNumber *number1 = @11;
-        @synchronized (number1) {
-            NSLog(@"");
+        unsigned int count = 0;
+        Class *class = objc_copyClassList(&count);
+        for (unsigned int i = 0; i < count; i++) {
+            NSLog(@"%@", NSStringFromClass(class[i]));
         }
     }
     return 0;

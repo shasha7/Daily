@@ -51,6 +51,14 @@
 // vtables are pointers far away from the low page in memory
 #define DISPATCH_OBJ_IS_VTABLE(x) ((unsigned long)(x)->do_vtable > 127ul)
 
+/*
+#define DISPATCH_CONTINUATION_HEADER(x) \
+const void *do_vtable; \
+struct x *volatile do_next; \
+dispatch_function_t dc_func; \
+void *dc_ctxt
+*/
+
 struct dispatch_continuation_s {
 	DISPATCH_CONTINUATION_HEADER(dispatch_continuation_s);
 	dispatch_group_t dc_group;
