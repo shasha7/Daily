@@ -157,9 +157,7 @@ typedef NSMutableDictionary<NSString *, id> SDCallbacksDictionary;
              *  We send nil as delegate queue so that the session creates a serial operation queue for performing all delegate
              *  method calls and completion handler calls.
              */
-            self.ownedSession = [NSURLSession sessionWithConfiguration:sessionConfig
-                                                              delegate:self
-                                                         delegateQueue:nil];
+            self.ownedSession = [NSURLSession sessionWithConfiguration:sessionConfig delegate:self delegateQueue:nil];
             session = self.ownedSession;
         }
         
@@ -385,6 +383,14 @@ didReceiveResponse:(NSURLResponse *)response
     }
     
     if (error) {
+        /*
+        NSArray<id> *completionBlocks = [self callbacksForKey:kCompletedCallbackKey];
+        dispatch_main_async_safe(^{
+            for (SDWebImageDownloaderCompletedBlock completedBlock in completionBlocks) {
+                completedBlock(nil, nil, error, YES);
+            }
+        });
+         */
         [self callCompletionBlocksWithError:error];
     } else {
         if ([self callbacksForKey:kCompletedCallbackKey].count > 0) {

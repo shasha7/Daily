@@ -10,25 +10,41 @@
 #import "SDWebImageCompat.h"
 #import "SDImageCacheConfig.h"
 
+// 缓存类型
 typedef NS_ENUM(NSInteger, SDImageCacheType) {
     /**
      * The image wasn't available the SDWebImage caches, but was downloaded from the web.
      */
-    SDImageCacheTypeNone,
+    SDImageCacheTypeNone,// 不进行缓存只是从从网络下载
     /**
      * The image was obtained from the disk cache.
      */
-    SDImageCacheTypeDisk,
+    SDImageCacheTypeDisk,//磁盘缓存
     /**
      * The image was obtained from the memory cache.
      */
-    SDImageCacheTypeMemory
+    SDImageCacheTypeMemory//内存缓存
 };
 
+/**
+ * 查询完成回调Block
+ * @param image     图片
+ * @param data      图片二进制数据
+ * @param cacheType 缓存类型
+ */
 typedef void(^SDCacheQueryCompletedBlock)(UIImage * _Nullable image, NSData * _Nullable data, SDImageCacheType cacheType);
 
+/**
+ * 磁盘缓存检查回调Block
+ * @param isInCache 是否在缓存中
+ */
 typedef void(^SDWebImageCheckCacheCompletionBlock)(BOOL isInCache);
 
+/**
+ * 磁盘缓存空间大小计算回调Block
+ * @param fileCount 文件数量
+ * @param totalSize 总大小
+ */
 typedef void(^SDWebImageCalculateSizeBlock)(NSUInteger fileCount, NSUInteger totalSize);
 
 
@@ -42,16 +58,19 @@ typedef void(^SDWebImageCalculateSizeBlock)(NSUInteger fileCount, NSUInteger tot
 
 /**
  *  Cache Config object - storing all kind of settings
+ *  配置信息
  */
 @property (nonatomic, nonnull, readonly) SDImageCacheConfig *config;
 
 /**
  * The maximum "total cost" of the in-memory image cache. The cost function is the number of pixels held in memory.
+ * 内存最大容量
  */
 @property (assign, nonatomic) NSUInteger maxMemoryCost;
 
 /**
  * The maximum number of objects the cache should hold.
+ * 缓存中可以存放缓存的最大数量，与NSCache相关
  */
 @property (assign, nonatomic) NSUInteger maxMemoryCountLimit;
 
