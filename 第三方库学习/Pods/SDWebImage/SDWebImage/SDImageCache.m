@@ -599,9 +599,7 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
 - (void)clearMemory {
     [self.memCache removeAllObjects];
 }
-- (void)clearMemory {
-    [self.memCache removeAllObjects];
-}
+
 
 /**
  移除所有的磁盘缓存图片数据
