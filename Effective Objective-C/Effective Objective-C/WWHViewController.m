@@ -32,7 +32,7 @@
  * cache这个是不被允许修改的，obj是删除的对象
  */
 - (void)cache:(NSCache *)cache willEvictObject:(id)obj {
-    
+    NSLog(@"obj = %@", obj);
 }
 
 - (void)viewDidLoad {
@@ -42,10 +42,11 @@
     self.title = @"定时器";
     
     WWHCache *cache = [[WWHCache alloc] init];
+    cache.delegate = self;
     [cache setCountLimit:10];
     for (NSInteger i = 0; i < 20; i++) {
         NSObject *o = [[NSObject alloc] init];
-        [cache setValue:o forKey:[NSString stringWithFormat:@"第%@个对象", @(i)]];
+        [cache setObject:o forKey:[NSString stringWithFormat:@"第%@个对象", @(i)]];
     }
     
     /*
@@ -92,8 +93,8 @@
     dispatch_resume(timer);
      */
 
-    NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(pthreadGetSpecific) object:nil];
-    [thread start];
+//    NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(pthreadGetSpecific) object:nil];
+//    [thread start];
 }
 
 - (void)didReceiveMemoryWarning {
