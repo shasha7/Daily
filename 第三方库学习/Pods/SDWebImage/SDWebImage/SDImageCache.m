@@ -54,12 +54,16 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
 
 @end
 
-
 @implementation SDImageCache {
     NSFileManager *_fileManager;
 }
 
 #pragma mark - Singleton, init, dealloc
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    SDDispatchQueueRelease(_ioQueue);// 释放自定义的串行队列
+}
 
 + (nonnull instancetype)sharedImageCache {
     static dispatch_once_t once;
@@ -126,7 +130,7 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
                                                  selector:@selector(deleteOldFiles)
                                                      name:UIApplicationWillTerminateNotification
                                                    object:nil];
-        //当应用进入后台的时候，在后台删除老数据
+        // 当应用进入后台的时候，在后台删除老数据
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(backgroundDeleteOldFiles)
                                                      name:UIApplicationDidEnterBackgroundNotification
@@ -135,11 +139,6 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
     }
 
     return self;
-}
-
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    SDDispatchQueueRelease(_ioQueue);// 释放自定义的串行队列
 }
 
 - (void)checkIfQueueIsIOQueue {
@@ -160,6 +159,17 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
 
 #pragma mark - Cache paths
 
+/**
+ 图片缓存目录
+ 
+ @param fullNamespace 自定义子目录名称
+ @return 完整目录
+ */
+- (nullable NSString *)makeDiskCachePath:(nonnull NSString*)fullNamespace {
+    NSArray<NSString *> *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    return [paths[0] stringByAppendingPathComponent:fullNamespace];
+}
+
 // 添加只读缓存路径
 - (void)addReadOnlyCachePath:(nonnull NSString *)path {
     if (!self.customPaths) {
@@ -169,6 +179,12 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
     if (![self.customPaths containsObject:path]) {
         [self.customPaths addObject:path];
     }
+}
+
+// key一般为图片的下载地址
+// http://img.spriteapp.cn/ugc/2017/08/cefd32d48c6111e7b08e842b2b4c75ab.png
+- (nullable NSString *)defaultCachePathForKey:(nullable NSString *)key {
+    return [self cachePathForKey:key inPath:self.diskCachePath];
 }
 
 /**
@@ -184,18 +200,14 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
     return [path stringByAppendingPathComponent:filename];
 }
 
-// key一般为图片的下载地址
-// http://img.spriteapp.cn/ugc/2017/08/cefd32d48c6111e7b08e842b2b4c75ab.png
-- (nullable NSString *)defaultCachePathForKey:(nullable NSString *)key {
-    return [self cachePathForKey:key inPath:self.diskCachePath];
-}
-
 - (nullable NSString *)cachedFileNameForKey:(nullable NSString *)key {
     const char *str = key.UTF8String;
     if (str == NULL) {
         str = "";
     }
     unsigned char r[CC_MD5_DIGEST_LENGTH];
+    // MD5:全称是Message Digest Algorithm 5，译为“消息摘要算法第5版”
+    // 效果：对输入信息生成唯一的128位散列值（32个字符）1字符4字节
     CC_MD5(str, (CC_LONG)strlen(str), r);
     NSURL *keyURL = [NSURL URLWithString:key];
     NSString *ext = keyURL ? keyURL.pathExtension : key.pathExtension;
@@ -203,17 +215,6 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
                           r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8], r[9], r[10],
                           r[11], r[12], r[13], r[14], r[15], ext.length == 0 ? @"" : [NSString stringWithFormat:@".%@", ext]];
     return filename;
-}
-
-/**
- 图片缓存目录
- 
- @param fullNamespace 自定义子目录名称
- @return 完整目录
- */
-- (nullable NSString *)makeDiskCachePath:(nonnull NSString*)fullNamespace {
-    NSArray<NSString *> *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    return [paths[0] stringByAppendingPathComponent:fullNamespace];
 }
 
 #pragma mark - Store Ops
@@ -278,9 +279,10 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
     
     // 缓存到磁盘中
     if (toDisk) {
-        // 在一个串行队列中做磁盘缓存操作
+        // 在一个串行队列中做磁盘缓存操作,串行队列起到的作用：锁 保障线程安全
         dispatch_async(self.ioQueue, ^{
             @autoreleasepool {
+                // OS_dispatch_data
                 NSData *data = imageData;
                 // 没有二进制数据，只有图片
                 if (data == nil && image) {
@@ -442,7 +444,7 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
 }
 
 /**
- 根据指定的key获取image对象
+ 根据指定的key从磁盘中获取image对象
  
  @param key key
  @return image对象
@@ -570,7 +572,6 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
     } else if (completion){
         completion();
     }
-    
 }
 
 # pragma mark - Mem Cache settings
@@ -599,7 +600,6 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
 - (void)clearMemory {
     [self.memCache removeAllObjects];
 }
-
 
 /**
  移除所有的磁盘缓存图片数据
@@ -642,7 +642,7 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
                                                    includingPropertiesForKeys:resourceKeys
                                                                       options:NSDirectoryEnumerationSkipsHiddenFiles
                                                                  errorHandler:NULL];
-
+        // 当前的时间，往前推一周，使用的时间格式 2018-03-09 14:47:42 UTC
         NSDate *expirationDate = [NSDate dateWithTimeIntervalSinceNow:-self.config.maxCacheAge];
         NSMutableDictionary<NSURL *, NSDictionary<NSString *, id> *> *cacheFiles = [NSMutableDictionary dictionary];
         NSUInteger currentCacheSize = 0;
