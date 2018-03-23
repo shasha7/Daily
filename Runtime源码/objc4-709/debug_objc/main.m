@@ -158,12 +158,7 @@ void structChange() {
 int main(int argc, const char * argv[]) {
     // void *objc_autoreleasePoolPush(void){return AutoreleasePoolPage::push();}
     @autoreleasepool {
-        // insert code here...
-        unsigned int count = 0;
-        Class *class = objc_copyClassList(&count);
-        for (unsigned int i = 0; i < count; i++) {
-            NSLog(@"%@", NSStringFromClass(class[i]));
-        }
+        // block是一个带有自动变量值的匿名函数、是一个Objective-C的对象、是一个C语言的结构体
     }
     return 0;
 }
