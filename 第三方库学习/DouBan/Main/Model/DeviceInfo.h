@@ -13,4 +13,6 @@
 @property (nonatomic, copy) NSString *appVer;
 @property (nonatomic, copy) NSString *appLang;
 @property (nonatomic, copy) NSString *token;
+@property (nonatomic, assign) NSInteger deviceID;
+
 @end
