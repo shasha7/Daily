@@ -1,23 +1,3 @@
-// AFAutoPurgingImageCache.m
-// Copyright (c) 2011–2016 Alamofire Software Foundation ( http://alamofire.org/ )
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
 
 #import <TargetConditionals.h>
 
@@ -27,11 +7,11 @@
 
 @interface AFCachedImage : NSObject
 
-@property (nonatomic, strong) UIImage *image;
-@property (nonatomic, strong) NSString *identifier;
-@property (nonatomic, assign) UInt64 totalBytes;
-@property (nonatomic, strong) NSDate *lastAccessDate;
-@property (nonatomic, assign) UInt64 currentMemoryUsage;
+@property (nonatomic, strong) UIImage *image;//缓存图片
+@property (nonatomic, strong) NSString *identifier;//图片标识
+@property (nonatomic, assign) UInt64 totalBytes;//总的内存大小
+@property (nonatomic, strong) NSDate *lastAccessDate;// 最后一次访问时间
+@property (nonatomic, assign) UInt64 currentMemoryUsage;//当前已用内存大小
 
 @end
 
@@ -107,10 +87,15 @@
     return result;
 }
 
+/**
+ * 将图片包装成AFCachedImage类型
+ */
 - (void)addImage:(UIImage *)image withIdentifier:(NSString *)identifier {
+    // 保证顺序执行，会创建新的线程
     dispatch_barrier_async(self.synchronizationQueue, ^{
         AFCachedImage *cacheImage = [[AFCachedImage alloc] initWithImage:image identifier:identifier];
 
+        // 判断是够保存过这张图片
         AFCachedImage *previousCachedImage = self.cachedImages[identifier];
         if (previousCachedImage != nil) {
             self.currentMemoryUsage -= previousCachedImage.totalBytes;

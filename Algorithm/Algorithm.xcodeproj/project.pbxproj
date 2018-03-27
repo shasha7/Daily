@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA59AADE206A451F001C595C /* WWHDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = AA59AADD206A451F001C595C /* WWHDictionary.m */; };
+		AA59AAE1206A452F001C595C /* Node.m in Sources */ = {isa = PBXBuildFile; fileRef = AA59AAE0206A452F001C595C /* Node.m */; };
 		AA6BB62020044F2200925469 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6BB61F20044F2200925469 /* main.m */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +25,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AA59AADC206A451F001C595C /* WWHDictionary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WWHDictionary.h; sourceTree = "<group>"; };
+		AA59AADD206A451F001C595C /* WWHDictionary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WWHDictionary.m; sourceTree = "<group>"; };
+		AA59AADF206A452F001C595C /* Node.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
+		AA59AAE0206A452F001C595C /* Node.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Node.m; sourceTree = "<group>"; };
 		AA6BB61C20044F2200925469 /* Algorithm */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Algorithm; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA6BB61F20044F2200925469 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -58,6 +64,10 @@
 			isa = PBXGroup;
 			children = (
 				AA6BB61F20044F2200925469 /* main.m */,
+				AA59AADC206A451F001C595C /* WWHDictionary.h */,
+				AA59AADD206A451F001C595C /* WWHDictionary.m */,
+				AA59AADF206A452F001C595C /* Node.h */,
+				AA59AAE0206A452F001C595C /* Node.m */,
 			);
 			path = Algorithm;
 			sourceTree = "<group>";
@@ -119,7 +129,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA59AADE206A451F001C595C /* WWHDictionary.m in Sources */,
 				AA6BB62020044F2200925469 /* main.m in Sources */,
+				AA59AAE1206A452F001C595C /* Node.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
