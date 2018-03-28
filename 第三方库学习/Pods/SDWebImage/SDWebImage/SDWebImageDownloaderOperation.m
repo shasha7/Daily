@@ -461,9 +461,11 @@ didReceiveResponse:(NSURLResponse *)response
                 credential = self.credential;
                 disposition = NSURLSessionAuthChallengeUseCredential;
             } else {
+                // The entire request will be canceled; the credential parameter is ignored
                 disposition = NSURLSessionAuthChallengeCancelAuthenticationChallenge;
             }
         } else {
+            // The entire request will be canceled; the credential parameter is ignored
             disposition = NSURLSessionAuthChallengeCancelAuthenticationChallenge;
         }
     }

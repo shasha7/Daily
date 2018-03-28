@@ -357,6 +357,7 @@ forHTTPHeaderField:(NSString *)field
 
     NSParameterAssert(url);
 
+    // 创建请求
     NSMutableURLRequest *mutableRequest = [[NSMutableURLRequest alloc] initWithURL:url];
     mutableRequest.HTTPMethod = method;
 
@@ -380,11 +381,13 @@ forHTTPHeaderField:(NSString *)field
     NSParameterAssert(method);
     NSParameterAssert(![method isEqualToString:@"GET"] && ![method isEqualToString:@"HEAD"]);
 
+    // step1
     NSMutableURLRequest *mutableRequest = [self requestWithMethod:method URLString:URLString parameters:nil error:error];
 
     // 创建表单
     __block AFStreamingMultipartFormData *formData = [[AFStreamingMultipartFormData alloc] initWithURLRequest:mutableRequest stringEncoding:NSUTF8StringEncoding];
 
+    // 有参数进行处理
     if (parameters) {
         // 创建表单step1
         // 将参数转化为装有AFQueryStringPair实例对象的数组
@@ -408,12 +411,14 @@ forHTTPHeaderField:(NSString *)field
         }
     }
 
+    // 返回formData 可以在这里设置请求体
     if (block) {
         block(formData);
     }
 
     // 创建表单step3
     /*
+    请求头
     POST /photo/http_upload.php HTTP/1.1
     Host: api.jiayuan.com
     Content-Type: multipart/form-data; boundary=Boundary+A3EFC08F345B801A
@@ -424,7 +429,7 @@ forHTTPHeaderField:(NSString *)field
     Accept-Language: zh-Hans-US;q=1, en-US;q=0.9, en;q=0.8
     Content-Length: 269117
     Accept-Encoding: gzip, deflate
-    
+    请求体
     --Boundary+A3EFC08F345B801A
     Content-Disposition: form-data; name="channel"
     
@@ -468,7 +473,7 @@ forHTTPHeaderField:(NSString *)field
     --Boundary+A3EFC08F345B801A
     Content-Disposition: form-data; name="upload_file"; filename="image.jpg"
     Content-Type: image/jpeg
-    --Boundary+A3EFC08F345B801A--
+    --Boundary+A3EFC08F345B801A-- // 结束标志
      */
     return [formData requestByFinalizingMultipartFormData];
 }
@@ -484,7 +489,9 @@ forHTTPHeaderField:(NSString *)field
     NSOutputStream *outputStream = [[NSOutputStream alloc] initWithURL:fileURL append:NO];
     __block NSError *error = nil;
 
+    // 开子线程
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        // NSDefaultRunLoopMode 滑动时不会进行数据的读写
         [inputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
         [outputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 
@@ -539,6 +546,8 @@ forHTTPHeaderField:(NSString *)field
     NSMutableURLRequest *mutableRequest = [request mutableCopy];
 
     // mutableHTTPRequestHeaders
+    // "Accept-Language" = "en;q=1";
+    // "User-Agent" = "DouBan/1.0 (iPhone; iOS 11.2; Scale/2.00)";
     [self.HTTPRequestHeaders enumerateKeysAndObjectsUsingBlock:^(id field, id value, BOOL * __unused stop) {
         if (![request valueForHTTPHeaderField:field]) {
             [mutableRequest setValue:value forHTTPHeaderField:field];
@@ -730,7 +739,7 @@ NSTimeInterval const kAFUploadStream3GSuggestedDelay = 0.2;
     }
 
     self.request = urlRequest;
-    self.stringEncoding = encoding;
+    self.stringEncoding = encoding;// NSUTF8StringEncoding
     // [NSString stringWithFormat:@"Boundary+%08X%08X", arc4random(), arc4random()]
     self.boundary = AFCreateMultipartFormBoundary();
     self.bodyStream = [[AFMultipartBodyStream alloc] initWithStringEncoding:encoding];
@@ -879,13 +888,21 @@ NSTimeInterval const kAFUploadStream3GSuggestedDelay = 0.2;
         return self.request;
     }
 
+    // 设置请求头
     // Reset the initial and final boundaries to ensure correct Content-Length
     [self.bodyStream setInitialAndFinalBoundaries];
+    
+    // Sets the request body to be the contents of the given stream
     [self.request setHTTPBodyStream:self.bodyStream];
 
     [self.request setValue:[NSString stringWithFormat:@"multipart/form-data; boundary=%@", self.boundary] forHTTPHeaderField:@"Content-Type"];
     [self.request setValue:[NSString stringWithFormat:@"%llu", [self.bodyStream contentLength]] forHTTPHeaderField:@"Content-Length"];
-
+    /*
+     "Accept-Language" = "en;q=1";
+     "Content-Length" = 93650790;
+     "Content-Type" = "multipart/form-data; boundary=Boundary+51790C9C534238CB";
+     "User-Agent" = "DouBan/1.0 (iPhone; iOS 11.2; Scale/2.00)";
+     */
     return self.request;
 }
 

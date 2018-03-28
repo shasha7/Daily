@@ -27,7 +27,7 @@
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.rootViewController = [DBTabBarController new];
-    
+    /*
     dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSString *filePath = [doc stringByAppendingPathComponent:@"test.sqlite"];
@@ -87,6 +87,7 @@
     // 1、2两种情况可以保证并行执行
     // 但是第二种情况是个什么原理？？？ 这是是串行队列在作怪，串行队列线程池数量为1，只能创建1个线程
     // 3、4同时读写存在问题
+     */
     [self.window makeKeyAndVisible];
 #ifdef DEBUG
     [[PAirSandbox sharedInstance] enableSwipe];
@@ -114,6 +115,7 @@
         }
         [db close];
     }];
+     
     return users;
 }
 
