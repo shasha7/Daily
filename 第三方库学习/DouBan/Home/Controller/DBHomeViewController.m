@@ -45,8 +45,7 @@
     return self;
 }
 
-
-- (void)viewDidLoad {
+- (void)viewDidLoad111 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [[AFHTTPSessionManager manager] POST:@"http://120.25.226.186:32812/upload" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
