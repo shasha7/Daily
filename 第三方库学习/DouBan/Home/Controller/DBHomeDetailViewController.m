@@ -27,18 +27,20 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor redColor];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(100, 100, 100, 200)];
-    label.backgroundColor = [UIColor whiteColor];
-    label.numberOfLines = -1;
-    label.font = [UIFont systemFontOfSize:13];
     
-    NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
-    style.lineSpacing = 10 - (label.font.lineHeight - label.font.pointSize);
-    
-    NSAttributedString *str = [[NSAttributedString alloc] initWithString:@"设置动画重复的时间 设置动画重复的时间 设置动画重复的时间 设置动画重复的时间 设置动画重复的时间 设置动画重复的时间 设置动画重复的时间 设置动画重复的时间 设置动画重复的时间" attributes:@{NSParagraphStyleAttributeName:style}];
-
-    label.attributedText = str;
-    [self.view addSubview:label];
+    [self jumpToOtherApplication];
+//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(100, 100, 100, 200)];
+//    label.backgroundColor = [UIColor whiteColor];
+//    label.numberOfLines = -1;
+//    label.font = [UIFont systemFontOfSize:13];
+//
+//    NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
+//    style.lineSpacing = 10 - (label.font.lineHeight - label.font.pointSize);
+//
+//    NSAttributedString *str = [[NSAttributedString alloc] initWithString:@"设置动画重复的时间 设置动画重复的时间 设置动画重复的时间 设置动画重复的时间 设置动画重复的时间 设置动画重复的时间 设置动画重复的时间 设置动画重复的时间 设置动画重复的时间" attributes:@{NSParagraphStyleAttributeName:style}];
+//
+//    label.attributedText = str;
+//    [self.view addSubview:label];
 //    [self basicAnimation];
 }
 
@@ -101,15 +103,21 @@
             NSDictionary *dict = @{@"go":@(4)};
             NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:nil];
             NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+//
+//            NSMutableString *mutStr = [NSMutableString stringWithString:jsonString];
+//            NSRange range = {0,jsonString.length};
+//            //去掉字符串中的空格
+//            [mutStr replaceOccurrencesOfString:@" " withString:@"" options:NSLiteralSearch range:range];
+//            NSRange range2 = {0,mutStr.length};
+//            //去掉字符串中的换行符
+//            [mutStr replaceOccurrencesOfString:@"\n" withString:@"" options:NSLiteralSearch range:range2];
             
-            NSMutableString *mutStr = [NSMutableString stringWithString:jsonString];
-            NSRange range = {0,jsonString.length};
-            //去掉字符串中的空格
-            [mutStr replaceOccurrencesOfString:@" " withString:@"" options:NSLiteralSearch range:range];
-            NSRange range2 = {0,mutStr.length};
-            //去掉字符串中的换行符
-            [mutStr replaceOccurrencesOfString:@"\n" withString:@"" options:NSLiteralSearch range:range2];
-            NSString *json = [NSString stringWithFormat:@"jiayuan://xxx?jsonValue=1&jsonParams=%@",mutStr];
+            //转码
+//            mutStr = [[mutStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] mutableCopy];
+            
+            jsonString = [jsonString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            
+            NSString *json = [NSString stringWithFormat:@"jiayuan://xxx?jsonValue=1&jsonParams=%@",jsonString];
             [application openURL:[NSURL URLWithString:json] options:@{} completionHandler:^(BOOL success) {
                 NSLog(@"success = %@", @(success));
             }];
