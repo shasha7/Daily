@@ -45,12 +45,111 @@
     return self;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)gcdCancel {
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    
+    __block BOOL isCancel = NO;
+    
+    dispatch_async(queue, ^{
+        NSLog(@"任务001 %@",[NSThread currentThread]);
+    });
+    
+    dispatch_async(queue, ^{
+        NSLog(@"任务002 %@",[NSThread currentThread]);
+    });
+    
+    dispatch_async(queue, ^{
+        NSLog(@"任务003 %@",[NSThread currentThread]);
+        isCancel = YES;
+    });
+    
+    dispatch_async(queue, ^{
+        // 模拟：线程等待3秒，确保任务003完成 isCancel＝YES
+        sleep(3);
+        if(isCancel){
+            NSLog(@"任务004已被取消 %@",[NSThread currentThread]);
+        }else{
+            NSLog(@"任务004 %@",[NSThread currentThread]);
+        }
+    });
 }
 
-- (void)viewDidLoad111 {
+- (void)gcdBlockCancel {
+    dispatch_queue_t queue = dispatch_queue_create("com.gcdtest.www", DISPATCH_QUEUE_CONCURRENT);
+    
+    dispatch_block_t block1 = dispatch_block_create(0, ^{
+        sleep(5);
+        NSLog(@"block1 %@",[NSThread currentThread]);
+    });
+    
+    dispatch_block_t block2 = dispatch_block_create(0, ^{
+        NSLog(@"block2 %@",[NSThread currentThread]);
+    });
+    
+    dispatch_block_t block3 = dispatch_block_create(0, ^{
+        NSLog(@"block3 %@",[NSThread currentThread]);
+    });
+    
+    dispatch_async(queue, block1);
+    dispatch_async(queue, block2);
+    dispatch_block_cancel(block3);
+}
+
+- (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    [self gcdCancel];
+}
+
+- (void)addDependency2 {
+    dispatch_queue_t myqueue =  dispatch_queue_create("myqueue.queue",DISPATCH_QUEUE_CONCURRENT);
+    // myqueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    
+    dispatch_async(myqueue, ^{
+        sleep(2);
+        NSLog(@"任务1");
+    });
+    
+    dispatch_async(myqueue, ^{
+        sleep(10);
+        NSLog(@"任务2");
+    });
+    
+    dispatch_barrier_async(myqueue, ^{
+        sleep(4);
+    });
+    
+    dispatch_async(myqueue, ^{
+        NSLog(@"任务4");
+    });
+}
+
+- (void)addDependency1 {
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    NSBlockOperation *blockA = [NSBlockOperation blockOperationWithBlock:^{
+        sleep(2);
+        NSLog(@"blockA");
+    }];
+    
+    NSBlockOperation *blockB = [NSBlockOperation blockOperationWithBlock:^{
+        sleep(3);
+        NSLog(@"blockB");
+    }];
+    
+    NSBlockOperation *blockC = [NSBlockOperation blockOperationWithBlock:^{
+        NSLog(@"blockC");
+    }];
+    
+    [blockC addDependency:blockA];
+    [blockC addDependency:blockB];
+    
+    [queue addOperation:blockA];
+    [queue addOperation:blockB];
+    [queue addOperation:blockC];
+}
+
+- (void)upload {
     // Do any additional setup after loading the view.
     [[AFHTTPSessionManager manager] POST:@"http://120.25.226.186:32812/upload" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         // 上传文件 在填写http请求体的时候，data采用NSDataReadingMappedIfSafe样式读取，控制内存峰值
@@ -63,8 +162,9 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"");
     }];
-    self.view.backgroundColor = [UIColor whiteColor];
-    
+}
+
+- (void)_commomInit {
     if (@available(iOS 11.0, *)) {
         UISearchController *searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
         self.navigationItem.searchController = searchController;
@@ -96,11 +196,6 @@
     } else {
         // Fallback on earlier versions
     }
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
