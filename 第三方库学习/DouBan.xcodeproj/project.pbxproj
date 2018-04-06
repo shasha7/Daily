@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		663909DB207710B60063BF7E /* DBWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 663909DA207710B60063BF7E /* DBWebViewController.m */; };
+		663909E1207712A50063BF7E /* 佳缘测试.html in Resources */ = {isa = PBXBuildFile; fileRef = 663909E0207712A50063BF7E /* 佳缘测试.html */; };
+		663909E5207715EB0063BF7E /* DBJS.m in Sources */ = {isa = PBXBuildFile; fileRef = 663909E4207715EB0063BF7E /* DBJS.m */; };
+		663909E920771EA40063BF7E /* DBHomeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 663909E820771EA40063BF7E /* DBHomeModel.m */; };
+		663909EC207728120063BF7E /* DBHomeSecondModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 663909EB207728120063BF7E /* DBHomeSecondModel.m */; };
 		8C57257CDBE76B8B18943C1D /* libPods-DouBan.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9CE53C46A15DC31A7960D55 /* libPods-DouBan.a */; };
 		AA6259C91F80DBDA009E200E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6259C81F80DBDA009E200E /* AppDelegate.m */; };
 		AA6259CF1F80DBDA009E200E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA6259CD1F80DBDA009E200E /* Main.storyboard */; };
@@ -38,6 +43,15 @@
 
 /* Begin PBXFileReference section */
 		129DA7CB8FAC5ABCDF37B388 /* Pods-DouBan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DouBan.release.xcconfig"; path = "Pods/Target Support Files/Pods-DouBan/Pods-DouBan.release.xcconfig"; sourceTree = "<group>"; };
+		663909D9207710B60063BF7E /* DBWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWebViewController.h; sourceTree = "<group>"; };
+		663909DA207710B60063BF7E /* DBWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWebViewController.m; sourceTree = "<group>"; };
+		663909E0207712A50063BF7E /* 佳缘测试.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "佳缘测试.html"; sourceTree = "<group>"; };
+		663909E3207715EB0063BF7E /* DBJS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBJS.h; sourceTree = "<group>"; };
+		663909E4207715EB0063BF7E /* DBJS.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBJS.m; sourceTree = "<group>"; };
+		663909E720771EA40063BF7E /* DBHomeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBHomeModel.h; sourceTree = "<group>"; };
+		663909E820771EA40063BF7E /* DBHomeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBHomeModel.m; sourceTree = "<group>"; };
+		663909EA207728120063BF7E /* DBHomeSecondModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBHomeSecondModel.h; sourceTree = "<group>"; };
+		663909EB207728120063BF7E /* DBHomeSecondModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBHomeSecondModel.m; sourceTree = "<group>"; };
 		AA6259C41F80DBDA009E200E /* DouBan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DouBan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA6259C71F80DBDA009E200E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		AA6259C81F80DBDA009E200E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -101,6 +115,44 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		663909D7207710830063BF7E /* Web */ = {
+			isa = PBXGroup;
+			children = (
+				663909E2207715D80063BF7E /* JS */,
+				663909D82077108D0063BF7E /* Controller */,
+			);
+			path = Web;
+			sourceTree = "<group>";
+		};
+		663909D82077108D0063BF7E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				663909D9207710B60063BF7E /* DBWebViewController.h */,
+				663909DA207710B60063BF7E /* DBWebViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		663909E2207715D80063BF7E /* JS */ = {
+			isa = PBXGroup;
+			children = (
+				663909E3207715EB0063BF7E /* DBJS.h */,
+				663909E4207715EB0063BF7E /* DBJS.m */,
+			);
+			path = JS;
+			sourceTree = "<group>";
+		};
+		663909E620771E910063BF7E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				663909E720771EA40063BF7E /* DBHomeModel.h */,
+				663909E820771EA40063BF7E /* DBHomeModel.m */,
+				663909EA207728120063BF7E /* DBHomeSecondModel.h */,
+				663909EB207728120063BF7E /* DBHomeSecondModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		75F5A696CBC6F9A90B8DD8BA /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -133,6 +185,7 @@
 			children = (
 				AA6259C71F80DBDA009E200E /* AppDelegate.h */,
 				AA6259C81F80DBDA009E200E /* AppDelegate.m */,
+				663909D7207710830063BF7E /* Web */,
 				AA6259E51F82140C009E200E /* Main */,
 				AA6259E91F82140C009E200E /* Home */,
 				AA6259DD1F82140B009E200E /* Broadcast */,
@@ -236,6 +289,7 @@
 		AA6259E91F82140C009E200E /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				663909E620771E910063BF7E /* Model */,
 				AA6259EA1F82140C009E200E /* Controller */,
 			);
 			path = Home;
@@ -255,6 +309,7 @@
 		AA625A231F821C5E009E200E /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				663909E0207712A50063BF7E /* 佳缘测试.html */,
 				AA625A241F821C5E009E200E /* Images */,
 			);
 			path = Resource;
@@ -401,6 +456,7 @@
 				AA625A471F821E11009E200E /* db_tab_home_selected@2x.png in Resources */,
 				AA6259CF1F80DBDA009E200E /* Main.storyboard in Resources */,
 				AA625A481F821E11009E200E /* db_tab_broadcast_selected@2x.png in Resources */,
+				663909E1207712A50063BF7E /* 佳缘测试.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,7 +539,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -495,11 +551,14 @@
 			files = (
 				AA7871581FE26D5E00379F9D /* UITableView+JYFlowInfoCell.m in Sources */,
 				AA6259F71F821445009E200E /* DBTabBarController.m in Sources */,
+				663909EC207728120063BF7E /* DBHomeSecondModel.m in Sources */,
 				AA625A031F821A7E009E200E /* DBTableViewController.m in Sources */,
 				AA8EE6601FE3B2E6004F7212 /* PAirSandbox.m in Sources */,
 				AA6259D71F80DBDA009E200E /* main.m in Sources */,
 				AA8EE65B1FE37BF7004F7212 /* DBFrequentLimit.m in Sources */,
+				663909E920771EA40063BF7E /* DBHomeModel.m in Sources */,
 				AA6AE0A71FE772C800832F41 /* UINavigationController+ExchangeToTopViewController.m in Sources */,
+				663909DB207710B60063BF7E /* DBWebViewController.m in Sources */,
 				AA625A0C1F821AE0009E200E /* DBBroadcastViewController.m in Sources */,
 				AA6AE09C1FE7659F00832F41 /* DBShareData.m in Sources */,
 				AA6259C91F80DBDA009E200E /* AppDelegate.m in Sources */,
@@ -512,6 +571,7 @@
 				AA6AE0911FE7511B00832F41 /* XMLDictionary.m in Sources */,
 				AA625A061F821AB0009E200E /* DBHomeViewController.m in Sources */,
 				AAB1FEFB1F84BFE7007AA4DB /* BroadcastCommunityModel.m in Sources */,
+				663909E5207715EB0063BF7E /* DBJS.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

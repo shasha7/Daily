@@ -10,17 +10,66 @@
 
 @interface DBHomeDetailViewController ()
 
+@property (nonatomic, assign) int age;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, strong) NSNumber *height;
+@property (nonatomic, copy) NSArray *books;
+@property (nonatomic, strong) NSMutableArray *cars;
+@property (nonatomic, strong) NSMutableDictionary *dict;
+
 @end
 
 @implementation DBHomeDetailViewController
+
+
+- (void)dealloc {
+    // 移除监听属性时不能重复删除？？
+    [self removeObserver:self forKeyPath:@"name"];
+//    [self removeObserver:self forKeyPath:@"name"];
+}
+
 
 - (instancetype)init {
     self = [super init];
     if (self) {
         self.title = @"详情";
         self.hidesBottomBarWhenPushed = YES;
+        
+        self.name = @"dwadadaw";
+        self.age = 10;
+        self.books = @[@"wangweihu", @"wushanshan"];
+        self.cars = [NSMutableArray array];
+        self.dict = [NSMutableDictionary dictionary];
+
+        [self.dict setObject:@(90) forKey:self.books];
+        NSLog(@"self.dict = %@", self.dict);
+        
+        [self addObserver:self forKeyPath:@"name" options:NSKeyValueObservingOptionNew context:nil];
+//        [self addObserver:self forKeyPath:@"age" options:NSKeyValueObservingOptionNew context:nil];
+//        [self addObserver:self forKeyPath:@"books" options:NSKeyValueObservingOptionNew context:nil];
+        [self addObserver:self forKeyPath:@"cars" options:NSKeyValueObservingOptionNew context:nil];
+        [self addObserver:self forKeyPath:@"dict" options:NSKeyValueObservingOptionNew context:nil];
+        
+        self.dict = [NSMutableDictionary dictionaryWithObject:@(19) forKey:@"age"];
+        
+//        [self.dict setObject:@"28" forKey:@"age"];
+//        [self.dict setObject:@"wangweihu" forKey:@"name"];
+//        [self mutableDictionaryValueForKey:@"cars"];
+        NSString *str = @"WANGWEIHU";
+        [[self mutableArrayValueForKey:@"cars"] addObject:str];
+        self.name = @"dawdawdawddawdaw";
+        self.age = 110;
+        self.books = @[@"wangweihu", @"wushanshan", @"wangxiaoshan"];
     }
     return self;
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"name"]) {
+        NSLog(@"change = %@", change);
+    }else if ([keyPath isEqualToString:@"dict"]) {
+        NSLog(@"change = %@", change);
+    }
 }
 
 - (void)viewDidLoad {

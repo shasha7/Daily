@@ -123,8 +123,8 @@ static inline dispatch_queue_t YYMemoryCacheGetReleaseQueue() {
     CFDictionaryRemoveValue(_dic, (__bridge const void *)(node->_key));
     _totalCost -= node->_cost;
     _totalCount--;
-    if (node->_next) node->_next->_prev = node->_prev;
-    if (node->_prev) node->_prev->_next = node->_next;
+    if (node->_next) node->_next->_prev = node->_prev;// 要删除节点的next节点的prev节点指向删除节点的prev节点
+    if (node->_prev) node->_prev->_next = node->_next;// 要删除节点的pre节点的next节点指向删除节点的next节点
     if (_head == node) _head = node->_next;
     if (_tail == node) _tail = node->_prev;
 }
@@ -417,6 +417,8 @@ static inline dispatch_queue_t YYMemoryCacheGetReleaseQueue() {
         return;
     }
     pthread_mutex_lock(&_lock);
+    
+    // 在保存缓存对象的时候，先查找缓存里面有没有key对应的缓存对象，有的话就将他移动到链表头部
     _YYLinkedMapNode *node = CFDictionaryGetValue(_lru->_dic, (__bridge const void *)(key));
     NSTimeInterval now = CACurrentMediaTime();
     if (node) {

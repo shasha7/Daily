@@ -7,7 +7,14 @@
 //
 
 #import "DBTableViewController.h"
+#import "DBHomeModel.h"
+#import "DBHomeSecondModel.h"
 
 @interface DBHomeViewController : DBTableViewController
+
+@property (nonatomic, strong) DBHomeModel *model;
+@property (nonatomic, strong) DBHomeSecondModel *secondModel;
+
+- (void)testMessageSendMechanism;
 
 @end

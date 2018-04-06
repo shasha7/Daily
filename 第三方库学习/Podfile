@@ -11,4 +11,5 @@ target 'DouBan' do
   pod 'YYCache', '~> 1.0.4'
   pod 'JSONModel', '~> 1.7.0'
   pod 'FMDB', '~> 2.7.2'
+  pod 'KVOController', '~> 1.2.0'
 end

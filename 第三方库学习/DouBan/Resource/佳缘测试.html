@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>佳缘测试</title>
+</head>
+<script>
+    var isLoad = true;
+    function webViewLoadComplete() {
+        alert('加载完成');
+    }
+    function getClientClientId(){
+        
+        var clientId = DBJS.getClientId();
+        alert(clientId);
+    }
+    function getClientVersionId(){
+        
+        var versionId = DBJS.getVersionId();
+        alert(versionId);
+    }
+    function getClientChannelId(){
+        
+        var channelId = DBJS.getChannelId();
+        alert(channelId);
+    }
+</script>
+<body>
+    <div style="margin-top: 30px">
+        <h1> JS call Objective-C Methods</h1>
+    </div>
+    <div style="margin-top: 20px">
+        <button style="font-size: large" onclick="getClientClientId()">返回当前客户端类型</button></br>
+    </div>
+    <div style="margin-top: 20px">
+        <button style="font-size: large" onclick="getClientVersionId()">返回当前版本号</button></br>
+    </div>
+    <div style="margin-top: 20px">
+        <button style="font-size: large" onclick="getClientChannelId()">返回当前渠道号</button></br>
+    </div>
+</body>
+</html>

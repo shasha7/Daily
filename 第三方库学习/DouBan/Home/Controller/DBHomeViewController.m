@@ -10,6 +10,8 @@
 #import "DBHomeDetailViewController.h"
 #import "UINavigationController+ExchangeToTopViewController.h"
 #import "AFNetworking.h"
+#import "KVOController.h"
+#import "DBWebViewController.h"
 
 /*
  Storage class specifier关键字
@@ -31,7 +33,14 @@
  }
  */
 
+
+typedef void (^MyBlock)(void);
+
 @interface DBHomeViewController ()
+
+@property (nonatomic, copy) MyBlock myblock;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSMutableArray *books;
 
 @end
 
@@ -41,8 +50,68 @@
     self = [super init];
     if (self) {
         self.title = @"首页";
+        self.model = [DBHomeModel new];
+        self.secondModel = [DBHomeSecondModel new];
+        
+        // 测试消息转发机制
+        [self testMessageSendMechanism];
     }
     return self;
+}
+
+// 动态方法分析
++ (BOOL)resolveInstanceMethod:(SEL)sel {
+    if ([NSStringFromSelector(sel) isEqualToString:@"testMessageSendMechanism"]) {
+        return YES;
+    }
+    return [super resolveInstanceMethod:sel];
+}
+
+// 备援接受者
+- (id)forwardingTargetForSelector:(SEL)aSelector {
+    return nil;
+//    return self.model;
+}
+
+// 完整的消息转发
+// forwardingTargetForSelector 同为消息转发，但在实践层面上有什么区别？何时可以考虑把消息下放到forwardInvocation阶段转发？
+// forwardingTargetForSelector 仅支持一个对象的返回，也就是说消息只能被转发给一个对象
+// forwardInvocation可以将消息同时转发给任意多个对象
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {
+    if(aSelector == @selector(testMessageSendMechanism)) {
+        return [NSMethodSignature signatureWithObjCTypes:"v@:"];
+    }
+    return nil;
+}
+
+- (void)forwardInvocation:(NSInvocation *)anInvocation {
+    if (anInvocation.selector == @selector(testMessageSendMechanism)) {
+        [anInvocation invokeWithTarget:self.model];
+        [anInvocation invokeWithTarget:self.secondModel];
+    }
+}
+
+- (void)test {
+    [self.KVOController observe:self keyPath:@"name" options:NSKeyValueObservingOptionNew block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
+        NSLog(@"observer = %@, object = %@, change = %@", observer, object, change);
+    }];
+    
+    NSMutableString *mStr = [NSMutableString stringWithString:@"wushanshan"];
+    self.name = mStr;
+    
+    NSLog(@"self.name = %@", self.name);
+    
+    [mStr appendString:@" love wushanshan"];
+    
+    NSLog(@"self.name = %@", self.name);
+}
+
+// 重写copy属性的变量的时候记得 copy操作， 这样是有必要的
+- (void)setName:(NSString *)name {
+
+//    _name = name; // 通过name外界可修改_name的值
+    
+    _name = [name copy];// 系统默认的操作 通过name外界不可修改_name的值
 }
 
 - (void)gcdCancel {
@@ -95,11 +164,61 @@
     dispatch_block_cancel(block3);
 }
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+//    self.myblock();
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     
-    [self gcdCancel];
+    /*
+    int aa = 10;
+    self.myblock = ^{
+//        NSLog(@"aa = %d", aa);
+    };
+    
+//    [self.myblock retain];
+//    [self.myblock release];
+//    [self.myblock retain];
+//    [self.myblock retain];
+//    NSLog(@"myblock = %lu", (unsigned long)[_myblock retainCount]);
+//
+    // ARC 在block不访问外界变量时，不会被copy到堆上
+    NSLog(@"myblock = %@", self.myblock);
+
+    __block int b = 10;
+    void (^block)(void) = ^{
+        b = 11;
+        NSLog(@"b = %d", b);
+    };
+    NSLog(@"block == %@", block);
+    // MRC block == <__NSStackBlock__: 0x7fff57eeb728>
+    // ARC block == <__NSGlobalBlock__: 0x10c203610>
+    block();
+//    block = [block copy];
+//    NSLog(@"[block copy] == %@", block);
+    
+    int a = 10;
+    MyBlock myBlock = ^{
+        NSLog(@"a = %d", a);
+    };
+    NSLog(@"myBlock == %@", myBlock);
+    // MRC myBlock == <__NSStackBlock__: 0x7fff51c476f0>
+    // ARC myBlock == <__NSMallocBlock__: 0x600000246f30>
+    
+//    myBlock = [myBlock copy];
+//    NSLog(@"[myBlock copy] == %@", myBlock);
+    myBlock();
+    
+    NSLog(@"getBlockArray = %@", [self getBlockArray]);
+     */
+}
+
+- (NSArray *)getBlockArray {
+    int val = 10;
+    NSArray *arr = @[^{NSLog(@"blk0:%d",val);}, ^{NSLog(@"blk1:%d",val);}, ^{NSLog(@"blk2:%d",val);}];
+    return arr;
 }
 
 - (void)addDependency2 {
@@ -219,7 +338,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    DBHomeDetailViewController *deatilVC = [[DBHomeDetailViewController alloc] init];
+    DBWebViewController *deatilVC = [[DBWebViewController alloc] init];
     [self.navigationController exchangeToTopViewController:deatilVC animated:YES];
 }
 
