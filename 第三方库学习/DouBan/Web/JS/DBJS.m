@@ -16,11 +16,12 @@
 }
 
 - (NSString *)getVersionId {
-    
+    NSLog(@"thread = %@", [NSThread currentThread]);//子线程
     return @"getVersionId";
 }
 
 - (NSString *)getChannelId {
+    NSLog(@"thread = %@", [NSThread currentThread]);//子线程
     return @"getChannelId";
 }
 

@@ -98,7 +98,8 @@ typedef void (^MyBlock)(void);
     }
 }
 
-- (void)test {
+- (void)key_test {
+    
     [self.KVOController observe:self keyPath:@"name" options:NSKeyValueObservingOptionNew block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
         NSLog(@"observer = %@, object = %@, change = %@", observer, object, change);
     }];
@@ -174,55 +175,64 @@ typedef void (^MyBlock)(void);
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    [self block_test];
 }
 
 - (void)block_test {
-    /*
-     int aa = 10;
-     self.myblock = ^{
-     //        NSLog(@"aa = %d", aa);
-     };
-     
-     //    [self.myblock retain];
-     //    [self.myblock release];
-     //    [self.myblock retain];
-     //    [self.myblock retain];
-     //    NSLog(@"myblock = %lu", (unsigned long)[_myblock retainCount]);
-     //
-     // ARC 在block不访问外界变量时，不会被copy到堆上
-     NSLog(@"myblock = %@", self.myblock);
-     
-     __block int b = 10;
-     void (^block)(void) = ^{
-     b = 11;
-     NSLog(@"b = %d", b);
-     };
-     NSLog(@"block == %@", block);
-     // MRC block == <__NSStackBlock__: 0x7fff57eeb728>
-     // ARC block == <__NSGlobalBlock__: 0x10c203610>
-     block();
-     //    block = [block copy];
-     //    NSLog(@"[block copy] == %@", block);
-     
-     int a = 10;
-     MyBlock myBlock = ^{
-     NSLog(@"a = %d", a);
-     };
-     NSLog(@"myBlock == %@", myBlock);
-     // MRC myBlock == <__NSStackBlock__: 0x7fff51c476f0>
-     // ARC myBlock == <__NSMallocBlock__: 0x600000246f30>
-     
-     //    myBlock = [myBlock copy];
-     //    NSLog(@"[myBlock copy] == %@", myBlock);
-     myBlock();
-     
-     NSLog(@"getBlockArray = %@", [self getBlockArray]);
-     */
+    NSObject *objc = [[NSObject alloc] init];
+
+//    NSDictionary *dict = @{objc: @"wangweihu"};
+//    NSLog(@"dict = %@", dict);
+    
+    
+    int aa = 10;
+    self.myblock = ^{
+    //        NSLog(@"aa = %d", aa);
+    };
+
+    //    [self.myblock retain];
+    //    [self.myblock release];
+    //    [self.myblock retain];
+    //    [self.myblock retain];
+    //    NSLog(@"myblock = %lu", (unsigned long)[_myblock retainCount]);
+    //
+    // ARC 在block不访问外界变量时，不会被copy到堆上
+    NSLog(@"myblock = %@", self.myblock);
+
+    __block int b = 10;
+    void (^block)(void) = ^{
+    b = 11;
+    NSLog(@"b = %d", b);
+    };
+    NSLog(@"block == %@", block);
+    // MRC block == <__NSStackBlock__: 0x7fff57eeb728>
+    // ARC block == <__NSGlobalBlock__: 0x10c203610>
+    block();
+    //    block = [block copy];
+    //    NSLog(@"[block copy] == %@", block);
+
+//    int a = 10;
+//    NSObject *objc = [[NSObject alloc] init];
+    MyBlock myBlock = ^{
+        NSLog(@"objc = %@", objc);
+    };
+    myBlock = [myBlock copy];// 对全局变量进行copy retain release没有任何变化
+    NSLog(@"myBlock == %@", myBlock);
+    
+    // MRC myBlock == <__NSStackBlock__: 0x7fff51c476f0>
+    // ARC myBlock == <__NSMallocBlock__: 0x600000246f30>
+
+    //    myBlock = [myBlock copy];
+    //    NSLog(@"[myBlock copy] == %@", myBlock);
+    myBlock();
+
+    NSLog(@"getBlockArray = %@", [self getBlockArray]);
+
     //    NSArray *arr = [self getBlockArray];
     //    void (^block)(void) = [arr objectAtIndex:1];
     //    block();
     //    NSLog(@"block = %@", block);
-    //    [self addDependency2];
 }
 
 - (void)dispatch_queue_create_test {
