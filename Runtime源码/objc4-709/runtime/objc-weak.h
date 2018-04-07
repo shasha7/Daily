@@ -30,8 +30,8 @@
 __BEGIN_DECLS
 
 /*
-key是weak所指对象的地址，value是weak所指对象所有有weak修饰的指针地址数组。
-弱引用表是由单个自旋锁管理的散列表。分配一块内存，通常是一个对象，但在GC之下分配，可能会将其地址存储在标记为__weak的存储位置通过使用编译器生成的写入屏障或手动编码的用途注册弱原语。与注册相关联可以是回调
+key是__weak修饰符修饰的变量所引用对象的内存地址，value是__weak修饰符修饰的变量的数组。
+弱引用表是由单个自旋锁管理的散列表(数组)。分配一块内存，通常是一个对象，但在GC之下分配，可能会将其地址存储在标记为__weak的存储位置通过使用编译器生成的写入屏障或手动编码的用途注册弱原语。与注册相关联可以是回调
 当分配的内存块之一被回收的情况下阻塞。该表被散列在分配内存的地址上。 当__weak标记记忆改变了它的参考，我们依靠我们仍然可以的事实见其以前的参考。所以，在由弱引用的项索引的哈希表中，是一个列表该地址当前正在存储的所有位置。对于ARC，我们也跟踪是否有任意的对象通过在调用之前将其简单地放置在表格中来解除分配dealloc，并通过objc_clear_deallocating在内存之前删除它开垦。
 The weak table is a hash table governed by a single spin lock.
 An allocated blob of memory, most often an object, but under GC any such 

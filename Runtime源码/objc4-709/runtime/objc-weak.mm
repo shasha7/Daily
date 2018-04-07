@@ -345,14 +345,12 @@ weak_entry_for_referent(weak_table_t *weak_table, objc_object *referent)
  * @param referent The object.
  * @param referrer The weak reference.
  */
-void
-weak_unregister_no_lock(weak_table_t *weak_table, id referent_id, 
-                        id *referrer_id)
+void weak_unregister_no_lock(weak_table_t *weak_table, id referent_id, id *referrer_id)
 {
-    objc_object *referent = (objc_object *)referent_id;
-    objc_object **referrer = (objc_object **)referrer_id;
+    objc_object *referent = (objc_object *)referent_id; // 旧对象 也就是weak以前所引用的对象
+    objc_object **referrer = (objc_object **)referrer_id;// 旧对象 也就是weak以前所引用的对象
 
-    weak_entry_t *entry;
+    weak_entry_t *entry;// 一个键值对？？
 
     if (!referent) return;
 
@@ -396,7 +394,7 @@ weak_register_no_lock(weak_table_t *weak_table, id referent_id,
     objc_object *referent = (objc_object *)referent_id;//__weak修饰的变量所指向的对象
     objc_object **referrer = (objc_object **)referrer_id;//__weak修饰的变量
 
-    if (!referent  ||  referent->isTaggedPointer()) return referent_id;
+    if (!referent || referent->isTaggedPointer()) return referent_id;
 
     // ensure that the referenced object is viable
     bool deallocating;

@@ -100,7 +100,7 @@
         if (previousCachedImage != nil) {
             self.currentMemoryUsage -= previousCachedImage.totalBytes;
         }
-
+        // 更新图片
         self.cachedImages[identifier] = cacheImage;
         self.currentMemoryUsage += cacheImage.totalBytes;
     });

@@ -162,6 +162,10 @@ int main(int argc, const char * argv[]) {
         // 使用附有__weak修饰符的变量即是使用注册到autoreleasepool中的对象
         NSObject *objc = [NSObject new];
         id __weak objc1 = objc;
+        id __weak objc2 = objc;
+        id __weak objc3 = objc;
+        id __weak objc4 = objc;
+        id __weak objc5 = objc;
         /*
          id objc1;
          objc_initWeak(&objc1, objc);//初始化objc1变量·
