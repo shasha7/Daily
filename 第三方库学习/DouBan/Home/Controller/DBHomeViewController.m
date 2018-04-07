@@ -52,11 +52,18 @@ typedef void (^MyBlock)(void);
         self.title = @"首页";
         self.model = [DBHomeModel new];
         self.secondModel = [DBHomeSecondModel new];
-        
-        // 测试消息转发机制
-        [self testMessageSendMechanism];
     }
     return self;
+}
+
+- (void)createTheard {
+    dispatch_queue_t queue = dispatch_queue_create("com.wangweihu.serialQueue", DISPATCH_QUEUE_SERIAL);
+    queue = dispatch_get_main_queue();
+    queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
+        NSLog(@"DISPATCH_QUEUE_SERIAL thread = %@", [NSThread currentThread]);
+        NSLog(@"DISPATCH_QUEUE_CONCURRENT thread = %@", [NSThread currentThread]);
+    });
 }
 
 // 动态方法分析
@@ -116,11 +123,11 @@ typedef void (^MyBlock)(void);
 
 - (void)gcdCancel {
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    
-    __block BOOL isCancel = NO;
+     __block BOOL isCancel = NO;
     
     dispatch_async(queue, ^{
         NSLog(@"任务001 %@",[NSThread currentThread]);
+        sleep(10);
     });
     
     dispatch_async(queue, ^{
@@ -129,7 +136,7 @@ typedef void (^MyBlock)(void);
     
     dispatch_async(queue, ^{
         NSLog(@"任务003 %@",[NSThread currentThread]);
-        isCancel = YES;
+         isCancel = YES;
     });
     
     dispatch_async(queue, ^{
@@ -164,55 +171,100 @@ typedef void (^MyBlock)(void);
     dispatch_block_cancel(block3);
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-//    self.myblock();
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    
-    /*
-    int aa = 10;
-    self.myblock = ^{
-//        NSLog(@"aa = %d", aa);
-    };
-    
-//    [self.myblock retain];
-//    [self.myblock release];
-//    [self.myblock retain];
-//    [self.myblock retain];
-//    NSLog(@"myblock = %lu", (unsigned long)[_myblock retainCount]);
-//
-    // ARC 在block不访问外界变量时，不会被copy到堆上
-    NSLog(@"myblock = %@", self.myblock);
+}
 
-    __block int b = 10;
-    void (^block)(void) = ^{
-        b = 11;
-        NSLog(@"b = %d", b);
-    };
-    NSLog(@"block == %@", block);
-    // MRC block == <__NSStackBlock__: 0x7fff57eeb728>
-    // ARC block == <__NSGlobalBlock__: 0x10c203610>
-    block();
-//    block = [block copy];
-//    NSLog(@"[block copy] == %@", block);
-    
-    int a = 10;
-    MyBlock myBlock = ^{
-        NSLog(@"a = %d", a);
-    };
-    NSLog(@"myBlock == %@", myBlock);
-    // MRC myBlock == <__NSStackBlock__: 0x7fff51c476f0>
-    // ARC myBlock == <__NSMallocBlock__: 0x600000246f30>
-    
-//    myBlock = [myBlock copy];
-//    NSLog(@"[myBlock copy] == %@", myBlock);
-    myBlock();
-    
-    NSLog(@"getBlockArray = %@", [self getBlockArray]);
+- (void)block_test {
+    /*
+     int aa = 10;
+     self.myblock = ^{
+     //        NSLog(@"aa = %d", aa);
+     };
+     
+     //    [self.myblock retain];
+     //    [self.myblock release];
+     //    [self.myblock retain];
+     //    [self.myblock retain];
+     //    NSLog(@"myblock = %lu", (unsigned long)[_myblock retainCount]);
+     //
+     // ARC 在block不访问外界变量时，不会被copy到堆上
+     NSLog(@"myblock = %@", self.myblock);
+     
+     __block int b = 10;
+     void (^block)(void) = ^{
+     b = 11;
+     NSLog(@"b = %d", b);
+     };
+     NSLog(@"block == %@", block);
+     // MRC block == <__NSStackBlock__: 0x7fff57eeb728>
+     // ARC block == <__NSGlobalBlock__: 0x10c203610>
+     block();
+     //    block = [block copy];
+     //    NSLog(@"[block copy] == %@", block);
+     
+     int a = 10;
+     MyBlock myBlock = ^{
+     NSLog(@"a = %d", a);
+     };
+     NSLog(@"myBlock == %@", myBlock);
+     // MRC myBlock == <__NSStackBlock__: 0x7fff51c476f0>
+     // ARC myBlock == <__NSMallocBlock__: 0x600000246f30>
+     
+     //    myBlock = [myBlock copy];
+     //    NSLog(@"[myBlock copy] == %@", myBlock);
+     myBlock();
+     
+     NSLog(@"getBlockArray = %@", [self getBlockArray]);
      */
+    //    NSArray *arr = [self getBlockArray];
+    //    void (^block)(void) = [arr objectAtIndex:1];
+    //    block();
+    //    NSLog(@"block = %@", block);
+    //    [self addDependency2];
+}
+
+- (void)dispatch_queue_create_test {
+    dispatch_queue_t myqueue1 =  dispatch_queue_create("myqueue.queue1",DISPATCH_QUEUE_SERIAL);
+    dispatch_queue_t myqueue2 =  dispatch_queue_create("myqueue.queue2",DISPATCH_QUEUE_SERIAL);
+    dispatch_queue_t myqueue3 =  dispatch_queue_create("myqueue.queue3",DISPATCH_QUEUE_SERIAL);
+    dispatch_queue_t myqueue4 =  dispatch_queue_create("myqueue.queue4",DISPATCH_QUEUE_SERIAL);
+    dispatch_queue_t myqueue5 =  dispatch_queue_create("myqueue.queue5",DISPATCH_QUEUE_SERIAL);
+    dispatch_queue_t myqueue6 =  dispatch_queue_create("myqueue.queue6",DISPATCH_QUEUE_SERIAL);
+    
+    // 将管理追加的block的C语言层实现的FIFO队列 作为dispatch_set_target_queue的第一个参数，这个函数不仅可以变更队列的优先级还可以作为队列的执行阶层
+    dispatch_queue_t queue = dispatch_queue_create("com.wangweihu.serialQueue", DISPATCH_QUEUE_SERIAL);
+    dispatch_set_target_queue(myqueue1, queue);
+    dispatch_set_target_queue(myqueue2, queue);
+    dispatch_set_target_queue(myqueue3, queue);
+    dispatch_set_target_queue(myqueue4, queue);
+    dispatch_set_target_queue(myqueue5, queue);
+    dispatch_set_target_queue(myqueue6, queue);
+    
+    dispatch_async(myqueue1, ^{
+        NSLog(@"任务1");
+        sleep(2);
+    });
+    dispatch_async(myqueue2, ^{
+        NSLog(@"任务2");
+        sleep(2);
+    });
+    dispatch_async(myqueue3, ^{
+        NSLog(@"任务3");
+        sleep(2);
+    });
+    dispatch_async(myqueue4, ^{
+        NSLog(@"任务4");
+        sleep(2);
+    });
+    dispatch_async(myqueue5, ^{
+        NSLog(@"任务5");
+        sleep(2);
+    });
+    dispatch_async(myqueue6, ^{
+        NSLog(@"任务6");
+    });
 }
 
 - (NSArray *)getBlockArray {
@@ -222,8 +274,9 @@ typedef void (^MyBlock)(void);
 }
 
 - (void)addDependency2 {
+    // 管理追加的block的C语言层实现的FIFO队列 myqueue 必须是自己创建的并发队列？？？
     dispatch_queue_t myqueue =  dispatch_queue_create("myqueue.queue",DISPATCH_QUEUE_CONCURRENT);
-    // myqueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+//     myqueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
     dispatch_async(myqueue, ^{
         sleep(2);
@@ -231,7 +284,7 @@ typedef void (^MyBlock)(void);
     });
     
     dispatch_async(myqueue, ^{
-        sleep(10);
+        sleep(1);
         NSLog(@"任务2");
     });
     
