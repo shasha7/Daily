@@ -158,6 +158,16 @@ void structChange() {
 int main(int argc, const char * argv[]) {
     // void *objc_autoreleasePoolPush(void){return AutoreleasePoolPage::push();}
     @autoreleasepool {
+        // 附有__weak修饰符的变量所引用的对象被销毁的时候，则将nil赋值给该变量
+        // 使用附有__weak修饰符的变量即是使用注册到autoreleasepool中的对象
+        NSObject *objc = [NSObject new];
+        id __weak objc1 = objc;
+        /*
+         id objc1;
+         objc_initWeak(&objc1, objc);//初始化objc1变量·
+         objc_destroyWeak(&objc1);//释放变量objc1
+         */
+        
         // block是一个带有自动变量值的匿名函数、是一个Objective-C的对象、是一个C语言的结构体
     }
     return 0;
