@@ -12,6 +12,7 @@
 		663909E5207715EB0063BF7E /* DBJS.m in Sources */ = {isa = PBXBuildFile; fileRef = 663909E4207715EB0063BF7E /* DBJS.m */; };
 		663909E920771EA40063BF7E /* DBHomeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 663909E820771EA40063BF7E /* DBHomeModel.m */; };
 		663909EC207728120063BF7E /* DBHomeSecondModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 663909EB207728120063BF7E /* DBHomeSecondModel.m */; };
+		6666EA8A207A570A00BC8811 /* DBSafeMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 6666EA89207A570A00BC8811 /* DBSafeMutableDictionary.m */; };
 		8C57257CDBE76B8B18943C1D /* libPods-DouBan.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9CE53C46A15DC31A7960D55 /* libPods-DouBan.a */; };
 		AA6259C91F80DBDA009E200E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6259C81F80DBDA009E200E /* AppDelegate.m */; };
 		AA6259CF1F80DBDA009E200E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA6259CD1F80DBDA009E200E /* Main.storyboard */; };
@@ -57,6 +58,8 @@
 		663909E820771EA40063BF7E /* DBHomeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBHomeModel.m; sourceTree = "<group>"; };
 		663909EA207728120063BF7E /* DBHomeSecondModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBHomeSecondModel.h; sourceTree = "<group>"; };
 		663909EB207728120063BF7E /* DBHomeSecondModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBHomeSecondModel.m; sourceTree = "<group>"; };
+		6666EA88207A570A00BC8811 /* DBSafeMutableDictionary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBSafeMutableDictionary.h; sourceTree = "<group>"; };
+		6666EA89207A570A00BC8811 /* DBSafeMutableDictionary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBSafeMutableDictionary.m; sourceTree = "<group>"; };
 		AA6259C41F80DBDA009E200E /* DouBan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DouBan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA6259C71F80DBDA009E200E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		AA6259C81F80DBDA009E200E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -166,6 +169,15 @@
 				663909EB207728120063BF7E /* DBHomeSecondModel.m */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		6666EA87207A56E600BC8811 /* SafeMutableDictionary */ = {
+			isa = PBXGroup;
+			children = (
+				6666EA88207A570A00BC8811 /* DBSafeMutableDictionary.h */,
+				6666EA89207A570A00BC8811 /* DBSafeMutableDictionary.m */,
+			);
+			path = SafeMutableDictionary;
 			sourceTree = "<group>";
 		};
 		75F5A696CBC6F9A90B8DD8BA /* Pods */ = {
@@ -380,6 +392,7 @@
 		AA8EE65C1FE3B2E6004F7212 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				6666EA87207A56E600BC8811 /* SafeMutableDictionary */,
 				AA6AE0921FE7642400832F41 /* DBNet */,
 				AA6AE08E1FE7511B00832F41 /* XMLDictionary */,
 				AA8EE65D1FE3B2E6004F7212 /* AirSandbox */,
@@ -609,6 +622,7 @@
 				663909E920771EA40063BF7E /* DBHomeModel.m in Sources */,
 				AA6AE0A71FE772C800832F41 /* UINavigationController+ExchangeToTopViewController.m in Sources */,
 				663909DB207710B60063BF7E /* DBWebViewController.m in Sources */,
+				6666EA8A207A570A00BC8811 /* DBSafeMutableDictionary.m in Sources */,
 				AA625A0C1F821AE0009E200E /* DBBroadcastViewController.m in Sources */,
 				AAE5A8E82079ECE300F6C257 /* DBBaseView.m in Sources */,
 				AA6AE09C1FE7659F00832F41 /* DBShareData.m in Sources */,
