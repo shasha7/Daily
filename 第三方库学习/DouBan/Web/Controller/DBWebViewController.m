@@ -18,6 +18,15 @@
 
 @implementation DBWebViewController
 
+- (void)dealloc {
+    // JD面试题笔试题
+    // https://blog.csdn.net/majiakun1/article/details/54944942
+    // 控制台打印 Cannot form weak reference to instance (0x105a011a0) of class DBWebViewController. It is possible that this object was over-released, or is in the process of deallocation
+    // 需要查看objc-709源码 崩溃在weak_register_no_lock方法中，当某个类正在deallocating时候，尝试用__weak修饰的变量去引用正在释放的对象，会造成循环释放，也就是过度调用release方法
+    // __weak __typeof(self) weak_self = self;
+    // NSLog(@"%@", weak_self);
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.

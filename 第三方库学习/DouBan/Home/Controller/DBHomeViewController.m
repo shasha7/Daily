@@ -12,6 +12,7 @@
 #import "AFNetworking.h"
 #import "KVOController.h"
 #import "DBWebViewController.h"
+#import "DBResponderViewController.h"
 
 /*
  Storage class specifier关键字
@@ -33,7 +34,6 @@
  }
  */
 
-
 typedef void (^MyBlock)(void);
 
 @interface DBHomeViewController ()
@@ -51,9 +51,19 @@ typedef void (^MyBlock)(void);
     if (self) {
         self.title = @"首页";
         self.model = [DBHomeModel new];
+        
+        [self.model addObserver:self forKeyPath:@"name" options:NSKeyValueObservingOptionNew context:nil];
+        
+//        self.model.name = @"wangweihu";
+//        [self.model setValue:@"wushanshan" forKey:@"name"];
+        
         self.secondModel = [DBHomeSecondModel new];
     }
     return self;
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    NSLog(@"change = %@", change);
 }
 
 - (void)createTheard {
@@ -401,7 +411,7 @@ typedef void (^MyBlock)(void);
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    DBWebViewController *deatilVC = [[DBWebViewController alloc] init];
+    DBResponderViewController *deatilVC = [[DBResponderViewController alloc] init];
     [self.navigationController exchangeToTopViewController:deatilVC animated:YES];
 }
 

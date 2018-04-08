@@ -39,6 +39,11 @@
 		AA8EE6601FE3B2E6004F7212 /* PAirSandbox.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8EE65E1FE3B2E6004F7212 /* PAirSandbox.m */; };
 		AAB1FEF81F84BB3E007AA4DB /* BroadcastViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB1FEF71F84BB3E007AA4DB /* BroadcastViewModel.m */; };
 		AAB1FEFB1F84BFE7007AA4DB /* BroadcastCommunityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB1FEFA1F84BFE7007AA4DB /* BroadcastCommunityModel.m */; };
+		AAE5A8E42079E9EF00F6C257 /* DBResponderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE5A8E32079E9EF00F6C257 /* DBResponderViewController.m */; };
+		AAE5A8E82079ECE300F6C257 /* DBBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE5A8E72079ECE300F6C257 /* DBBaseView.m */; };
+		AAE5A8EB2079EEAD00F6C257 /* DBViewOne.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE5A8EA2079EEAD00F6C257 /* DBViewOne.m */; };
+		AAE5A8EE2079EEBB00F6C257 /* DBViewTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE5A8ED2079EEBB00F6C257 /* DBViewTwo.m */; };
+		AAE5A8F12079EEC800F6C257 /* DBViewThree.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE5A8F02079EEC800F6C257 /* DBViewThree.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,6 +104,16 @@
 		AAB1FEF71F84BB3E007AA4DB /* BroadcastViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BroadcastViewModel.m; sourceTree = "<group>"; };
 		AAB1FEF91F84BFE7007AA4DB /* BroadcastCommunityModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BroadcastCommunityModel.h; sourceTree = "<group>"; };
 		AAB1FEFA1F84BFE7007AA4DB /* BroadcastCommunityModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BroadcastCommunityModel.m; sourceTree = "<group>"; };
+		AAE5A8E22079E9EF00F6C257 /* DBResponderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBResponderViewController.h; sourceTree = "<group>"; };
+		AAE5A8E32079E9EF00F6C257 /* DBResponderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBResponderViewController.m; sourceTree = "<group>"; };
+		AAE5A8E62079ECE300F6C257 /* DBBaseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBBaseView.h; sourceTree = "<group>"; };
+		AAE5A8E72079ECE300F6C257 /* DBBaseView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBBaseView.m; sourceTree = "<group>"; };
+		AAE5A8E92079EEAD00F6C257 /* DBViewOne.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBViewOne.h; sourceTree = "<group>"; };
+		AAE5A8EA2079EEAD00F6C257 /* DBViewOne.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBViewOne.m; sourceTree = "<group>"; };
+		AAE5A8EC2079EEBB00F6C257 /* DBViewTwo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBViewTwo.h; sourceTree = "<group>"; };
+		AAE5A8ED2079EEBB00F6C257 /* DBViewTwo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBViewTwo.m; sourceTree = "<group>"; };
+		AAE5A8EF2079EEC800F6C257 /* DBViewThree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBViewThree.h; sourceTree = "<group>"; };
+		AAE5A8F02079EEC800F6C257 /* DBViewThree.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBViewThree.m; sourceTree = "<group>"; };
 		E9CE53C46A15DC31A7960D55 /* libPods-DouBan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DouBan.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F180E1DBF3E9DDB10BB30262 /* Pods-DouBan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DouBan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DouBan/Pods-DouBan.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -185,6 +200,7 @@
 			children = (
 				AA6259C71F80DBDA009E200E /* AppDelegate.h */,
 				AA6259C81F80DBDA009E200E /* AppDelegate.m */,
+				AAE5A8E02079E9AF00F6C257 /* Responder */,
 				663909D7207710830063BF7E /* Web */,
 				AA6259E51F82140C009E200E /* Main */,
 				AA6259E91F82140C009E200E /* Home */,
@@ -380,6 +396,39 @@
 			path = AirSandbox;
 			sourceTree = "<group>";
 		};
+		AAE5A8E02079E9AF00F6C257 /* Responder */ = {
+			isa = PBXGroup;
+			children = (
+				AAE5A8E12079E9D000F6C257 /* Controller */,
+				AAE5A8E52079ECCD00F6C257 /* View */,
+			);
+			path = Responder;
+			sourceTree = "<group>";
+		};
+		AAE5A8E12079E9D000F6C257 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				AAE5A8E22079E9EF00F6C257 /* DBResponderViewController.h */,
+				AAE5A8E32079E9EF00F6C257 /* DBResponderViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		AAE5A8E52079ECCD00F6C257 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AAE5A8E62079ECE300F6C257 /* DBBaseView.h */,
+				AAE5A8E72079ECE300F6C257 /* DBBaseView.m */,
+				AAE5A8E92079EEAD00F6C257 /* DBViewOne.h */,
+				AAE5A8EA2079EEAD00F6C257 /* DBViewOne.m */,
+				AAE5A8EC2079EEBB00F6C257 /* DBViewTwo.h */,
+				AAE5A8ED2079EEBB00F6C257 /* DBViewTwo.m */,
+				AAE5A8EF2079EEC800F6C257 /* DBViewThree.h */,
+				AAE5A8F02079EEC800F6C257 /* DBViewThree.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		B4B3CBC6A8554E76DCE56E01 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -550,6 +599,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA7871581FE26D5E00379F9D /* UITableView+JYFlowInfoCell.m in Sources */,
+				AAE5A8F12079EEC800F6C257 /* DBViewThree.m in Sources */,
 				AA6259F71F821445009E200E /* DBTabBarController.m in Sources */,
 				663909EC207728120063BF7E /* DBHomeSecondModel.m in Sources */,
 				AA625A031F821A7E009E200E /* DBTableViewController.m in Sources */,
@@ -560,16 +610,20 @@
 				AA6AE0A71FE772C800832F41 /* UINavigationController+ExchangeToTopViewController.m in Sources */,
 				663909DB207710B60063BF7E /* DBWebViewController.m in Sources */,
 				AA625A0C1F821AE0009E200E /* DBBroadcastViewController.m in Sources */,
+				AAE5A8E82079ECE300F6C257 /* DBBaseView.m in Sources */,
 				AA6AE09C1FE7659F00832F41 /* DBShareData.m in Sources */,
 				AA6259C91F80DBDA009E200E /* AppDelegate.m in Sources */,
+				AAE5A8EE2079EEBB00F6C257 /* DBViewTwo.m in Sources */,
 				AA625A001F821A64009E200E /* DBViewController.m in Sources */,
 				AA6259FA1F82145E009E200E /* DBNavigationController.m in Sources */,
 				AA6AE0AA1FE7917200832F41 /* DBHomeDetailViewController.m in Sources */,
 				AA6AE0951FE7642500832F41 /* DBRequestManager.m in Sources */,
 				AA6AE0981FE764F400832F41 /* DeviceInfo.m in Sources */,
+				AAE5A8EB2079EEAD00F6C257 /* DBViewOne.m in Sources */,
 				AAB1FEF81F84BB3E007AA4DB /* BroadcastViewModel.m in Sources */,
 				AA6AE0911FE7511B00832F41 /* XMLDictionary.m in Sources */,
 				AA625A061F821AB0009E200E /* DBHomeViewController.m in Sources */,
+				AAE5A8E42079E9EF00F6C257 /* DBResponderViewController.m in Sources */,
 				AAB1FEFB1F84BFE7007AA4DB /* BroadcastCommunityModel.m in Sources */,
 				663909E5207715EB0063BF7E /* DBJS.m in Sources */,
 			);

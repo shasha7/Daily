@@ -12,4 +12,6 @@
 
 - (void)testMessageSendMechanism;
 
+@property (nonatomic, copy) NSString *name;
+
 @end
