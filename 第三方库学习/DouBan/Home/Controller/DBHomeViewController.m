@@ -15,6 +15,7 @@
 #import "DBResponderViewController.h"
 #import "Coder.h"
 #import "Person.h"
+#import "DBSqliteViewController.h"
 
 /*
  Storage class specifier关键字
@@ -67,8 +68,7 @@ typedef void (^MyBlock)(void);
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-
-    [self test_inheritedAndOverrided];
+    
 }
 
 // 判断子类是否复写了父类的方法
@@ -379,7 +379,7 @@ typedef void (^MyBlock)(void);
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    DBResponderViewController *deatilVC = [[DBResponderViewController alloc] init];
+    DBSqliteViewController *deatilVC = [[DBSqliteViewController alloc] init];
     [self.navigationController exchangeToTopViewController:deatilVC animated:YES];
 }
 

@@ -37,6 +37,7 @@
 		AA6AE0AA1FE7917200832F41 /* DBHomeDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6AE0A91FE7917200832F41 /* DBHomeDetailViewController.m */; };
 		AA6DABB1207C5FC30029E436 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6DABB0207C5FC30029E436 /* Person.m */; };
 		AA6DABB4207C5FCB0029E436 /* Coder.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6DABB3207C5FCB0029E436 /* Coder.m */; };
+		AA6DABB8207CABD20029E436 /* DBSqliteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6DABB7207CABD20029E436 /* DBSqliteViewController.m */; };
 		AA7871581FE26D5E00379F9D /* UITableView+JYFlowInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7871561FE26D5D00379F9D /* UITableView+JYFlowInfoCell.m */; };
 		AA8EE65B1FE37BF7004F7212 /* DBFrequentLimit.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8EE65A1FE37BF7004F7212 /* DBFrequentLimit.m */; };
 		AA8EE6601FE3B2E6004F7212 /* PAirSandbox.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8EE65E1FE3B2E6004F7212 /* PAirSandbox.m */; };
@@ -103,6 +104,8 @@
 		AA6DABB0207C5FC30029E436 /* Person.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		AA6DABB2207C5FCB0029E436 /* Coder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Coder.h; sourceTree = "<group>"; };
 		AA6DABB3207C5FCB0029E436 /* Coder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Coder.m; sourceTree = "<group>"; };
+		AA6DABB6207CABD20029E436 /* DBSqliteViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBSqliteViewController.h; sourceTree = "<group>"; };
+		AA6DABB7207CABD20029E436 /* DBSqliteViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBSqliteViewController.m; sourceTree = "<group>"; };
 		AA7871561FE26D5D00379F9D /* UITableView+JYFlowInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+JYFlowInfoCell.m"; sourceTree = "<group>"; };
 		AA7871571FE26D5E00379F9D /* UITableView+JYFlowInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+JYFlowInfoCell.h"; sourceTree = "<group>"; };
 		AA8EE6591FE37BF7004F7212 /* DBFrequentLimit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBFrequentLimit.h; sourceTree = "<group>"; };
@@ -340,6 +343,8 @@
 				AA625A051F821AB0009E200E /* DBHomeViewController.m */,
 				AA6AE0A81FE7917200832F41 /* DBHomeDetailViewController.h */,
 				AA6AE0A91FE7917200832F41 /* DBHomeDetailViewController.m */,
+				AA6DABB6207CABD20029E436 /* DBSqliteViewController.h */,
+				AA6DABB7207CABD20029E436 /* DBSqliteViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -631,6 +636,7 @@
 				AA6259D71F80DBDA009E200E /* main.m in Sources */,
 				AA8EE65B1FE37BF7004F7212 /* DBFrequentLimit.m in Sources */,
 				663909E920771EA40063BF7E /* DBHomeModel.m in Sources */,
+				AA6DABB8207CABD20029E436 /* DBSqliteViewController.m in Sources */,
 				AA6AE0A71FE772C800832F41 /* UINavigationController+ExchangeToTopViewController.m in Sources */,
 				663909DB207710B60063BF7E /* DBWebViewController.m in Sources */,
 				6666EA8A207A570A00BC8811 /* DBSafeMutableDictionary.m in Sources */,
