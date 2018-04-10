@@ -13,6 +13,8 @@
 #import "KVOController.h"
 #import "DBWebViewController.h"
 #import "DBResponderViewController.h"
+#import "Coder.h"
+#import "Person.h"
 
 /*
  Storage class specifier关键字
@@ -52,141 +54,48 @@ typedef void (^MyBlock)(void);
         self.title = @"首页";
         self.model = [DBHomeModel new];
         
-        [self.model addObserver:self forKeyPath:@"name" options:NSKeyValueObservingOptionNew context:nil];
+//        [self.model addObserver:self forKeyPath:@"name" options:NSKeyValueObservingOptionNew context:nil];
         
 //        self.model.name = @"wangweihu";
 //        [self.model setValue:@"wushanshan" forKey:@"name"];
         
-        self.secondModel = [DBHomeSecondModel new];
+//        self.secondModel = [DBHomeSecondModel new];
     }
     return self;
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    NSLog(@"change = %@", change);
-}
-
-- (void)createTheard {
-    dispatch_queue_t queue = dispatch_queue_create("com.wangweihu.serialQueue", DISPATCH_QUEUE_SERIAL);
-    queue = dispatch_get_main_queue();
-    queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_async(queue, ^{
-        NSLog(@"DISPATCH_QUEUE_SERIAL thread = %@", [NSThread currentThread]);
-        NSLog(@"DISPATCH_QUEUE_CONCURRENT thread = %@", [NSThread currentThread]);
-    });
-}
-
-// 动态方法分析
-+ (BOOL)resolveInstanceMethod:(SEL)sel {
-    if ([NSStringFromSelector(sel) isEqualToString:@"testMessageSendMechanism"]) {
-        return YES;
-    }
-    return [super resolveInstanceMethod:sel];
-}
-
-// 备援接受者
-- (id)forwardingTargetForSelector:(SEL)aSelector {
-    return nil;
-//    return self.model;
-}
-
-// 完整的消息转发
-// forwardingTargetForSelector 同为消息转发，但在实践层面上有什么区别？何时可以考虑把消息下放到forwardInvocation阶段转发？
-// forwardingTargetForSelector 仅支持一个对象的返回，也就是说消息只能被转发给一个对象
-// forwardInvocation可以将消息同时转发给任意多个对象
-- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {
-    if(aSelector == @selector(testMessageSendMechanism)) {
-        return [NSMethodSignature signatureWithObjCTypes:"v@:"];
-    }
-    return nil;
-}
-
-- (void)forwardInvocation:(NSInvocation *)anInvocation {
-    if (anInvocation.selector == @selector(testMessageSendMechanism)) {
-        [anInvocation invokeWithTarget:self.model];
-        [anInvocation invokeWithTarget:self.secondModel];
-    }
-}
-
-- (void)key_test {
-    
-    [self.KVOController observe:self keyPath:@"name" options:NSKeyValueObservingOptionNew block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
-        NSLog(@"observer = %@, object = %@, change = %@", observer, object, change);
-    }];
-    
-    NSMutableString *mStr = [NSMutableString stringWithString:@"wushanshan"];
-    self.name = mStr;
-    
-    NSLog(@"self.name = %@", self.name);
-    
-    [mStr appendString:@" love wushanshan"];
-    
-    NSLog(@"self.name = %@", self.name);
-}
-
-// 重写copy属性的变量的时候记得 copy操作， 这样是有必要的
-- (void)setName:(NSString *)name {
-
-//    _name = name; // 通过name外界可修改_name的值
-    
-    _name = [name copy];// 系统默认的操作 通过name外界不可修改_name的值
-}
-
-- (void)gcdCancel {
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-     __block BOOL isCancel = NO;
-    
-    dispatch_async(queue, ^{
-        NSLog(@"任务001 %@",[NSThread currentThread]);
-        sleep(10);
-    });
-    
-    dispatch_async(queue, ^{
-        NSLog(@"任务002 %@",[NSThread currentThread]);
-    });
-    
-    dispatch_async(queue, ^{
-        NSLog(@"任务003 %@",[NSThread currentThread]);
-         isCancel = YES;
-    });
-    
-    dispatch_async(queue, ^{
-        // 模拟：线程等待3秒，确保任务003完成 isCancel＝YES
-        sleep(3);
-        if(isCancel){
-            NSLog(@"任务004已被取消 %@",[NSThread currentThread]);
-        }else{
-            NSLog(@"任务004 %@",[NSThread currentThread]);
-        }
-    });
-}
-
-- (void)gcdBlockCancel {
-    dispatch_queue_t queue = dispatch_queue_create("com.gcdtest.www", DISPATCH_QUEUE_CONCURRENT);
-    
-    dispatch_block_t block1 = dispatch_block_create(0, ^{
-        sleep(5);
-        NSLog(@"block1 %@",[NSThread currentThread]);
-    });
-    
-    dispatch_block_t block2 = dispatch_block_create(0, ^{
-        NSLog(@"block2 %@",[NSThread currentThread]);
-    });
-    
-    dispatch_block_t block3 = dispatch_block_create(0, ^{
-        NSLog(@"block3 %@",[NSThread currentThread]);
-    });
-    
-    dispatch_async(queue, block1);
-    dispatch_async(queue, block2);
-    dispatch_block_cancel(block3);
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+
+    [self test_inheritedAndOverrided];
+}
+
+// 判断子类是否复写了父类的方法
+- (void)test_inheritedAndOverrided {
+    Coder *coder = [Coder new];
+    SEL selector = @selector(doSomething);
+    BOOL inherited = ![coder isMemberOfClass:[Person class]]; //判断对象不是由父类本身创建的
+    BOOL overrided = [Coder instanceMethodForSelector:selector] == [Person instanceMethodForSelector:selector]; //判断同一个方法，子类调用的IMP跟父类调用的IMP是否一致，如果不一致则说明子类复写了父类的方法
+    if (inherited && overrided) {
+        NSLog(@"子类复写了父类的方法");
+    }else{
+        NSLog(@"子类没有复写父类的方法");
+    }
+    NSLog(@"inherited = %@", @(inherited));
+    NSLog(@"overrided = %@", @(overrided));
+}
+
+- (void)UILabel_test_iOS_8_x_bug {
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(100, 100, 200, 0)];  //为了测试，设置高度为0
+    label.backgroundColor = [UIColor blueColor];  //高度为0时背景色并不会显示,这里为了明显设置为蓝色
+    label.textColor = [UIColor blackColor];
+    label.text = @"测试";
+    [self.view addSubview:label];
     
-    [self block_test];
+    // 解决方案
+    // label.clipsToBounds = YES;
+    // label.hidden = YES;  //高度为0时hidden掉
 }
 
 - (void)block_test {
@@ -196,7 +105,7 @@ typedef void (^MyBlock)(void);
 //    NSLog(@"dict = %@", dict);
     
     
-    int aa = 10;
+//    int aa = 10;
     self.myblock = ^{
     //        NSLog(@"aa = %d", aa);
     };
@@ -293,8 +202,67 @@ typedef void (^MyBlock)(void);
     return arr;
 }
 
+- (void)fetchFeedInfoWithCompletion:(void(^)(NSDictionary *feed, NSError *error))completion {
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
+        NSLog(@"action 1");
+        NSLog(@"线程 = %@", [NSThread currentThread]);
+        sleep(3);
+        completion(nil, nil);
+    });
+}
+
+- (void)fetchCommentsWithCompletion:(void(^)(NSDictionary *feed, NSError *error))completion {
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
+        NSLog(@"action 2");
+        NSLog(@"线程 = %@", [NSThread currentThread]);
+        completion(nil, nil);
+    });
+}
+
+- (void)addDependency4 {
+    dispatch_group_t group = dispatch_group_create();
+    //请求动态信息
+    dispatch_group_enter(group);
+    [self fetchFeedInfoWithCompletion:^(NSDictionary *feed, NSError *error) {
+        //do something with FeedInfo
+        dispatch_group_leave(group);
+    }];
+    //请求评论信息
+    dispatch_group_enter(group);
+    [self fetchCommentsWithCompletion:^(NSDictionary *feed, NSError *error) {
+        //do something with Comments
+        dispatch_group_leave(group);
+    }];
+    //上面的请求都执行完毕之后在主线程刷新UI
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        //刷新UI等
+        NSLog(@"主线程 = %@", [NSThread currentThread]);
+    });
+}
+
+- (void)addDependency3 {
+    dispatch_group_t group = dispatch_group_create();
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    queue = dispatch_queue_create("com.wangweihu.customqueue", DISPATCH_QUEUE_CONCURRENT);
+    dispatch_group_async(group, queue, ^{
+        NSLog(@"action 1");
+        sleep(3);
+    });
+    
+    dispatch_group_async(group, queue, ^{
+        NSLog(@"action 2");
+    });
+    
+    //通知主线程刷新UI或者执行其他操作
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        NSLog(@"finish");
+    });
+}
+
 - (void)addDependency2 {
-    // 管理追加的block的C语言层实现的FIFO队列 myqueue 必须是自己创建的并发队列？？？
+    // 管理追加的block的C语言层实现的FIFO队列 myqueue 必须是自己创建的并发队列
     dispatch_queue_t myqueue =  dispatch_queue_create("myqueue.queue",DISPATCH_QUEUE_CONCURRENT);
 //     myqueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
@@ -413,6 +381,126 @@ typedef void (^MyBlock)(void);
     
     DBResponderViewController *deatilVC = [[DBResponderViewController alloc] init];
     [self.navigationController exchangeToTopViewController:deatilVC animated:YES];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    NSLog(@"change = %@", change);
+}
+
+- (void)createTheard {
+    dispatch_queue_t queue = dispatch_queue_create("com.wangweihu.serialQueue", DISPATCH_QUEUE_SERIAL);
+    queue = dispatch_get_main_queue();
+    queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
+        NSLog(@"DISPATCH_QUEUE_SERIAL thread = %@", [NSThread currentThread]);
+        NSLog(@"DISPATCH_QUEUE_CONCURRENT thread = %@", [NSThread currentThread]);
+    });
+}
+
+// 动态方法分析
++ (BOOL)resolveInstanceMethod:(SEL)sel {
+    if ([NSStringFromSelector(sel) isEqualToString:@"testMessageSendMechanism"]) {
+        return YES;
+    }
+    return [super resolveInstanceMethod:sel];
+}
+
+// 备援接受者
+- (id)forwardingTargetForSelector:(SEL)aSelector {
+    return nil;
+    //    return self.model;
+}
+
+// 完整的消息转发
+// forwardingTargetForSelector 同为消息转发，但在实践层面上有什么区别？何时可以考虑把消息下放到forwardInvocation阶段转发？
+// forwardingTargetForSelector 仅支持一个对象的返回，也就是说消息只能被转发给一个对象
+// forwardInvocation可以将消息同时转发给任意多个对象
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {
+    if(aSelector == @selector(testMessageSendMechanism)) {
+        return [NSMethodSignature signatureWithObjCTypes:"v@:"];
+    }
+    return nil;
+}
+
+- (void)forwardInvocation:(NSInvocation *)anInvocation {
+    if (anInvocation.selector == @selector(testMessageSendMechanism)) {
+        [anInvocation invokeWithTarget:self.model];
+        [anInvocation invokeWithTarget:self.secondModel];
+    }
+}
+
+- (void)key_test {
+    
+    [self.KVOController observe:self keyPath:@"name" options:NSKeyValueObservingOptionNew block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
+        NSLog(@"observer = %@, object = %@, change = %@", observer, object, change);
+    }];
+    
+    NSMutableString *mStr = [NSMutableString stringWithString:@"wushanshan"];
+    self.name = mStr;
+    
+    NSLog(@"self.name = %@", self.name);
+    
+    [mStr appendString:@" love wushanshan"];
+    
+    NSLog(@"self.name = %@", self.name);
+}
+
+// 重写copy属性的变量的时候记得 copy操作， 这样是有必要的
+- (void)setName:(NSString *)name {
+    
+    //    _name = name; // 通过name外界可修改_name的值
+    
+    _name = [name copy];// 系统默认的操作 通过name外界不可修改_name的值
+}
+
+- (void)gcdCancel {
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    __block BOOL isCancel = NO;
+    
+    dispatch_async(queue, ^{
+        NSLog(@"任务001 %@",[NSThread currentThread]);
+        sleep(10);
+    });
+    
+    dispatch_async(queue, ^{
+        NSLog(@"任务002 %@",[NSThread currentThread]);
+    });
+    
+    dispatch_async(queue, ^{
+        NSLog(@"任务003 %@",[NSThread currentThread]);
+        isCancel = YES;
+    });
+    
+    dispatch_async(queue, ^{
+        // 模拟：线程等待3秒，确保任务003完成 isCancel＝YES
+        sleep(3);
+        if(isCancel){
+            NSLog(@"任务004已被取消 %@",[NSThread currentThread]);
+        }else{
+            NSLog(@"任务004 %@",[NSThread currentThread]);
+        }
+    });
+}
+
+- (void)gcdBlockCancel {
+    dispatch_queue_t queue = dispatch_queue_create("com.gcdtest.www", DISPATCH_QUEUE_CONCURRENT);
+    
+    dispatch_block_t block1 = dispatch_block_create(0, ^{
+        sleep(5);
+        NSLog(@"block1 %@",[NSThread currentThread]);
+    });
+    
+    dispatch_block_t block2 = dispatch_block_create(0, ^{
+        NSLog(@"block2 %@",[NSThread currentThread]);
+    });
+    
+    dispatch_block_t block3 = dispatch_block_create(0, ^{
+        NSLog(@"block3 %@",[NSThread currentThread]);
+    });
+    
+    dispatch_async(queue, block1);
+    dispatch_async(queue, block2);
+    dispatch_block_cancel(block3);
 }
 
 @end

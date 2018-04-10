@@ -15,6 +15,6 @@
 @property (nonatomic, strong) DBHomeModel *model;
 @property (nonatomic, strong) DBHomeSecondModel *secondModel;
 
-- (void)testMessageSendMechanism;
+//- (void)testMessageSendMechanism;
 
 @end
