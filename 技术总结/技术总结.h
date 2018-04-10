@@ -2,6 +2,21 @@
 ///技术总结暨每天处理问题总结
 ///---------------------
 
+// 禁止手机睡眠
+项目当中，有网页版狼人杀游戏，在网页中，随着玩的时间增长，手机会进入到睡眠状态，这时需要让手机保持活跃转态
+在UIApplication类中有个一属性可以控制应用是否进入到休眠状态
+[UIApplication sharedApplication].idleTimerDisabled = YES;//禁止手机睡眠
+需要注意的是在应用退出或Terminate时记得在设置回来
+[UIApplication sharedApplication].idleTimerDisabled = NO;//可以进入到睡眠状态
+
+// 禁用button高亮
+UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+或者Type不为UIButtonTypeCustom时修改属性adjustsImageWhenHighlighted为NO
+button.adjustsImageWhenHighlighted = NO;
+
+// 本地缓存
+SDWebImage本地缓存有时候会害人。如果之前缓存过一张图片，即使下次服务器换了这张图片，但是图片url没换，用sdwebimage下载下来的还是以前那张,所以遇到这种问题，不要先去怼服务器，清空下缓存再试就好了
+
 -------------------------
 2016.5.24
 
