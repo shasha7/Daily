@@ -11,10 +11,14 @@
 #import "NSTimer+BlocksSupport.h"
 #import <pthread/pthread.h>
 #import "WWHCache.h"
+#import <MediaPlayer/MediaPlayer.h>
+#import <AVKit/AVKit.h>
+#import "EOCViewController.h"
+#import "EOCNotificationCenter.h"
 
 @interface WWHViewController ()<NSCacheDelegate>
 
-@property (nonatomic, weak) NSTimer *timer;
+@property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, strong) dispatch_source_t dtimer;
 @property (nonatomic, strong) WWHCache *cache;
 
@@ -22,9 +26,19 @@
 
 @implementation WWHViewController
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        // 注册消息监听 第一个参数是观察者为本身，第二个参数表示消息回调的方法，第三个消息通知的名字，第四个为nil表示表示接受所有发送者传递过来的消息
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(run:) name:@"run" object:@"wangweihu"];
+    }
+    return self;
+}
+
 - (void)dealloc {
     NSLog(@"销毁了控制器");
     [_timer invalidate];
+    _timer = nil;
 }
 
 /**
@@ -35,12 +49,38 @@
     NSLog(@"obj = %@", obj);
 }
 
+- (void)run:(NSNotification *)notification {
+    NSLog(@"---notification---%@", notification.object);
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [_timer invalidate];
+    
+    [[EOCNotificationCenter defaultCenter] postNotificationName:@"run" object:nil];
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    EOCViewController *eocVC = [[EOCViewController alloc] init];
+    [self.navigationController pushViewController:eocVC animated:YES];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"定时器";
     
+    
+    
+//    AVPlayerViewController *VC = [[AVPlayerViewController alloc] init];
+    
+//    __weak typeof(self) weak_self = self;
+//    NSTimer *timer = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(run) userInfo:nil repeats:YES];
+//    [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
+//    self.timer = timer;
+    
+    /*
     WWHCache *cache = [[WWHCache alloc] init];
     cache.delegate = self;
     [cache setCountLimit:10];
@@ -48,7 +88,7 @@
         NSObject *o = [[NSObject alloc] init];
         [cache setObject:o forKey:[NSString stringWithFormat:@"第%@个对象", @(i)]];
     }
-    
+    */
     /*
      self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f repeats:NO block:^(NSTimer * _Nonnull timer) {
      NSLog(@"------");

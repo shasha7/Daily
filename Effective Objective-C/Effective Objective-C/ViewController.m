@@ -75,9 +75,14 @@ __weak NSString *string_weak_ = nil;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+- (void)run:(NSNotification *)notification {
+    NSLog(@"---notification---%@", notification.object);
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(run:) name:@"run" object:@"wangweihu"];
     
 //    dispatch_semaphore_t dsma = dispatch_semaphore_create(0);
 //    self.dsma = dsma;

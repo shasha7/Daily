@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		663D334B205AA72B00EF4193 /* WWHCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 663D334A205AA72B00EF4193 /* WWHCache.m */; };
+		6674A480207E3C11002F4007 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6674A47F207E3C11002F4007 /* CoreTelephony.framework */; };
+		6674A483207E4ADC002F4007 /* EOCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6674A482207E4ADC002F4007 /* EOCViewController.m */; };
+		6674A487207E4E30002F4007 /* EOCNotificationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6674A486207E4E30002F4007 /* EOCNotificationCenter.m */; };
 		AA17A343201071F5007B8535 /* Dog.m in Sources */ = {isa = PBXBuildFile; fileRef = AA17A33D201071F5007B8535 /* Dog.m */; };
 		AA17A344201071F5007B8535 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = AA17A33F201071F5007B8535 /* Person.m */; };
 		AA17A345201071F5007B8535 /* Animal.m in Sources */ = {isa = PBXBuildFile; fileRef = AA17A342201071F5007B8535 /* Animal.m */; };
@@ -53,6 +56,11 @@
 /* Begin PBXFileReference section */
 		663D3349205AA72B00EF4193 /* WWHCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WWHCache.h; sourceTree = "<group>"; };
 		663D334A205AA72B00EF4193 /* WWHCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WWHCache.m; sourceTree = "<group>"; };
+		6674A47F207E3C11002F4007 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		6674A481207E4ADC002F4007 /* EOCViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EOCViewController.h; sourceTree = "<group>"; };
+		6674A482207E4ADC002F4007 /* EOCViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EOCViewController.m; sourceTree = "<group>"; };
+		6674A485207E4E30002F4007 /* EOCNotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EOCNotificationCenter.h; sourceTree = "<group>"; };
+		6674A486207E4E30002F4007 /* EOCNotificationCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EOCNotificationCenter.m; sourceTree = "<group>"; };
 		AA17A33D201071F5007B8535 /* Dog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Dog.m; sourceTree = "<group>"; };
 		AA17A33E201071F5007B8535 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
 		AA17A33F201071F5007B8535 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
@@ -131,12 +139,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6674A480207E3C11002F4007 /* CoreTelephony.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6674A47E207E3C11002F4007 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6674A47F207E3C11002F4007 /* CoreTelephony.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6674A484207E4E0E002F4007 /* 8.NotificationCenter */ = {
+			isa = PBXGroup;
+			children = (
+				6674A485207E4E30002F4007 /* EOCNotificationCenter.h */,
+				6674A486207E4E30002F4007 /* EOCNotificationCenter.m */,
+			);
+			path = 8.NotificationCenter;
+			sourceTree = "<group>";
+		};
 		AA17A33C201071B5007B8535 /* 0.Property */ = {
 			isa = PBXGroup;
 			children = (
@@ -266,6 +292,7 @@
 			children = (
 				AADF60D32006FE5B00B6F705 /* Effective Objective-C */,
 				AADF60D22006FE5B00B6F705 /* Products */,
+				6674A47E207E3C11002F4007 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -290,11 +317,14 @@
 				AA17A34820107680007B8535 /* 5.UIView&CALayer */,
 				AA9A059B2011D83900AB4EE5 /* 6.List */,
 				AA9A05A42011E3AE00AB4EE5 /* 7.Encryption */,
+				6674A484207E4E0E002F4007 /* 8.NotificationCenter */,
 				AADF60D72006FE5B00B6F705 /* ViewController.h */,
 				AADF60D82006FE5B00B6F705 /* ViewController.m */,
 				AA17A34C20107805007B8535 /* ViewController.rtf */,
 				AA36140920566CFB0007B11F /* WWHViewController.h */,
 				AA36140A20566CFB0007B11F /* WWHViewController.m */,
+				6674A481207E4ADC002F4007 /* EOCViewController.h */,
+				6674A482207E4ADC002F4007 /* EOCViewController.m */,
 				AA36140C205678050007B11F /* EOCWeakProxy.h */,
 				AA36140D205678050007B11F /* EOCWeakProxy.m */,
 				AA36140F205679120007B11F /* NSTimer+BlocksSupport.h */,
@@ -435,6 +465,7 @@
 				AADF60D92006FE5B00B6F705 /* ViewController.m in Sources */,
 				AADF60F32006FF7700B6F705 /* CategoryDemo.m in Sources */,
 				663D334B205AA72B00EF4193 /* WWHCache.m in Sources */,
+				6674A483207E4ADC002F4007 /* EOCViewController.m in Sources */,
 				AA9A05D12011E3AE00AB4EE5 /* NSString+NSReplace.m in Sources */,
 				AA17A344201071F5007B8535 /* Person.m in Sources */,
 				AA17A34B201076A1007B8535 /* HomeHeaderView.m in Sources */,
@@ -450,6 +481,7 @@
 				AA36140E205678050007B11F /* EOCWeakProxy.m in Sources */,
 				AADF60F42006FF7700B6F705 /* CategoryDemo+attribute.m in Sources */,
 				AA9A05DA2011E3AE00AB4EE5 /* EncryptUtils.m in Sources */,
+				6674A487207E4E30002F4007 /* EOCNotificationCenter.m in Sources */,
 				AA9A05E02011E3AE00AB4EE5 /* NSData+Base64.m in Sources */,
 				AA361411205679120007B11F /* NSTimer+BlocksSupport.m in Sources */,
 				AA9A059E2011D87400AB4EE5 /* SingleList.m in Sources */,

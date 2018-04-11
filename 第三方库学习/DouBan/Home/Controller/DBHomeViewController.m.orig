@@ -54,13 +54,16 @@ typedef void (^MyBlock)(void);
     if (self) {
         self.title = @"首页";
         self.model = [DBHomeModel new];
+<<<<<<< Updated upstream
         
 //        [self.model addObserver:self forKeyPath:@"name" options:NSKeyValueObservingOptionNew context:nil];
         
+=======
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(haha) name:nil object:nil];
         [self.model addObserver:self forKeyPath:@"name" options:NSKeyValueObservingOptionNew context:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"" object:nil];
+>>>>>>> Stashed changes
 //        self.model.name = @"wangweihu";
 //        [self.model setValue:@"wushanshan" forKey:@"name"];
         
@@ -69,10 +72,11 @@ typedef void (^MyBlock)(void);
     return self;
 }
 
+<<<<<<< Updated upstream
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    
+=======
 - (void)haha {
     
     
@@ -82,16 +86,6 @@ typedef void (^MyBlock)(void);
     NSLog(@"change = %@", change);
 }
 
-// 判断子类是否复写了父类的方法
-- (void)test_inheritedAndOverrided {
-    Coder *coder = [Coder new];
-    SEL selector = @selector(doSomething);
-    BOOL inherited = ![coder isMemberOfClass:[Person class]]; //判断对象不是由父类本身创建的
-    BOOL overrided = [Coder instanceMethodForSelector:selector] == [Person instanceMethodForSelector:selector]; //判断同一个方法，子类调用的IMP跟父类调用的IMP是否一致，如果不一致则说明子类复写了父类的方法
-    if (inherited && overrided) {
-        NSLog(@"子类复写了父类的方法");
-    }else{
-        NSLog(@"子类没有复写父类的方法");
 - (void)createTheard {
     dispatch_queue_t queue = dispatch_queue_create("com.wangweihu.serialQueue", DISPATCH_QUEUE_SERIAL);
     queue = dispatch_get_main_queue();
@@ -107,17 +101,9 @@ typedef void (^MyBlock)(void);
     if ([NSStringFromSelector(sel) isEqualToString:@"testMessageSendMechanism"]) {
         return YES;
     }
-    NSLog(@"inherited = %@", @(inherited));
-    NSLog(@"overrided = %@", @(overrided));
     return [super resolveInstanceMethod:sel];
 }
 
-- (void)UILabel_test_iOS_8_x_bug {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(100, 100, 200, 0)];  //为了测试，设置高度为0
-    label.backgroundColor = [UIColor blueColor];  //高度为0时背景色并不会显示,这里为了明显设置为蓝色
-    label.textColor = [UIColor blackColor];
-    label.text = @"测试";
-    [self.view addSubview:label];
 // 备援接受者
 - (id)forwardingTargetForSelector:(SEL)aSelector {
     return nil;
@@ -144,9 +130,6 @@ typedef void (^MyBlock)(void);
 
 - (void)key_test {
     
-    // 解决方案
-    // label.clipsToBounds = YES;
-    // label.hidden = YES;  //高度为0时hidden掉
     [self.KVOController observe:self keyPath:@"name" options:NSKeyValueObservingOptionNew block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
         NSLog(@"observer = %@, object = %@, change = %@", observer, object, change);
     }];
@@ -186,44 +169,35 @@ typedef void (^MyBlock)(void);
         NSLog(@"任务003 %@",[NSThread currentThread]);
          isCancel = YES;
     });
+>>>>>>> Stashed changes
     
-    dispatch_async(queue, ^{
-        // 模拟：线程等待3秒，确保任务003完成 isCancel＝YES
-        sleep(3);
-        if(isCancel){
-            NSLog(@"任务004已被取消 %@",[NSThread currentThread]);
-        }else{
-            NSLog(@"任务004 %@",[NSThread currentThread]);
-        }
-    });
 }
 
-- (void)gcdBlockCancel {
-    dispatch_queue_t queue = dispatch_queue_create("com.gcdtest.www", DISPATCH_QUEUE_CONCURRENT);
-    
-    dispatch_block_t block1 = dispatch_block_create(0, ^{
-        sleep(5);
-        NSLog(@"block1 %@",[NSThread currentThread]);
-    });
-    
-    dispatch_block_t block2 = dispatch_block_create(0, ^{
-        NSLog(@"block2 %@",[NSThread currentThread]);
-    });
-    
-    dispatch_block_t block3 = dispatch_block_create(0, ^{
-        NSLog(@"block3 %@",[NSThread currentThread]);
-    });
-    
-    dispatch_async(queue, block1);
-    dispatch_async(queue, block2);
-    dispatch_block_cancel(block3);
+// 判断子类是否复写了父类的方法
+- (void)test_inheritedAndOverrided {
+    Coder *coder = [Coder new];
+    SEL selector = @selector(doSomething);
+    BOOL inherited = ![coder isMemberOfClass:[Person class]]; //判断对象不是由父类本身创建的
+    BOOL overrided = [Coder instanceMethodForSelector:selector] == [Person instanceMethodForSelector:selector]; //判断同一个方法，子类调用的IMP跟父类调用的IMP是否一致，如果不一致则说明子类复写了父类的方法
+    if (inherited && overrided) {
+        NSLog(@"子类复写了父类的方法");
+    }else{
+        NSLog(@"子类没有复写父类的方法");
+    }
+    NSLog(@"inherited = %@", @(inherited));
+    NSLog(@"overrided = %@", @(overrided));
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
+- (void)UILabel_test_iOS_8_x_bug {
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(100, 100, 200, 0)];  //为了测试，设置高度为0
+    label.backgroundColor = [UIColor blueColor];  //高度为0时背景色并不会显示,这里为了明显设置为蓝色
+    label.textColor = [UIColor blackColor];
+    label.text = @"测试";
+    [self.view addSubview:label];
     
-    [self block_test];
+    // 解决方案
+    // label.clipsToBounds = YES;
+    // label.hidden = YES;  //高度为0时hidden掉
 }
 
 - (void)block_test {
