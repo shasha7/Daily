@@ -72,6 +72,17 @@
     }
 }
 
+#pragma mark - Throttle消息频率限制
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(doSomething) object:nil];
+    [self performSelector:@selector(doSomething) withObject:nil afterDelay:.5];
+}
+
+- (void)doSomething {
+    NSLog(@"doSomething");
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.

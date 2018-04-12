@@ -8,15 +8,15 @@
 
 #import "DBHomeViewController.h"
 #import "DBHomeDetailViewController.h"
-#import "UINavigationController+ExchangeToTopViewController.h"
-#import "AFNetworking.h"
-#import "KVOController.h"
 #import "DBWebViewController.h"
 #import "DBResponderViewController.h"
+#import "DBSqliteViewController.h"
+#import "UINavigationController+ExchangeToTopViewController.h"
+
+#import "AFNetworking.h"
+#import "KVOController.h"
 #import "Coder.h"
 #import "Person.h"
-#import "DBSqliteViewController.h"
-
 /*
  Storage class specifier关键字
  包括:auto,extern,static,register,mutable,volatile,restrict以及typedef.
@@ -56,11 +56,11 @@ typedef void (^MyBlock)(void);
         self.model = [DBHomeModel new];
         
 //        [self.model addObserver:self forKeyPath:@"name" options:NSKeyValueObservingOptionNew context:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(haha) name:nil object:nil];
-        [self.model addObserver:self forKeyPath:@"name" options:NSKeyValueObservingOptionNew context:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:self];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"" object:nil];
+//
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(haha) name:nil object:nil];
+//        [self.model addObserver:self forKeyPath:@"name" options:NSKeyValueObservingOptionNew context:nil];
+//        [[NSNotificationCenter defaultCenter] removeObserver:self];
+//        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"" object:nil];
 //        self.model.name = @"wangweihu";
 //        [self.model setValue:@"wushanshan" forKey:@"name"];
         
@@ -72,9 +72,6 @@ typedef void (^MyBlock)(void);
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    
-- (void)haha {
-    
     
 }
 
@@ -92,6 +89,11 @@ typedef void (^MyBlock)(void);
         NSLog(@"子类复写了父类的方法");
     }else{
         NSLog(@"子类没有复写父类的方法");
+    }
+    NSLog(@"inherited = %@", @(inherited));
+    NSLog(@"overrided = %@", @(overrided));
+}
+
 - (void)createTheard {
     dispatch_queue_t queue = dispatch_queue_create("com.wangweihu.serialQueue", DISPATCH_QUEUE_SERIAL);
     queue = dispatch_get_main_queue();
@@ -107,8 +109,6 @@ typedef void (^MyBlock)(void);
     if ([NSStringFromSelector(sel) isEqualToString:@"testMessageSendMechanism"]) {
         return YES;
     }
-    NSLog(@"inherited = %@", @(inherited));
-    NSLog(@"overrided = %@", @(overrided));
     return [super resolveInstanceMethod:sel];
 }
 
@@ -118,6 +118,7 @@ typedef void (^MyBlock)(void);
     label.textColor = [UIColor blackColor];
     label.text = @"测试";
     [self.view addSubview:label];
+}
 // 备援接受者
 - (id)forwardingTargetForSelector:(SEL)aSelector {
     return nil;
@@ -219,7 +220,7 @@ typedef void (^MyBlock)(void);
     dispatch_block_cancel(block3);
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad11111 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -507,128 +508,128 @@ typedef void (^MyBlock)(void);
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    DBSqliteViewController *deatilVC = [[DBSqliteViewController alloc] init];
+    DBHomeDetailViewController *deatilVC = [[DBHomeDetailViewController alloc] init];
     [self.navigationController exchangeToTopViewController:deatilVC animated:YES];
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    NSLog(@"change = %@", change);
-}
-
-- (void)createTheard {
-    dispatch_queue_t queue = dispatch_queue_create("com.wangweihu.serialQueue", DISPATCH_QUEUE_SERIAL);
-    queue = dispatch_get_main_queue();
-    queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_async(queue, ^{
-        NSLog(@"DISPATCH_QUEUE_SERIAL thread = %@", [NSThread currentThread]);
-        NSLog(@"DISPATCH_QUEUE_CONCURRENT thread = %@", [NSThread currentThread]);
-    });
-}
-
-// 动态方法分析
-+ (BOOL)resolveInstanceMethod:(SEL)sel {
-    if ([NSStringFromSelector(sel) isEqualToString:@"testMessageSendMechanism"]) {
-        return YES;
-    }
-    return [super resolveInstanceMethod:sel];
-}
-
-// 备援接受者
-- (id)forwardingTargetForSelector:(SEL)aSelector {
-    return nil;
-    //    return self.model;
-}
+//- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+//    NSLog(@"change = %@", change);
+//}
+//
+//- (void)createTheard {
+//    dispatch_queue_t queue = dispatch_queue_create("com.wangweihu.serialQueue", DISPATCH_QUEUE_SERIAL);
+//    queue = dispatch_get_main_queue();
+//    queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+//    dispatch_async(queue, ^{
+//        NSLog(@"DISPATCH_QUEUE_SERIAL thread = %@", [NSThread currentThread]);
+//        NSLog(@"DISPATCH_QUEUE_CONCURRENT thread = %@", [NSThread currentThread]);
+//    });
+//}
+//
+//// 动态方法分析
+//+ (BOOL)resolveInstanceMethod:(SEL)sel {
+//    if ([NSStringFromSelector(sel) isEqualToString:@"testMessageSendMechanism"]) {
+//        return YES;
+//    }
+//    return [super resolveInstanceMethod:sel];
+//}
+//
+//// 备援接受者
+//- (id)forwardingTargetForSelector:(SEL)aSelector {
+//    return nil;
+//    //    return self.model;
+//}
 
 // 完整的消息转发
 // forwardingTargetForSelector 同为消息转发，但在实践层面上有什么区别？何时可以考虑把消息下放到forwardInvocation阶段转发？
 // forwardingTargetForSelector 仅支持一个对象的返回，也就是说消息只能被转发给一个对象
 // forwardInvocation可以将消息同时转发给任意多个对象
-- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {
-    if(aSelector == @selector(testMessageSendMechanism)) {
-        return [NSMethodSignature signatureWithObjCTypes:"v@:"];
-    }
-    return nil;
-}
-
-- (void)forwardInvocation:(NSInvocation *)anInvocation {
-    if (anInvocation.selector == @selector(testMessageSendMechanism)) {
-        [anInvocation invokeWithTarget:self.model];
-        [anInvocation invokeWithTarget:self.secondModel];
-    }
-}
-
-- (void)key_test {
-    
-    [self.KVOController observe:self keyPath:@"name" options:NSKeyValueObservingOptionNew block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
-        NSLog(@"observer = %@, object = %@, change = %@", observer, object, change);
-    }];
-    
-    NSMutableString *mStr = [NSMutableString stringWithString:@"wushanshan"];
-    self.name = mStr;
-    
-    NSLog(@"self.name = %@", self.name);
-    
-    [mStr appendString:@" love wushanshan"];
-    
-    NSLog(@"self.name = %@", self.name);
-}
-
-// 重写copy属性的变量的时候记得 copy操作， 这样是有必要的
-- (void)setName:(NSString *)name {
-    
-    //    _name = name; // 通过name外界可修改_name的值
-    
-    _name = [name copy];// 系统默认的操作 通过name外界不可修改_name的值
-}
-
-- (void)gcdCancel {
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    __block BOOL isCancel = NO;
-    
-    dispatch_async(queue, ^{
-        NSLog(@"任务001 %@",[NSThread currentThread]);
-        sleep(10);
-    });
-    
-    dispatch_async(queue, ^{
-        NSLog(@"任务002 %@",[NSThread currentThread]);
-    });
-    
-    dispatch_async(queue, ^{
-        NSLog(@"任务003 %@",[NSThread currentThread]);
-        isCancel = YES;
-    });
-    
-    dispatch_async(queue, ^{
-        // 模拟：线程等待3秒，确保任务003完成 isCancel＝YES
-        sleep(3);
-        if(isCancel){
-            NSLog(@"任务004已被取消 %@",[NSThread currentThread]);
-        }else{
-            NSLog(@"任务004 %@",[NSThread currentThread]);
-        }
-    });
-}
-
-- (void)gcdBlockCancel {
-    dispatch_queue_t queue = dispatch_queue_create("com.gcdtest.www", DISPATCH_QUEUE_CONCURRENT);
-    
-    dispatch_block_t block1 = dispatch_block_create(0, ^{
-        sleep(5);
-        NSLog(@"block1 %@",[NSThread currentThread]);
-    });
-    
-    dispatch_block_t block2 = dispatch_block_create(0, ^{
-        NSLog(@"block2 %@",[NSThread currentThread]);
-    });
-    
-    dispatch_block_t block3 = dispatch_block_create(0, ^{
-        NSLog(@"block3 %@",[NSThread currentThread]);
-    });
-    
-    dispatch_async(queue, block1);
-    dispatch_async(queue, block2);
-    dispatch_block_cancel(block3);
-}
+//- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {
+//    if(aSelector == @selector(testMessageSendMechanism)) {
+//        return [NSMethodSignature signatureWithObjCTypes:"v@:"];
+//    }
+//    return nil;
+//}
+//
+//- (void)forwardInvocation:(NSInvocation *)anInvocation {
+//    if (anInvocation.selector == @selector(testMessageSendMechanism)) {
+//        [anInvocation invokeWithTarget:self.model];
+//        [anInvocation invokeWithTarget:self.secondModel];
+//    }
+//}
+//
+//- (void)key_test {
+//
+//    [self.KVOController observe:self keyPath:@"name" options:NSKeyValueObservingOptionNew block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
+//        NSLog(@"observer = %@, object = %@, change = %@", observer, object, change);
+//    }];
+//
+//    NSMutableString *mStr = [NSMutableString stringWithString:@"wushanshan"];
+//    self.name = mStr;
+//
+//    NSLog(@"self.name = %@", self.name);
+//
+//    [mStr appendString:@" love wushanshan"];
+//
+//    NSLog(@"self.name = %@", self.name);
+//}
+//
+//// 重写copy属性的变量的时候记得 copy操作， 这样是有必要的
+//- (void)setName:(NSString *)name {
+//
+//    //    _name = name; // 通过name外界可修改_name的值
+//
+//    _name = [name copy];// 系统默认的操作 通过name外界不可修改_name的值
+//}
+//
+//- (void)gcdCancel {
+//    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+//    __block BOOL isCancel = NO;
+//
+//    dispatch_async(queue, ^{
+//        NSLog(@"任务001 %@",[NSThread currentThread]);
+//        sleep(10);
+//    });
+//
+//    dispatch_async(queue, ^{
+//        NSLog(@"任务002 %@",[NSThread currentThread]);
+//    });
+//
+//    dispatch_async(queue, ^{
+//        NSLog(@"任务003 %@",[NSThread currentThread]);
+//        isCancel = YES;
+//    });
+//
+//    dispatch_async(queue, ^{
+//        // 模拟：线程等待3秒，确保任务003完成 isCancel＝YES
+//        sleep(3);
+//        if(isCancel){
+//            NSLog(@"任务004已被取消 %@",[NSThread currentThread]);
+//        }else{
+//            NSLog(@"任务004 %@",[NSThread currentThread]);
+//        }
+//    });
+//}
+//
+//- (void)gcdBlockCancel {
+//    dispatch_queue_t queue = dispatch_queue_create("com.gcdtest.www", DISPATCH_QUEUE_CONCURRENT);
+//
+//    dispatch_block_t block1 = dispatch_block_create(0, ^{
+//        sleep(5);
+//        NSLog(@"block1 %@",[NSThread currentThread]);
+//    });
+//
+//    dispatch_block_t block2 = dispatch_block_create(0, ^{
+//        NSLog(@"block2 %@",[NSThread currentThread]);
+//    });
+//
+//    dispatch_block_t block3 = dispatch_block_create(0, ^{
+//        NSLog(@"block3 %@",[NSThread currentThread]);
+//    });
+//
+//    dispatch_async(queue, block1);
+//    dispatch_async(queue, block2);
+//    dispatch_block_cancel(block3);
+//}
 
 @end
