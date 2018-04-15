@@ -14,17 +14,17 @@
     NSLog(@"self = %@", self);
 }
 
-- (void)setName:(NSString *)name {
-    [self willChangeValueForKey:@"name"];
-    _name = [name copy];
-    [self didChangeValueForKey:@"name"];
-}
-
-+ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key {
-    if ([key isEqualToString:@"name"]) {
-        return NO;
-    }
-    return [super automaticallyNotifiesObserversForKey:key];
-}
+//- (void)setName:(NSString *)name {
+//    [self willChangeValueForKey:@"name"];
+//    _name = [name copy];
+//    [self didChangeValueForKey:@"name"];
+//}
+//
+//+ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key {
+//    if ([key isEqualToString:@"name"]) {
+//        return NO;
+//    }
+//    return [super automaticallyNotifiesObserversForKey:key];
+//}
 
 @end

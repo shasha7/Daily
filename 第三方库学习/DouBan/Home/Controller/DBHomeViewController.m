@@ -54,7 +54,31 @@ typedef void (^MyBlock)(void);
     if (self) {
         self.title = @"首页";
         self.model = [DBHomeModel new];
+        self.model.name = @"wangweihu";
         
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        
+        NSNumber *objc = [NSNumber numberWithInteger:10];
+        NSMutableArray *array = [NSMutableArray arrayWithObjects:objc, nil];
+        
+//        [userDefaults setValue:[NSObject new] forKey:@"objc"];
+        [userDefaults setValue:array forKey:@"objc"];
+        [userDefaults synchronize];
+        
+        NSLog(@"%@", [userDefaults objectForKey:@"objc"]);//__NSCFArray
+        
+        //方法一
+        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+        //方法二
+        NSDictionary *dict = [userDefaults dictionaryRepresentation];
+        for (id key in dict)    {
+            [userDefaults removeObjectForKey:key];
+        }
+        [userDefaults synchronize];
+    
+        NSLog(@".........");
+    
 //        [self.model addObserver:self forKeyPath:@"name" options:NSKeyValueObservingOptionNew context:nil];
 //
 //        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(haha) name:nil object:nil];
@@ -68,6 +92,8 @@ typedef void (^MyBlock)(void);
     }
     return self;
 }
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
