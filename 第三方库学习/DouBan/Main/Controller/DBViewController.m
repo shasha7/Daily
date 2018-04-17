@@ -14,6 +14,10 @@
 
 @implementation DBViewController
 
++ (void)initialize {
+    NSLog(@"这里能干点啥，初始化一些常量--父类");
+}
+
 - (instancetype)init {
     if (self == [super init]) {
         self.requestManager = [DBRequestManager manager];

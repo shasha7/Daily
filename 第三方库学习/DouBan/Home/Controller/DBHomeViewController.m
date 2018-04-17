@@ -12,11 +12,13 @@
 #import "DBResponderViewController.h"
 #import "DBSqliteViewController.h"
 #import "UINavigationController+ExchangeToTopViewController.h"
-
+#import <AVFoundation/AVFoundation.h>
 #import "AFNetworking.h"
 #import "KVOController.h"
 #import "Coder.h"
 #import "Person.h"
+#import "Masonry.h"
+
 /*
  Storage class specifier关键字
  包括:auto,extern,static,register,mutable,volatile,restrict以及typedef.
@@ -44,10 +46,21 @@ typedef void (^MyBlock)(void);
 @property (nonatomic, copy) MyBlock myblock;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSMutableArray *books;
+@property (nonatomic, strong) AVSpeechSynthesizer *synthesizer;
 
 @end
 
 @implementation DBHomeViewController
+
+/*
+ ObjC 对于加载的管理，主要使用了两个列表，分别是loadable_classes和loadable_categories
+ load 可以说我们在日常开发中可以接触到的调用时间最靠前的方法，在主函数运行之前，load 方法就会调用。
+ 由于它的调用不是惰性的，且其只会在程序调用期间调用一次，最最重要的是，如果在类与分类中都实现了load方法，它们都会被调用，不像其它的在分类中实现的方法会被覆盖，这就使load方法成为了方法调剂的绝佳时机。
+ 注意：但是由于load方法的运行时间过早，所以这里可能不是一个理想的环境，因为某些类可能需要在在其它类之前加载，但是这是我们无法保证的。不过在这个时间点，所有的framework都已经加载到了运行时中，所以调用 framework中的方法都是安全的。
+ */
+//+ (void)load {
+//
+//}
 
 - (instancetype)init {
     self = [super init];
@@ -93,12 +106,111 @@ typedef void (^MyBlock)(void);
     return self;
 }
 
++ (void)initialize {
+    // initialize方法的调用为什么是惰性的,没有显示的写明但是为什么会调用父类的initialize方法
+    /*
+     特点
+     1.initialize的调用是惰性的，它会在第一次调用当前类的方法时被调用
+     2.与load不同，initialize方法调用时，所有的类都已经加载到了内存中了
+     3.initialize的运行是线程安全的
+     4.子类会继承父类的initialize方法
+     */
+    /*
+     调用栈
+     0 +[DBViewController initialize]
+     1 _class_initialize
+     2 lookUpImpOrForward
+     3 _class_lookupMethodAndLoadCache3
+     4 objc_msgSend
+     5 main
+     6 start
+     */
+    if ([self class] == [DBHomeViewController class]) {
+        NSLog(@"这里能干点啥");
+    }
+}
 
+- (void)commonInit {
+    AVSpeechSynthesizer *synthesizer = [[AVSpeechSynthesizer alloc] init];
+    self.synthesizer = synthesizer;
+}
+
+- (void)createVoices {
+    AVSpeechSynthesisVoice *usVoice = [AVSpeechSynthesisVoice voiceWithLanguage:@"en-US"];
+//    usVoice.quality = AVSpeechSynthesisVoiceQualityEnhanced;//只读属性
+    if (@available(iOS 9.0, *)) {
+        [usVoice setValue:@(AVSpeechSynthesisVoiceQualityEnhanced) forKey:@"quality"];
+    } else {
+        // Fallback on earlier versions
+    }
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+ 
+    [self commonInit];
     
+    AVSpeechSynthesisVoice *usVoice = [AVSpeechSynthesisVoice voiceWithLanguage:@"zh-CN"];
+    
+    AVSpeechUtterance *utterance = [AVSpeechUtterance speechUtteranceWithString:@"我就看看不说话我就看看不说话我就看看不说话我就看看不说话我就看看不说话我就看看不说话我就看看不说话我就看看不说话"];
+    utterance.rate = AVSpeechUtteranceDefaultSpeechRate;
+    utterance.volume = 0.6f;
+    utterance.pitchMultiplier = 1;
+    utterance.voice = usVoice;
+    
+    [self.synthesizer speakUtterance:utterance];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        // pause之后可以重新开始，但是stop事后不能继续播放，只能再次调用speakUtterance:
+        [self.synthesizer pauseSpeakingAtBoundary:AVSpeechBoundaryImmediate];
+    });
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.synthesizer continueSpeaking];
+    });
+    
+    /*
+     " Language: ar-SA, Name: Maged, Quality: Default [com.apple.ttsbundle.Maged-compact]",
+     " Language: cs-CZ, Name: Zuzana, Quality: Default [com.apple.ttsbundle.Zuzana-compact]",
+     " Language: da-DK, Name: Sara, Quality: Default [com.apple.ttsbundle.Sara-compact]",
+     " Language: de-DE, Name: Anna, Quality: Default [com.apple.ttsbundle.Anna-compact]",
+     " Language: el-GR, Name: Melina, Quality: Default [com.apple.ttsbundle.Melina-compact]",
+     " Language: en-AU, Name: Karen, Quality: Default [com.apple.ttsbundle.Karen-compact]",
+     " Language: en-GB, Name: Daniel, Quality: Default [com.apple.ttsbundle.Daniel-compact]",
+     " Language: en-IE, Name: Moira, Quality: Default [com.apple.ttsbundle.Moira-compact]",
+     " Language: en-US, Name: Samantha, Quality: Default [com.apple.ttsbundle.Samantha-compact]",
+     " Language: en-ZA, Name: Tessa, Quality: Default [com.apple.ttsbundle.Tessa-compact]",
+     " Language: es-ES, Name: Monica, Quality: Default [com.apple.ttsbundle.Monica-compact]",
+     " Language: es-MX, Name: Paulina, Quality: Default [com.apple.ttsbundle.Paulina-compact]",
+     " Language: fi-FI, Name: Satu, Quality: Default [com.apple.ttsbundle.Satu-compact]",
+     " Language: fr-CA, Name: Amelie, Quality: Default [com.apple.ttsbundle.Amelie-compact]",
+     " Language: fr-FR, Name: Thomas, Quality: Default [com.apple.ttsbundle.Thomas-compact]",
+     " Language: he-IL, Name: Carmit, Quality: Default [com.apple.ttsbundle.Carmit-compact]",
+     " Language: hi-IN, Name: Lekha, Quality: Default [com.apple.ttsbundle.Lekha-compact]",
+     " Language: hu-HU, Name: Mariska, Quality: Default [com.apple.ttsbundle.Mariska-compact]",
+     " Language: id-ID, Name: Damayanti, Quality: Default [com.apple.ttsbundle.Damayanti-compact]",
+     " Language: it-IT, Name: Alice, Quality: Default [com.apple.ttsbundle.Alice-compact]",
+     " Language: ja-JP, Name: Kyoko, Quality: Default [com.apple.ttsbundle.Kyoko-compact]",
+     " Language: ko-KR, Name: Yuna, Quality: Default [com.apple.ttsbundle.Yuna-compact]",
+     " Language: nl-BE, Name: Ellen, Quality: Default [com.apple.ttsbundle.Ellen-compact]",
+     " Language: nl-NL, Name: Xander, Quality: Default [com.apple.ttsbundle.Xander-compact]",
+     " Language: no-NO, Name: Nora, Quality: Default [com.apple.ttsbundle.Nora-compact]",
+     " Language: pl-PL, Name: Zosia, Quality: Default [com.apple.ttsbundle.Zosia-compact]",
+     " Language: pt-BR, Name: Luciana, Quality: Default [com.apple.ttsbundle.Luciana-compact]",
+     " Language: pt-PT, Name: Joana, Quality: Default [com.apple.ttsbundle.Joana-compact]",
+     " Language: ro-RO, Name: Ioana, Quality: Default [com.apple.ttsbundle.Ioana-compact]",
+     " Language: ru-RU, Name: Milena, Quality: Default [com.apple.ttsbundle.Milena-compact]",
+     " Language: sk-SK, Name: Laura, Quality: Default [com.apple.ttsbundle.Laura-compact]",
+     " Language: sv-SE, Name: Alva, Quality: Default [com.apple.ttsbundle.Alva-compact]",
+     " Language: th-TH, Name: Kanya, Quality: Default [com.apple.ttsbundle.Kanya-compact]",
+     " Language: tr-TR, Name: Yelda, Quality: Default [com.apple.ttsbundle.Yelda-compact]",
+     " Language: zh-CN, Name: Ting-Ting, Quality: Default [com.apple.ttsbundle.Ting-Ting-compact]",
+     " Language: zh-HK, Name: Sin-Ji, Quality: Default [com.apple.ttsbundle.Sin-Ji-compact]",
+     "Language: zh-TW, Name: Mei-Jia, Quality: Default [com.apple.ttsbundle.Mei-Jia-compact]"
+     */
+//    NSLog(@"%@", [AVSpeechSynthesisVoice speechVoices]);
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -657,5 +769,45 @@ typedef void (^MyBlock)(void);
 //    dispatch_async(queue, block2);
 //    dispatch_block_cancel(block3);
 //}
+
+- (void)masonryTest {
+    __weak typeof(self) weakSelf = self; //对self进行weak化，否则造成循环引用无法释放controller
+    
+    UIView *tempView = [[UIView alloc] init];
+    NSInteger count = 10;//设置一排view的个数
+    NSInteger margin = 10;//设置相隔距离
+    NSInteger height = 50;//设置view的高度
+    for (int i = 0; i < count; i ++) {
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = [UIColor brownColor];
+        [self.view addSubview:view];
+        if (i == 0) {
+            [view mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(weakSelf.view).offset(margin);
+                make.centerY.equalTo(weakSelf.view);
+                make.height.mas_equalTo(height);
+            }];
+        }
+        else if (i == count - 1) {
+            [view mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.right.equalTo(weakSelf.view).offset(-margin);
+                make.left.equalTo(tempView.mas_right).offset(margin);
+                make.centerY.equalTo(tempView);
+                make.height.equalTo(tempView);
+                make.width.equalTo(tempView);
+            }];
+        }
+        else{
+            [view mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(tempView.mas_right).offset(margin);
+                make.centerY.equalTo(tempView);
+                make.height.equalTo(tempView);
+                make.width.equalTo(tempView);
+            }];
+        }
+        tempView = view;
+        [view layoutIfNeeded];
+    }
+}
 
 @end
