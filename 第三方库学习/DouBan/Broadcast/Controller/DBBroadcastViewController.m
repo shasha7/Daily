@@ -9,7 +9,7 @@
 #import "DBBroadcastViewController.h"
 #import "BroadcastViewModel.h"
 #import "BroadcastCommunityModel.h"
-#import "UIImageView+WebCache.h"
+#import "DBBroadcastCell.h"
 
 @interface DBBroadcastViewController ()
 
@@ -34,7 +34,12 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     
+    [self setupTableView];
     [self getData];
+}
+
+- (void)setupTableView {
+    self.tableView.rowHeight = 80.0f;
 }
 
 - (void)getData {
@@ -52,13 +57,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *identifier = @"cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    DBBroadcastCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (nil == cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell = [[DBBroadcastCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     BroadcastCommunityModel *model = [self.source objectAtIndex:indexPath.row];
-    cell.textLabel.text = model.theme_name;
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.image_detail]];
+    cell.model = model;
     return cell;
 }
 
