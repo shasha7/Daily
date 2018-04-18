@@ -63,8 +63,8 @@
     }
     BroadcastCommunityModel *model = [self.source objectAtIndex:indexPath.row];
     cell.model = model;
-    [cell.subject subscribeNext:^(NSString *str) {
-        NSLog(@"str = %@", str);
+    [cell.subject subscribeNext:^(id x) {
+        NSLog(@"按钮被点击了");
     }];
     return cell;
 }

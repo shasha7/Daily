@@ -23,8 +23,15 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         [self setupUI];
+        // 创建信号
+        [self createSignal];
     }
     return self;
+}
+
+- (void)createSignal {
+    RACSubject *subject = [RACSubject subject];
+    self.subject = subject;
 }
 
 - (void)setupUI {
@@ -51,9 +58,7 @@
 }
 
 - (void)subscribeBtnClick:(UIButton *)sender {
-    RACSubject *subject = [RACSubject subject];
-    [subject sendNext:@"点击了订阅按钮"];
-    self.subject = subject;
+    [self.subject sendNext:nil];
 }
 
 - (void)layoutSubviews {
