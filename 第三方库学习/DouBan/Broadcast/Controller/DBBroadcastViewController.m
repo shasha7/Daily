@@ -63,6 +63,9 @@
     }
     BroadcastCommunityModel *model = [self.source objectAtIndex:indexPath.row];
     cell.model = model;
+    [cell.subject subscribeNext:^(NSString *str) {
+        NSLog(@"str = %@", str);
+    }];
     return cell;
 }
 

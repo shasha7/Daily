@@ -66,6 +66,7 @@
 		6666EA89207A570A00BC8811 /* DBSafeMutableDictionary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBSafeMutableDictionary.m; sourceTree = "<group>"; };
 		AA5881422086DDD900A080A7 /* DBBroadcastCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBBroadcastCell.h; sourceTree = "<group>"; };
 		AA5881432086DDD900A080A7 /* DBBroadcastCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBBroadcastCell.m; sourceTree = "<group>"; };
+		AA5881452087155600A080A7 /* DBHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBHeader.h; sourceTree = "<group>"; };
 		AA6259C41F80DBDA009E200E /* DouBan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DouBan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA6259C71F80DBDA009E200E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		AA6259C81F80DBDA009E200E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -320,6 +321,7 @@
 		AA6259E71F82140C009E200E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				AA5881452087155600A080A7 /* DBHeader.h */,
 				AA6AE0991FE7652B00832F41 /* DBMacro.h */,
 				AA8EE6591FE37BF7004F7212 /* DBFrequentLimit.h */,
 				AA8EE65A1FE37BF7004F7212 /* DBFrequentLimit.m */,
@@ -806,7 +808,6 @@
 			baseConfigurationReference = F180E1DBF3E9DDB10BB30262 /* Pods-DouBan.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8XH63VCP26;
 				GCC_WARN_INHIBIT_ALL_WARNINGS = NO;
@@ -823,7 +824,6 @@
 			baseConfigurationReference = 129DA7CB8FAC5ABCDF37B388 /* Pods-DouBan.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8XH63VCP26;
 				GCC_WARN_INHIBIT_ALL_WARNINGS = NO;

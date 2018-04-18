@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DBHeader.h"
 
 @class BroadcastCommunityModel;
 
 @interface DBBroadcastCell : UITableViewCell
 
 @property (nonatomic, strong) BroadcastCommunityModel *model;
+@property (nonatomic, strong) RACSubject *subject;
 
 @end
