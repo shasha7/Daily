@@ -9,16 +9,12 @@
 #import "DBBroadcastViewController.h"
 #import "BroadcastViewModel.h"
 #import "BroadcastCommunityModel.h"
-#import <YYCache/YYCache.h>
-#import "SDImageCache.h"
 #import "UIImageView+WebCache.h"
 
 @interface DBBroadcastViewController ()
 
 @property (nonatomic, strong) BroadcastViewModel *viewModel;
 @property (nonatomic, strong) NSArray *source;
-@property (nonatomic, strong) YYCache *yyCache;
-@property (nonatomic, strong) SDImageCache *sdCache;
 
 @end
 
@@ -29,30 +25,25 @@
     self = [super init];
     if (self) {
         self.title = @"广播";
-        self.yyCache = [[YYCache alloc] initWithName:@"广播"];
-        self.sdCache = [SDImageCache sharedImageCache];
     }
     return self;
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     
+    [self getData];
+}
+
+- (void)getData {
     self.viewModel = [[BroadcastViewModel alloc] init];
     RACSignal *signal = [self.viewModel.communityRequest execute:nil];
     [signal subscribeNext:^(NSArray *communityDictArray) {
         self.source = [communityDictArray copy];
-        for (BroadcastCommunityModel *model in [communityDictArray copy]) {
-            [self.yyCache setObject:model.info forKey:model.theme_name];
-        }
         [self.tableView reloadData];
     }];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -67,7 +58,7 @@
     }
     BroadcastCommunityModel *model = [self.source objectAtIndex:indexPath.row];
     cell.textLabel.text = model.theme_name;
-    [cell.imageView sd_setImageWithURL:model.image_detail];
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.image_detail]];
     return cell;
 }
 

@@ -12,9 +12,10 @@
 
 @interface BroadcastViewModel ()
 
-@property (nonatomic, strong, readwrite) RACCommand *communityRequest;
+@property (nonatomic, strong) RACCommand *communityRequest;
 
 @end
+
 @implementation BroadcastViewModel
 
 - (instancetype)init {
@@ -32,9 +33,10 @@
             // 1.遍历字典
             NSDictionary *params = @{@"token":@"dadwadwad",
                                      @"uid":@"13123124414"};
+            // RACTuple使用以及params.rac_sequence.signal的好处
             [params.rac_sequence.signal subscribeNext:^(RACTuple *x) {
                 RACTupleUnpack(NSString *key, NSString *value) = x;
-                NSLog(@"key=%@,value=%@", key, value);
+                // NSLog(@"key=%@,value=%@", key, value);
             }];
             
             [[DBRequestManager manager] GET:@"http://d.api.budejie.com/forum/subscribe/bs0315-iphone-4.5.7.json" requestID:@"" parameters:nil success:^(id  _Nullable result) {
