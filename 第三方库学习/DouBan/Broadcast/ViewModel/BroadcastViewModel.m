@@ -35,7 +35,7 @@
                                      @"uid":@"13123124414"};
             // RACTuple使用以及params.rac_sequence.signal的好处
             [params.rac_sequence.signal subscribeNext:^(RACTuple *x) {
-                RACTupleUnpack(NSString *key, NSString *value) = x;
+//                RACTupleUnpack(NSString *key, NSString *value) = x;
                 // NSLog(@"key=%@,value=%@", key, value);
             }];
             

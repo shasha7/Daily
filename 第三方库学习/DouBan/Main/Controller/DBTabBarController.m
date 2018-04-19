@@ -11,6 +11,7 @@
 
 #import "DBHomeViewController.h"
 #import "DBBroadcastViewController.h"
+#import "DBVideoViewController.h"
 
 typedef struct DBTabBarItem {
     __unsafe_unretained NSString *title;
@@ -20,7 +21,8 @@ typedef struct DBTabBarItem {
 
 static DBTabBarItem tabBarList[] = {
     {@"首页", @"db_tab_home", @"db_tab_home_selected"},
-    {@"广播", @"db_tab_broadcast", @"db_tab_broadcast_selected"}
+    {@"广播", @"db_tab_broadcast", @"db_tab_broadcast_selected"},
+    {@"音频", @"db_tab_home", @"db_tab_home_selected"}
 };
 
 @interface DBTabBarController ()
@@ -62,6 +64,9 @@ static DBTabBarItem tabBarList[] = {
 
     DBBroadcastViewController *broadcastVC = [DBBroadcastViewController new];
     [self addChildViewController:broadcastVC title:tabBarList[1].title image:tabBarList[1].image selectedImage:tabBarList[1].selectedImage];
+    
+    DBVideoViewController *videoVC = [DBVideoViewController new];
+    [self addChildViewController:videoVC title:tabBarList[2].title image:tabBarList[2].image selectedImage:tabBarList[2].selectedImage];
 }
 
 - (void)addChildViewController:(UIViewController *)childController title:(NSString *)title image:(NSString *)image selectedImage:(NSString *)selectedImage {

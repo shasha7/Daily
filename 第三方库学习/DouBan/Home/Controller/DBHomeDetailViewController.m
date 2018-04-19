@@ -160,9 +160,9 @@
     // 打开其他家应用 前提是手机上有安装需要打开的应用
     if ([application canOpenURL:[NSURL URLWithString:@"jiayuan://"]]) {
         if (@available(iOS 10.0, *)) {
-            NSDictionary *dict = @{@"go":@(4)};
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:nil];
-            NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+//            NSDictionary *dict = @{@"go":@(4)};
+//            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:nil];
+//            NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 //
 //            NSMutableString *mutStr = [NSMutableString stringWithString:jsonString];
 //            NSRange range = {0,jsonString.length};
@@ -175,18 +175,18 @@
             //转码
 //            mutStr = [[mutStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] mutableCopy];
             
-            jsonString = [jsonString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//            jsonString = [jsonString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
             
-            NSString *json = [NSString stringWithFormat:@"jiayuan://xxx?jsonValue=1&jsonParams=%@",jsonString];
-            [application openURL:[NSURL URLWithString:json] options:@{} completionHandler:^(BOOL success) {
-                NSLog(@"success = %@", @(success));
-            }];
+//            NSString *json = [NSString stringWithFormat:@"jiayuan://xxx?jsonValue=1&jsonParams=%@",jsonString];
+//            [application openURL:[NSURL URLWithString:json] options:@{} completionHandler:^(BOOL success) {
+//                NSLog(@"success = %@", @(success));
+//            }];
         } else {
             // Fallback on earlier versions
         }
     }else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Notice" message:@"sorry the application is not load" delegate:self cancelButtonTitle:@"Cacell" otherButtonTitles:nil, nil];
-        [alert show];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Notice" message:@"sorry the application is not load" delegate:self cancelButtonTitle:@"Cacell" otherButtonTitles:nil, nil];
+//        [alert show];
     }
 }
 
