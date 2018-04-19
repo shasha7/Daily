@@ -17,9 +17,46 @@
 #import "KVOController.h"
 #import "Coder.h"
 #import "Person.h"
+#import "Student.h"
 #import "Masonry.h"
 
 /*
+ 第三方库中常用锁
+ @synchronized关键字
+ @synchronized(这里添加一个OC对象，一般使用self，必须在多个线程中都是同一对象) {
+ //这里写要加锁的代码
+ }
+ 注意点
+ 1.加锁的代码尽量少
+ 2.优点是不需要显式的创建锁对象，便可以实现锁的机制。
+ 3.@synchronized块会隐式的添加一个异常处理例程来保护代码，该处理例程会在异常抛出的时候自动的释放互斥锁。所以如果不想让隐式的异常处理例程带来额外的开销，你可以考虑使用锁对象。
+ 
+ NSLock 对象锁
+ NSRecursiveLock 递归锁
+ NSConditionLock 条件锁
+ pthread_mutex 互斥锁（C语言）
+ dispatch_semaphore 信号量实现加锁（GCD）
+ OSSpinLock （暂不建议使用，原因参见这里）
+ 
+ https://www.jianshu.com/p/y5MUd2
+ iOS中常用的一些线程同步手段
+ YYCache里面涉及到的锁pthread_mutex(互斥锁)   dispatch_semaphore(信号量)
+ SDWebImage里面涉及到的锁@synchronized关键字
+ 
+ 
+ 原子操作
+ iOS平台下的原子操作函数都以OSAtomic开头的,在<libkern/OSAtomic.h>里面.不同线程如果通过原子操作函数对同一变量进行操作,可以保证一个线程的操作不会影响到其他线程内对此变量的操作,因为这些操作都是原子式的.因为原子操作只能对内置类型进行操作,所以原子操作能够同步的线程只能位于同一个进程的地址空间内.
+ 原子操作快速高效,常用的加/减/自增/自减等都有对应的API实现.主要可以应用到一些计数的同步中.
+ 
+ 
+ 使用GCD进行线程同步
+ 
+ 
+ Objective-C中的锁
+ Objective-C有一些常用的锁, 他们的接口实际上都是通过NSLocking协议定义的,它定义了lock和unlock方法.你使用这些方法来获取和释放该锁.
+ 常用的锁有:NSLock,NSRecursiveLock,NSCondition,NSConditionLock.
+ 
+
  Storage class specifier关键字
  包括:auto,extern,static,register,mutable,volatile,restrict以及typedef.
  对于typedef,只是说在语句构成上,typedef声明看起来象static,extern等类型的变量声明;
@@ -37,6 +74,64 @@
     NSLog(@"parameters=%@, url=%@",parameters, url);
     return parameters;
  }
+ 
+ https://joeshang.github.io/2018/04/04/ios-http://t.cn/RmzQDL
+ http://t.cn/RmzQDL9
+ http://www.cnblogs.com/oc-bowen/p/7081146.html
+ http://weslyxl.coding.me/2018/02/12/2018/2/iOS%E6%8E%A8%E9%80%81%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/
+ http://www.cocoachina.com/ios/20170105/18525.html
+ 使用DZNEmptyDataSet遇到的一个问题
+ https://www.jianshu.com/p/81dd49e78358
+ https://www.jianshu.com/p/594433d2b5b2
+ 
+ 引用计数问题，单步走完一个方法的调用流程，没问题，但是一旦放开断点就会crash
+ https://juejin.im/post/5a3134386fb9a04500030e22
+ 在ARC下修改一个对象的引用计数，可以使用CoreFoundation框架的API，CFRetain和 CFRelease 函数
+ 
+ pch 优点与缺点？
+ c++编译警告的消除
+ MRC/ARC处理 -fno-objc-arc
+ 消除Xcode CocoaPods 引入第三方库产生的编译警告
+ 在podfile文件中 platform之后加上inhibit-all-warings!
+ 
+ Xcode9 自动签名更新设备列表  http://www.jianshu.com/p/af2c243c39b4
+ Git 如何删除本地分支和远程分支 http://blog.csdn.net/sub_lele/article/details/52289996
+ 
+ 
+ 无论是哪家的聊天人列表 排序都是按照时间排序的
+ 
+ 负载均衡处理 太多的人链接统一服务器(主机)长时间socket链接 造成服务器过载 这就需要重新请求一套新的ip port，以这套 ip port来进行socket链接
+ 
+ 无论是socket获取消息列表还是http拉取下来的列表 首先是按照时间排序
+ 
+ 
+ // json解析  json是非标准格式字符串  里面含有\n \r \t 等制表符
+ NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
+ NSError *error = nil;
+ NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+ // json数据当中没有 \r\n \r \t 等制表符，当后台给出有问题时，我们需要对json数据过滤
+ dataString = [dataString stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+ dataString = [dataString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+ dataString = [dataString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+ NSData *utf8Data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
+ NSArray *array = [NSJSONSerialization JSONObjectWithData:utf8Data options:NSJSONReadingMutableContainers error:&error];
+ 
+ // 面试题
+ 1、什么是kvo和kvc？
+ 2、kvo的缺陷？
+ 3、Swfit和Objective-C的联系，Swift比Objective-C有什么优势？
+ 4、举例说明Swfit里面有哪些是Objective-C中没有的？
+ 5、如何对iOS设备进行性能测试？
+ 6、使用过CocoPods吗？它是什么？CocoaPods的原理？
+ 7、集成三方框架有哪些方法？
+ 8、SDWebImage的原理实现机制，如何解决TableView卡的问题？
+ 9、一个动画怎么实现？
+ 10、iOS中常用的数据存储方式有哪些？
+ 11、说一说你对SQLite的认识？
+ 12、runloop和线程有什么关系？
+ 13、runloop的mode作用是什么？
+ 14、你一般是如何调试Bug的？
+ 15、描述一个ViewController的生命周期
  */
 
 typedef void (^MyBlock)(void);
@@ -211,6 +306,31 @@ typedef void (^MyBlock)(void);
      "Language: zh-TW, Name: Mei-Jia, Quality: Default [com.apple.ttsbundle.Mei-Jia-compact]"
      */
 //    NSLog(@"%@", [AVSpeechSynthesisVoice speechVoices]);
+}
+
+- (void)sort {
+    Student *stu1 = [Student studentWithFirstname:@"MingJie" lastname:@"Li"];
+    Student *stu2 = [Student studentWithFirstname:@"LongHu" lastname:@"Huang"];
+    Student *stu3 = [Student studentWithFirstname:@"LianJie" lastname:@"Li"];
+    Student *stu4 = [Student studentWithFirstname:@"Jian" lastname:@"Xiao"];
+    NSArray *array = [NSArray arrayWithObjects:stu1,stu2,stu3, stu4, nil];
+    
+    // 利用block进行排序
+    NSArray *array2 = [array sortedArrayUsingComparator:
+                       ^NSComparisonResult(Student *obj1, Student *obj2) {
+                           // 先按照姓排序
+                           NSComparisonResult result = [obj1.lastname compare:obj2.lastname];
+                           // 如果有相同的姓，就比较名字
+                           if (result == NSOrderedSame) {
+                               result = [obj1.firstname compare:obj2.firstname];
+                           }
+                           
+                           return result;
+                       }];
+    
+    [array2 enumerateObjectsUsingBlock:^(Student *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSLog(@"firstname:%@ lastname:%@", obj.firstname, obj.lastname);
+    }];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -810,4 +930,58 @@ typedef void (^MyBlock)(void);
     }
 }
 
+- (NSString *)digView:(UIView *)view {
+    if ([view isKindOfClass:[UITableViewCell class]]) return @"";
+    // 1.初始化
+    NSMutableString *xml = [NSMutableString string];
+    
+    // 2.标签开头
+    [xml appendFormat:@"<%@ frame=\"%@\"", view.class, NSStringFromCGRect(view.frame)];
+    if (!CGPointEqualToPoint(view.bounds.origin, CGPointZero)) {
+        [xml appendFormat:@" bounds=\"%@\"", NSStringFromCGRect(view.bounds)];
+    }
+    
+    if ([view isKindOfClass:[UIScrollView class]]) {
+        UIScrollView *scroll = (UIScrollView *)view;
+        if (!UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero, scroll.contentInset)) {
+            [xml appendFormat:@" contentInset=\"%@\"", NSStringFromUIEdgeInsets(scroll.contentInset)];
+        }
+    }
+    
+    // 3.判断是否要结束
+    if (view.subviews.count == 0) {
+        [xml appendString:@" />"];
+        return xml;
+    } else {
+        [xml appendString:@">"];
+    }
+    
+    // 4.遍历所有的子控件
+    for (UIView *child in view.subviews) {
+        NSString *childXml = [self digView:child];
+        [xml appendString:childXml];
+    }
+    
+    // 5.标签结尾
+    [xml appendFormat:@"<!--%@-->", view.class];
+    
+    return xml;
+}
+
+
+// 遍历父视图的所有子视图，包括嵌套的子视图
+- (void)TraverseAllSubviews:(UIView *)view {
+    NSMutableArray *array = [NSMutableArray array];
+    NSString *str = @"";
+    for (UIView *subView in view.subviews) {
+        if (subView.subviews.count) {
+            str = [str stringByAppendingString:@"-1"];
+            [self TraverseAllSubviews:subView];
+        }else {
+            [array addObject:str];
+        }
+        //        NSLog(@"%@",subView);
+    }
+    NSLog(@"%@",array);
+}
 @end
