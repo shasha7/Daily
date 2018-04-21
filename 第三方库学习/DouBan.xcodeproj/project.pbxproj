@@ -47,6 +47,8 @@
 		AAB1FEF81F84BB3E007AA4DB /* BroadcastViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB1FEF71F84BB3E007AA4DB /* BroadcastViewModel.m */; };
 		AAB1FEFB1F84BFE7007AA4DB /* BroadcastCommunityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB1FEFA1F84BFE7007AA4DB /* BroadcastCommunityModel.m */; };
 		AABFDC48208887390020CC63 /* Student.m in Sources */ = {isa = PBXBuildFile; fileRef = AABFDC47208887390020CC63 /* Student.m */; };
+		AAC4D07C208B038000868E3B /* DBApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = AAC4D07B208B038000868E3B /* DBApplication.m */; };
+		AAC4D07E208B0FE500868E3B /* timian.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AAC4D07D208B0FE500868E3B /* timian.mp3 */; };
 		AAE5A8E42079E9EF00F6C257 /* DBResponderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE5A8E32079E9EF00F6C257 /* DBResponderViewController.m */; };
 		AAE5A8E82079ECE300F6C257 /* DBBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE5A8E72079ECE300F6C257 /* DBBaseView.m */; };
 		AAE5A8EB2079EEAD00F6C257 /* DBViewOne.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE5A8EA2079EEAD00F6C257 /* DBViewOne.m */; };
@@ -128,6 +130,9 @@
 		AAB1FEFA1F84BFE7007AA4DB /* BroadcastCommunityModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BroadcastCommunityModel.m; sourceTree = "<group>"; };
 		AABFDC46208887390020CC63 /* Student.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Student.h; sourceTree = "<group>"; };
 		AABFDC47208887390020CC63 /* Student.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Student.m; sourceTree = "<group>"; };
+		AAC4D07A208B038000868E3B /* DBApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBApplication.h; sourceTree = "<group>"; };
+		AAC4D07B208B038000868E3B /* DBApplication.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBApplication.m; sourceTree = "<group>"; };
+		AAC4D07D208B0FE500868E3B /* timian.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = timian.mp3; sourceTree = "<group>"; };
 		AAE5A8E22079E9EF00F6C257 /* DBResponderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBResponderViewController.h; sourceTree = "<group>"; };
 		AAE5A8E32079E9EF00F6C257 /* DBResponderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBResponderViewController.m; sourceTree = "<group>"; };
 		AAE5A8E62079ECE300F6C257 /* DBBaseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBBaseView.h; sourceTree = "<group>"; };
@@ -210,6 +215,7 @@
 		66F853922088E95900BD3405 /* Audios */ = {
 			isa = PBXGroup;
 			children = (
+				AAC4D07D208B0FE500868E3B /* timian.mp3 */,
 				66F853932088E95900BD3405 /* Little Bit Better.mp3 */,
 			);
 			path = Audios;
@@ -365,6 +371,8 @@
 				AA6AE0971FE764F400832F41 /* DeviceInfo.m */,
 				AA6AE09A1FE7659F00832F41 /* DBShareData.h */,
 				AA6AE09B1FE7659F00832F41 /* DBShareData.m */,
+				AAC4D07A208B038000868E3B /* DBApplication.h */,
+				AAC4D07B208B038000868E3B /* DBApplication.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -552,6 +560,11 @@
 					AA6259C31F80DBDA009E200E = {
 						CreatedOnToolsVersion = 9.0;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -586,6 +599,7 @@
 				AA625A471F821E11009E200E /* db_tab_home_selected@2x.png in Resources */,
 				AA6259CF1F80DBDA009E200E /* Main.storyboard in Resources */,
 				AA625A481F821E11009E200E /* db_tab_broadcast_selected@2x.png in Resources */,
+				AAC4D07E208B0FE500868E3B /* timian.mp3 in Resources */,
 				663909E1207712A50063BF7E /* 佳缘测试.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -695,6 +709,7 @@
 				663909DB207710B60063BF7E /* DBWebViewController.m in Sources */,
 				6666EA8A207A570A00BC8811 /* DBSafeMutableDictionary.m in Sources */,
 				AA6DABB1207C5FC30029E436 /* Person.m in Sources */,
+				AAC4D07C208B038000868E3B /* DBApplication.m in Sources */,
 				AA625A0C1F821AE0009E200E /* DBBroadcastViewController.m in Sources */,
 				AAE5A8E82079ECE300F6C257 /* DBBaseView.m in Sources */,
 				AA6AE09C1FE7659F00832F41 /* DBShareData.m in Sources */,
